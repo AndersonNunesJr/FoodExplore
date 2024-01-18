@@ -1,0 +1,12 @@
+{
+    "extends": "@rocketseat/eslint-config/node",
+    "overrides": [
+      {
+        "files": ["**/*.js"], 
+        "rules": {
+          "@typescript-eslint/no-var-requires": "off"
+        }
+      }
+    ]
+  }
+    
