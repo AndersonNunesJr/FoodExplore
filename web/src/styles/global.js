@@ -8,9 +8,8 @@ export default createGlobalStyle`
     background-color: blue;
   }
    body{
-    background: ${({ theme }) => theme.COLORS.BACKGROUND_1000};
-    color: ${({ theme }) => theme.COLORS.CARROT_100};
-    font-family: "Roboto Slab", serif;
+    background: ${({ theme }) => theme.COLORS.TOMATO_400};
+    color: ${({ theme }) => theme.COLORS.CAKE_200};
     
 }
 `;

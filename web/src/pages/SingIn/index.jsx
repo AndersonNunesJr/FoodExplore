@@ -1,9 +1,9 @@
-import {Container} from "./styles"
+import { Container } from "./styles";
 
-export function SingIn(){
- return(
+export function SingIn() {
+  return (
     <Container>
-        <div>asdasdasdasd</div>
+      <div>asdasdasdasd</div>
     </Container>
- );   
+  );
 }
