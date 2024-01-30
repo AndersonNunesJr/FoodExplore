@@ -1,15 +1,23 @@
 import { createGlobalStyle } from "styled-components";
+import theme from "./theme";
 
 export default createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: blue;
+    background: ${theme.getColorStyle("DARK_400")};
   }
-   body{
-    background: ${({ theme }) => theme.COLORS.TOMATO_400};
-    color: ${({ theme }) => theme.COLORS.CAKE_200};
+  a {
+    text-decoration:none;
+   }
+  button, a {
+
+    cursor: pointer;
+    transition: filter 0.2s;  
+    }
+    button:hover, a:hover {
+        filter: brightness(0.9);
+    }
     
-}
 `;
