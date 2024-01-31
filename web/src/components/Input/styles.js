@@ -9,6 +9,7 @@ export const Container = styled.div`
   color: ${theme.getColorStyle("LIGHT_400")};
 
   border-radius: 8px;
+  width: 100%;
 
   > input {
     width: 100%;
