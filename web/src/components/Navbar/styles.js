@@ -17,4 +17,9 @@ export const Container = styled.div`
     height: 32px;
     background: transparent;
   }
+  .Signout {
+    background: transparent;
+    color: ${theme.getColorStyle("LIGHT_100")};
+    border: none;
+  }
 `;

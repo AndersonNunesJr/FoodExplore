@@ -8,6 +8,11 @@ export const Container = styled.button`
   align-items: center;
   justify-content: center;
   border: none;
+  gap: 10px;
+
+  > svg {
+    background: transparent;
+  }
 
   background-color: ${theme.getColorStyle("TOMATO_100")};
   border-radius: 5px;
