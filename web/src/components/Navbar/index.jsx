@@ -13,7 +13,7 @@ export function Navbar() {
         placeholder="Busque por pratos ou ingredientes"
         icon={CiSearch}
       />
-      <Button title={`Meu pedido (${numeroDePedidos})`} icon={PiReceiptLight} />
+      <Button title={`Pedidos (${numeroDePedidos})`} icon={PiReceiptLight} />
       <button className="Signout">
         <PiSignOutBold size={22} />
       </button>

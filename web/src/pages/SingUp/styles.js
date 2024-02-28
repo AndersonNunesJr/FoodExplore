@@ -10,7 +10,7 @@ export const Container = styled.div`
   grid-template-columns: 50% auto;
 `;
 export const Form = styled.form`
-  padding: 64px;
+  padding: 32px 64px;
   height: max-content;
   margin: auto;
   width: 60%;
@@ -35,12 +35,12 @@ export const Form = styled.form`
   > p {
     color: ${theme.getColorStyle("LIGHT_400")};
     ${theme.getFontStyle("Roboto_Small_normal")};
-    margin: 32px 0 0;
+    margin: 24px 0 0;
     background: none;
   }
   > a {
     width: fit-content;
-    margin: 32px auto 0;
+    margin: 24px auto 0;
     color: ${theme.getColorStyle("LIGHT_100")};
     background: none;
   }

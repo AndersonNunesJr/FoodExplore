@@ -7,11 +7,11 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  padding: 24px 123px;
+  padding: 12px 123px;
   background-color: ${theme.getColorStyle("DARK_600")};
 
   > img {
-    height: 32px;
+    height: 24px;
     background: transparent;
   }
 
