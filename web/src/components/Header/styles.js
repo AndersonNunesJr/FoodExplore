@@ -30,14 +30,14 @@ export const Container = styled.div`
   color: aliceblue;
   background: linear-gradient(to bottom, #091e26, #00131c);
   margin: 124px 124px 0;
-  position: relative; 
+  position: relative;
 
   > img {
     width: 400px;
     height: 300px;
     background: transparent;
-    position: absolute; 
-    top: -85px; 
+    position: absolute;
+    top: -85px;
   }
 
   > div {
