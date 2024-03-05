@@ -1,55 +1,48 @@
 import styled from "styled-components";
-
-// export const Container = styled.div`
-//   display: flex;
-//   align-items: center;
-//   color: aliceblue;
-//   background: linear-gradient(to bottom, #091e26, #00131c);
-//   margin: 0 124px;
-
-//   > img {
-//     width: 500px;
-//     height: 500px;
-//     background: transparent;
-//   }
-//   > div {
-//     padding: 80px 100px 90px 0;
-//     background: transparent;
-//     > h2 {
-//       background: transparent;
-//     }
-//     > p {
-//       background: transparent;
-//     }
-//   }
-// `;
+import theme from "../../styles/theme";
 
 export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  color: aliceblue;
-  background: linear-gradient(to bottom, #091e26, #00131c);
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-areas: "img div";
+
   margin: 124px 124px 0;
+
+  color: ${theme.getColorStyle("LIGHT_300")};
+  background: linear-gradient(to bottom, #091e26, #00131c);
+
   position: relative;
+  justify-content: end;
 
   > img {
-    width: 400px;
-    height: 300px;
+    width: 100%;
+    height: 150%;
+
+    grid-area: img;
+
     background: transparent;
+
     position: absolute;
-    top: -85px;
+    top: -122px;
+    left: -65px;
   }
 
   > div {
-    padding: 80px 100px 90px 0;
+    grid-area: div;
+
+    padding-top: 80px;
+    padding-bottom: 90px;
+    padding-right: 0;
     background: transparent;
 
-    > h2 {
+    > h1 {
       background: transparent;
+      ${theme.getFontStyle("Poppins_500_medium")}
     }
 
     > p {
       background: transparent;
+      ${theme.getFontStyle("Poppins_Small_normal")}
     }
   }
 `;

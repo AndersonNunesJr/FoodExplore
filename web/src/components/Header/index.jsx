@@ -5,7 +5,7 @@ export function Header() {
     <Container>
       <img src={imgEggPng} alt="" />
       <div>
-        <h2>Sabores inigualáveis</h2>
+        <h1>Sabores inigualáveis</h1>
         <p>Sinta o cuidado do preparo com ingredientes selecionados</p>
       </div>
     </Container>

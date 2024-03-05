@@ -15,7 +15,7 @@ export function Navbar() {
       />
       <Button title={`Pedidos (${numeroDePedidos})`} icon={PiReceiptLight} />
       <button className="Signout">
-        <PiSignOutBold size={22} />
+        <PiSignOutBold size={26} />
       </button>
     </Container>
   );

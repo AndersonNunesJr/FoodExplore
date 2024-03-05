@@ -6,7 +6,7 @@ export const Container = styled.div`
   position: relative;
   align-items: center;
 
-  width: 100%;
+  width: 50%;
   gap: 10px;
   padding: 0 14px;
   border-radius: 8px;
@@ -18,7 +18,7 @@ export const Container = styled.div`
 
   > input {
     width: 100%;
-    height: 48px;
+    height: 36px;
 
     background: transparent;
     color: ${theme.getColorStyle("LIGHT_400")};
