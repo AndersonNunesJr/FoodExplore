@@ -15,7 +15,7 @@ export const Container = styled.div`
   justify-content: end;
 
   > img {
-    width: 100%;
+    width: 119%;
     height: 150%;
 
     grid-area: img;
@@ -23,7 +23,7 @@ export const Container = styled.div`
     background: transparent;
 
     position: absolute;
-    top: -122px;
+    top: -123px;
     left: -65px;
   }
 

@@ -2,13 +2,10 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 
 export const Container = styled.div`
-  width: 100vw;
-
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: 16px 0;
-  gap: 32px;
+  padding: 16px 42px;
 
   background-color: ${theme.getColorStyle("DARK_600")};
 

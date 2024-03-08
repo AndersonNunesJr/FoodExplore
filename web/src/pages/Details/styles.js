@@ -4,7 +4,7 @@ import theme from "../../styles/theme";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   justify-content: space-between;
   .back {
     width: fit-content;
