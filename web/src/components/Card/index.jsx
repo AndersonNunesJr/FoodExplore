@@ -3,7 +3,7 @@ import { Container } from "./styles";
 import { IoMdRemove, IoMdAdd, IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { useState } from "react";
 
-export function Card({ title, description, valor, img, imgText }) {
+export function Card({ title, description, value, img, imgText }) {
   const [quantidade, setQuantidade] = useState("1");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -23,13 +23,18 @@ export function Card({ title, description, valor, img, imgText }) {
   };
   return (
     <Container>
-      <button onClick={handleButton} title="btn-favorite" className="btn">
-        {!isTyping ? <IoMdHeartEmpty /> : <IoMdHeart />}
-      </button>
-      <img src={img} alt={imgText} />
-      <h1>{title} </h1>
-      <p>{description}</p>
-      <h2>R$ {valor}</h2>
+      <div className="btn-favorite">
+        <button onClick={handleButton} title="btn-favorite" className="btn">
+          {!isTyping ? <IoMdHeartEmpty size={24} /> : <IoMdHeart size={24} />}
+        </button>
+      </div>
+      <img src={img} alt={imgText} className="img" />
+      <h1 className="title">
+        {title}
+        {" >"}
+      </h1>
+      <p className="description">{description}</p>
+      <h2 className="value">R$ {value}</h2>
       <div className="btn-display">
         <button className="btn" onClick={handleButton} title="btn-remove">
           <IoMdRemove size={24} />

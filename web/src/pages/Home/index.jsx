@@ -10,13 +10,75 @@ export function Home() {
         <Header />
         <Carrossel title={"Refeição"}>
           <Card
-            title={"Spaguetti Gambe  >"}
+            title={"Spaguetti Gambe"}
             description={"Massa fresca com camarões e pesto. "}
-            valor={"79,97"}
+            value={"79,97"}
             img={img}
             imgText={""}
           />
-          <Card />
+          <Card
+            title={""}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={"Torradas de Parma"}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={""}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={"Spaguetti Gambe"}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={""}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={"Spaguetti Gambe"}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={""}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={"Spaguetti Gambe"}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={""}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
         </Carrossel>
       </Section>
       <Footer />

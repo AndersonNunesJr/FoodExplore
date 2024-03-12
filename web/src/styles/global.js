@@ -7,6 +7,7 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     background: ${theme.getColorStyle("DARK_400")};
+    /* background-color: darkgray; */
   }
   a {
     text-decoration:none;
