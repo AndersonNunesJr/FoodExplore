@@ -1,11 +1,12 @@
 import { Button } from "../Button";
 import { Container } from "./styles";
 import { IoMdRemove, IoMdAdd, IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Card({ title, description, value, img, imgText }) {
   const [quantidade, setQuantidade] = useState("1");
   const [isTyping, setIsTyping] = useState(false);
+  const titleTransition = useRef(null);
 
   const handleButton = (e) => {
     const buttonTitle = e.currentTarget.title;
@@ -21,6 +22,15 @@ export function Card({ title, description, value, img, imgText }) {
       setIsTyping(!isTyping);
     }
   };
+
+  useEffect(() => {
+    if (titleTransition.current) {
+      if (titleTransition.current.offsetWidth > 254) {
+        titleTransition.current.setAttribute("class", "transition");
+      }
+    }
+  }, []);
+
   return (
     <Container>
       <div className="btn-favorite">
@@ -29,10 +39,12 @@ export function Card({ title, description, value, img, imgText }) {
         </button>
       </div>
       <img src={img} alt={imgText} className="img" />
-      <h1 className="title">
-        {title}
-        {" >"}
-      </h1>
+      <div className="title">
+        <h1 ref={titleTransition}>
+          {title}
+          {" >"}
+        </h1>
+      </div>
       <p className="description">{description}</p>
       <h2 className="value">R$ {value}</h2>
       <div className="btn-display">

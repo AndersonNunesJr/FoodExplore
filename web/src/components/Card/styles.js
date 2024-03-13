@@ -8,10 +8,13 @@ export const Container = styled.div`
   flex-direction: column;
 
   background: ${theme.getColorStyle("DARK_200")};
-  /* background: white; */
+
   border-radius: 5px;
-  gap: 10px;
+  justify-content: space-around;
   padding: 20px;
+  width: 300px;
+
+  flex: none;
 
   .btn-favorite {
     display: flex;
@@ -47,14 +50,24 @@ export const Container = styled.div`
   }
 
   .title {
-    flex: none;
+    background: none;
+    width: 100%;
+    display: flex;
+    overflow-x: hidden;
+  }
+  .title h1 {
     ${theme.getFontStyle("Poppins_300_bold")}
     color: ${theme.getColorStyle("LIGHT_300")};
     background: none;
-    width: 100%;
-    text-align: center;
-    min-width: 240px;
-    max-width: 241px;
+    white-space: nowrap;
+    transition: transform 3s linear;
+  }
+  .transition:not(:hover) {
+    transition: transform 0s linear;
+    transform: translateX(0);
+  }
+  .transition:hover {
+    transform: translateX(-100%);
   }
 
   .description {
@@ -62,8 +75,6 @@ export const Container = styled.div`
     color: ${theme.getColorStyle("LIGHT_400")};
     background: none;
     text-align: center;
-    padding: 0 8px;
-    width: 100%;
   }
 
   .value {

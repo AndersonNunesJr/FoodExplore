@@ -10,14 +10,14 @@ export function Home() {
         <Header />
         <Carrossel title={"Refeição"}>
           <Card
-            title={"Spaguetti Gambe"}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={""}
+            title={"Spaguetti Gambe"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
@@ -31,55 +31,68 @@ export function Home() {
             imgText={""}
           />
           <Card
-            title={""}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={"Spaguetti Gambe"}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={""}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={"Spaguetti Gambe"}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={""}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={"Spaguetti Gambe"}
+            title={"1234567890/1234567890/1234567890/ 1234567890/ 1234567890/"}
+            description={"Massa fresca com camarões e pesto. "}
+            value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          {/* <Card
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
           />
           <Card
-            title={""}
+            title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
             img={img}
             imgText={""}
-          />
+          /> */}
         </Carrossel>
+        <Carrossel title={"Sobremesas"}></Carrossel>
+        <Carrossel title={"Bebidas"}></Carrossel>
+        <Carrossel title={"Bebidas"}></Carrossel>
+        <Carrossel title={"Bebidas"}></Carrossel>
+        <Carrossel title={"Bebidas"}></Carrossel>
+        <Carrossel title={"Bebidas"}></Carrossel>
       </Section>
       <Footer />
     </Container>
