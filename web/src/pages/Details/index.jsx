@@ -6,7 +6,7 @@ export function Details() {
   return (
     <Container>
       <Navbar />
-      <Section className="details">
+      <Section>
         <a href="/" className="back">
           <PiCaretLeftBold size={24} />
           <p>Voltar</p>

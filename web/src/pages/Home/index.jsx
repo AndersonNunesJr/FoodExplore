@@ -1,4 +1,4 @@
-import { Navbar, Footer, Section, Header, Carrossel } from "../../components";
+import { Navbar, Footer, Header, Carrossel } from "../../components";
 import { Card } from "../../components/Card";
 import img from "../../assets/image3.png";
 import { Container } from "./styles";
@@ -6,7 +6,7 @@ export function Home() {
   return (
     <Container>
       <Navbar />
-      <Section>
+      <div className="content">
         <Header />
         <Carrossel title={"Refeição"}>
           <Card
@@ -93,7 +93,7 @@ export function Home() {
         <Carrossel title={"Bebidas"}></Carrossel>
         <Carrossel title={"Bebidas"}></Carrossel>
         <Carrossel title={"Bebidas"}></Carrossel>
-      </Section>
+      </div>
       <Footer />
     </Container>
   );

@@ -17,6 +17,16 @@ export const Container = styled.button`
   background-color: ${theme.getColorStyle("TOMATO_100")};
   border-radius: 5px;
 
+  &.TOMATO_200 {
+    background-color: ${theme.getColorStyle("TOMATO_200")};
+  }
+  &.TOMATO_300 {
+    background-color: ${theme.getColorStyle("TOMATO_300")};
+  }
+  &.TOMATO_400 {
+    background-color: ${theme.getColorStyle("TOMATO_400")};
+  }
+
   color: ${theme.getColorStyle("LIGHT_100")};
   ${theme.getFontStyle("Poppins_100_medium")}
 `;

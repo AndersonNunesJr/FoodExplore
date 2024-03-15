@@ -11,22 +11,26 @@ export const Container = styled.div`
   padding: 0 14px;
   border-radius: 8px;
 
-  cursor: pointer;
+  cursor: text;
 
   background: ${theme.getColorStyle("DARK_900")};
   color: ${theme.getColorStyle("LIGHT_400")};
 
-  > input {
+  &.width_100 {
     width: 100%;
-    height: 36px;
-
-    background: transparent;
-    color: ${theme.getColorStyle("LIGHT_400")};
-
-    border: none;
-    outline: none;
   }
   > svg {
     background: transparent;
   }
+`;
+
+export const StyledInput = styled.input`
+  width: 100%;
+  height: 36px;
+
+  background: transparent;
+  color: ${theme.getColorStyle("LIGHT_400")};
+
+  border: none;
+  outline: none;
 `;
