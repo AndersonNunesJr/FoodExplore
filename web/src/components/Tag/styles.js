@@ -7,4 +7,8 @@ export const Container = styled.div`
   border-radius: 5px;
   padding: 5px 14px;
   color: ${theme.getColorStyle("LIGHT_100")};
+
+  &.LIGHT_600 {
+    background-color: ${theme.getColorStyle("LIGHT_600")};
+  }
 `;

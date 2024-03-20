@@ -6,6 +6,7 @@ export * from "./Header";
 export * from "./Input";
 export * from "./Iten";
 export * from "./Navbar";
+export * from "./NewTag";
 export * from "./Section";
 export * from "./Tag";
 export * from "./TextArea";

@@ -4,7 +4,7 @@ import theme from "../../styles/theme";
 export const Container = styled.button`
   display: flex;
 
-  padding: 6px 32px;
+  padding: 5px 20px;
   align-items: center;
   justify-content: center;
   border: none;
