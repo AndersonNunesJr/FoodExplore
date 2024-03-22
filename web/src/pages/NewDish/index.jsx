@@ -56,7 +56,7 @@ export function New() {
                   onClick={handleAddTag}
                 />
                 <NewTag
-                  isNew
+                  // isNew
                   placeholder="Adicionar"
                   onChange={(e) => setNewTag(e.target.value)}
                   value={newTag}
