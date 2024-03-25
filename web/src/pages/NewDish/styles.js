@@ -40,50 +40,87 @@ export const Form = styled.form`
       flex-direction: column;
       gap: 10px;
       justify-content: space-between;
+
       > :nth-child(2) {
         height: 40px;
       }
+    }
 
+    .add_img {
       > button {
         background: ${theme.getColorStyle("DARK_800")};
       }
     }
+
+    .name {
+      grid-column: 2 / span 2;
+
+      div {
+        background-color: ${theme.getColorStyle("DARK_800")};
+      }
+    }
+
+    .category {
+      grid-column: 4 / span 2;
+
+      div {
+        background-color: ${theme.getColorStyle("DARK_800")};
+        border-radius: 8px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        /* padding-right: 25px; */
+
+        > select {
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          background: none;
+          color: ${theme.getColorStyle("LIGHT_500")};
+          outline: none;
+          border: none;
+          padding: 0 0 0 15px;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          > svg {
+            background: none;
+            position: relative;
+            z-index: 5;
+          }
+        }
+      }
+    }
+
+    .tags {
+      grid-column: 1 / span 4;
+
+      .section_tag {
+        display: flex;
+        flex-wrap: wrap;
+        background: ${theme.getColorStyle("DARK_800")};
+        gap: 5px;
+        padding: 8px;
+        border-radius: 5px;
+      }
+    }
+
+    .price {
+      div {
+        background-color: ${theme.getColorStyle("DARK_800")};
+      }
+    }
+
     .description {
       grid-column: 1 / span 5;
       > textarea {
         height: 150px;
       }
     }
-    .name {
-      grid-column: 2 / span 2;
-    }
-    .category {
-      grid-column: 4 / span 2;
-    }
   }
 
-  .black {
-    background: ${theme.getColorStyle("DARK_800")};
-    width: fit-content;
-  }
-
-  .tags {
-    grid-column: 1 / span 4;
-
-    .section_tag {
-      display: flex;
-      flex-wrap: wrap;
-      background: ${theme.getColorStyle("DARK_800")};
-      gap: 5px;
-      padding: 8px;
-      border-radius: 5px;
-
-      > div {
-        /* width: fit-content; */
-      }
-    }
-  }
-  > Button {
-    width: fit-content;
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
   }
 `;

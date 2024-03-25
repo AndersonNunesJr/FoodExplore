@@ -36,7 +36,7 @@ export function Edit() {
         <Form>
           <h1>Adcionar prato</h1>
           <div className="details">
-            <div>
+            <div className="add_img">
               <p>Imagem do prato</p>
               <Button icon={PiUploadSimpleBold} title={"Selecione imagem"} />
             </div>
@@ -65,7 +65,7 @@ export function Edit() {
                 />
               </div>
             </div>
-            <div>
+            <div className="price">
               <p>Preço</p>
               <Input
                 className="width_100"
@@ -81,7 +81,10 @@ export function Edit() {
               />
             </div>
           </div>
-          <Button title="Salvar alterações" className="TOMATO_400" />
+          <div className="btn-group">
+            <Button title="Excluir prato" className="excluir" />
+            <Button title="Salvar alterações" className="TOMATO_400" />
+          </div>
         </Form>
       </Section>
       <Footer />

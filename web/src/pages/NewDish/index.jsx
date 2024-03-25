@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Footer,
   Navbar,
@@ -6,7 +6,6 @@ import {
   Input,
   TextArea,
   Button,
-  Tag,
   NewTag
 } from "../../components";
 import { Container, Form } from "./styles";
@@ -24,6 +23,12 @@ export function New() {
     setTags((prevState) => [...prevState, newTag]);
     setNewTag("");
   }
+  const selectRef = useRef(null);
+
+  const handleContainerClick = () => {
+    selectRef.current.focus();
+  };
+
   return (
     <Container>
       <Navbar />
@@ -35,7 +40,7 @@ export function New() {
         <Form>
           <h1>Adcionar prato</h1>
           <div className="details">
-            <div>
+            <div className="add_img">
               <p>Imagem do prato</p>
               <Button icon={PiUploadSimpleBold} title={"Selecione imagem"} />
             </div>
@@ -45,7 +50,14 @@ export function New() {
             </div>
             <div className="category">
               <p>Categoria</p>
-              <Input className="width_100" icon={PiCaretDownBold} />
+              <div onClick={handleContainerClick}>
+                <select name="seuSelect" id="seuSelect" ref={selectRef}>
+                  <option value="opcao1">Opção 1</option>
+                  <option value="opcao2">Opção 2</option>
+                  <option value="opcao3">Opção 3</option>
+                  <PiCaretDownBold size={20} />
+                </select>
+              </div>
             </div>
             <div className="tags">
               <p>Ingredientes</p>
@@ -56,7 +68,7 @@ export function New() {
                   onClick={handleAddTag}
                 />
                 <NewTag
-                  // isNew
+                  isNew
                   placeholder="Adicionar"
                   onChange={(e) => setNewTag(e.target.value)}
                   value={newTag}
@@ -64,7 +76,7 @@ export function New() {
                 />
               </div>
             </div>
-            <div>
+            <div className="price">
               <p>Preço</p>
               <Input
                 className="width_100"
@@ -80,7 +92,9 @@ export function New() {
               />
             </div>
           </div>
-          <Button title="Salvar alterações" className="TOMATO_400" />
+          <div className="btn-group">
+            <Button title="Salvar alterações" className="TOMATO_400" />
+          </div>
         </Form>
       </Section>
       <Footer />

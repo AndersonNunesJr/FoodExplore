@@ -7,11 +7,11 @@ export const Container = styled.div`
 
   width: 120px;
 
-  background-color: ${({ isnew }) =>
-    isnew ? "transparent" : theme.getColorStyle("LIGHT_600")};
+  background-color: ${({ $isnew }) =>
+    $isnew ? "transparent" : theme.getColorStyle("LIGHT_600")};
 
-  border: ${({ isnew }) =>
-    isnew ? `1px dashed ${theme.getColorStyle("LIGHT_500")};;` : "none"};
+  border: ${({ $isnew }) =>
+    $isnew ? `1px dashed ${theme.getColorStyle("LIGHT_500")};;` : "none"};
 
   border-radius: 8px;
   padding-right: 10px;

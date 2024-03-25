@@ -40,50 +40,68 @@ export const Form = styled.form`
       flex-direction: column;
       gap: 10px;
       justify-content: space-between;
+
       > :nth-child(2) {
         height: 40px;
       }
+    }
 
+    .add_img {
       > button {
         background: ${theme.getColorStyle("DARK_800")};
       }
     }
+
+    .name {
+      grid-column: 2 / span 2;
+
+      div {
+        background-color: ${theme.getColorStyle("DARK_800")};
+      }
+    }
+
+    .category {
+      grid-column: 4 / span 2;
+
+      div {
+        background-color: ${theme.getColorStyle("DARK_800")};
+      }
+    }
+
+    .tags {
+      grid-column: 1 / span 4;
+
+      .section_tag {
+        display: flex;
+        flex-wrap: wrap;
+        background: ${theme.getColorStyle("DARK_800")};
+        gap: 5px;
+        padding: 8px;
+        border-radius: 5px;
+      }
+    }
+
+    .price {
+      div {
+        background-color: ${theme.getColorStyle("DARK_800")};
+      }
+    }
+
     .description {
       grid-column: 1 / span 5;
       > textarea {
         height: 150px;
       }
     }
-    .name {
-      grid-column: 2 / span 2;
-    }
-    .category {
-      grid-column: 4 / span 2;
-    }
   }
 
-  .black {
-    background: ${theme.getColorStyle("DARK_800")};
-    width: fit-content;
-  }
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 
-  .tags {
-    grid-column: 1 / span 4;
-
-    .section_tag {
-      display: flex;
-      flex-wrap: wrap;
-      background: ${theme.getColorStyle("DARK_800")};
-      gap: 5px;
-      padding: 8px;
-      border-radius: 5px;
-
-      > div {
-        /* width: fit-content; */
-      }
+    .excluir {
+      background-color: ${theme.getColorStyle("DARK_900")};
     }
-  }
-  > Button {
-    width: fit-content;
   }
 `;

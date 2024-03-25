@@ -9,6 +9,11 @@ export const Container = styled.div`
   gap: 25px;
   margin: 50px;
 
+  .title-container {
+    ${theme.getFontStyle("Poppins_400_medium")}
+    z-index: 3;
+  }
+
   > div {
     display: flex;
     gap: 15px;
@@ -17,7 +22,7 @@ export const Container = styled.div`
   .btn {
     background: none;
     border: none;
-    color: aliceblue;
+    color: ${theme.getColorStyle("LIGHT_100")};
   }
 
   .btn svg {
@@ -27,10 +32,10 @@ export const Container = styled.div`
   .carrossel {
     display: flex;
     overflow-x: hidden;
-    scroll-behavior: smooth;
     gap: 25px;
   }
-  .title {
-    ${theme.getFontStyle("Poppins_400_medium")}
+  .btn-direction {
+    display: flex;
+    align-items: center;
   }
 `;
