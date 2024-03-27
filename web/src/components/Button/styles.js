@@ -9,6 +9,7 @@ export const Container = styled.button`
   justify-content: center;
   border: none;
   gap: 10px;
+  text-wrap: nowrap;
 
   > svg {
     background: transparent;

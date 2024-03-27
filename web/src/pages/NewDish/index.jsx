@@ -19,15 +19,11 @@ export function New() {
   const [description, setDescription] = useState("");
   const [newTag, setNewTag] = useState("");
   const [tags, setTags] = useState([]);
+
   function handleAddTag() {
     setTags((prevState) => [...prevState, newTag]);
     setNewTag("");
   }
-  const selectRef = useRef(null);
-
-  const handleContainerClick = () => {
-    selectRef.current.focus();
-  };
 
   return (
     <Container>
@@ -50,12 +46,11 @@ export function New() {
             </div>
             <div className="category">
               <p>Categoria</p>
-              <div onClick={handleContainerClick}>
-                <select name="seuSelect" id="seuSelect" ref={selectRef}>
+              <div>
+                <select name="seuSelect" id="seuSelect">
                   <option value="opcao1">Opção 1</option>
                   <option value="opcao2">Opção 2</option>
                   <option value="opcao3">Opção 3</option>
-                  <PiCaretDownBold size={20} />
                 </select>
               </div>
             </div>

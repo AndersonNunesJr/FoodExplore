@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from "../../styles/theme";
+import { PiCaretDownBold } from "react-icons/pi";
 
 export const Container = styled.div`
   display: flex;
@@ -64,30 +65,21 @@ export const Form = styled.form`
       grid-column: 4 / span 2;
 
       div {
-        background-color: ${theme.getColorStyle("DARK_800")};
-        border-radius: 8px;
         position: relative;
         display: flex;
         align-items: center;
-        /* padding-right: 25px; */
 
         > select {
-          z-index: 1;
           width: 100%;
           height: 100%;
-          background: none;
+          padding: 0 0 0 15px;
+          border-radius: 8px;
+
+          background-color: ${theme.getColorStyle("DARK_800")};
+
           color: ${theme.getColorStyle("LIGHT_500")};
           outline: none;
           border: none;
-          padding: 0 0 0 15px;
-          appearance: none;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          > svg {
-            background: none;
-            position: relative;
-            z-index: 5;
-          }
         }
       }
     }

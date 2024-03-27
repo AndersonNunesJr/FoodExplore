@@ -64,7 +64,22 @@ export const Form = styled.form`
       grid-column: 4 / span 2;
 
       div {
-        background-color: ${theme.getColorStyle("DARK_800")};
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        > select {
+          width: 100%;
+          height: 100%;
+          padding: 0 0 0 15px;
+          border-radius: 8px;
+
+          background-color: ${theme.getColorStyle("DARK_800")};
+
+          color: ${theme.getColorStyle("LIGHT_500")};
+          outline: none;
+          border: none;
+        }
       }
     }
 

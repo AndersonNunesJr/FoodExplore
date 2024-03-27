@@ -6,15 +6,11 @@ import {
   Input,
   TextArea,
   Button,
-  Tag,
   NewTag
 } from "../../components";
 import { Container, Form } from "./styles";
-import {
-  PiCaretLeftBold,
-  PiUploadSimpleBold,
-  PiCaretDownBold
-} from "react-icons/pi";
+import { PiCaretLeftBold, PiUploadSimpleBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 export function Edit() {
   const [description, setDescription] = useState("");
@@ -29,10 +25,10 @@ export function Edit() {
     <Container>
       <Navbar />
       <Section>
-        <a href="/" className="back">
+        <Link href="/" className="back">
           <PiCaretLeftBold size={24} />
           <p>Voltar</p>
-        </a>
+        </Link>
         <Form>
           <h1>Adcionar prato</h1>
           <div className="details">
@@ -46,7 +42,13 @@ export function Edit() {
             </div>
             <div className="category">
               <p>Categoria</p>
-              <Input className="width_100" icon={PiCaretDownBold} />
+              <div>
+                <select name="seuSelect" id="seuSelect">
+                  <option value="opcao1">Opção 1</option>
+                  <option value="opcao2">Opção 2</option>
+                  <option value="opcao3">Opção 3</option>
+                </select>
+              </div>
             </div>
             <div className="tags">
               <p>Ingredientes</p>
