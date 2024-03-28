@@ -3,6 +3,7 @@ export * from "./Card";
 export * from "./Carrossel";
 export * from "./Footer";
 export * from "./Header";
+export * from "./Highlight";
 export * from "./Input";
 export * from "./Iten";
 export * from "./Navbar";
