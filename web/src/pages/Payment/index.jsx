@@ -1,6 +1,9 @@
 import { Footer, Highlight, Navbar } from "../../components";
 import { Container, Checkout, Form } from "./styles";
 import img from "../../assets/image3.png";
+import Pix from "../../assets/Pix.png";
+import Credit from "../../assets/Credit.png";
+import Qrcode from "../../assets/Qrcode.svg";
 
 export function Payment() {
   const amount = 1;
@@ -55,10 +58,18 @@ export function Payment() {
         <Form>
           <h2>Pagamento</h2>
           <div className="btn-pay">
-            <button>Pix</button>
-            <button>Crédito</button>
+            <button className="pix">
+              <img src={Pix} alt="" />
+              Pix
+            </button>
+            <button className="credit">
+              <img src={Credit} alt="" />
+              Crédito
+            </button>
           </div>
-          <div className="method"></div>
+          <div className="method">
+            <img src={Qrcode} alt="" />
+          </div>
         </Form>
       </div>
       <Footer />

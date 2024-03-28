@@ -37,22 +37,55 @@ export const Form = styled.form`
   flex-direction: column;
 
   .btn-pay {
+    margin-top: 20px;
+    display: flex;
+
     > button {
-      width: 300px;
+      width: 250px;
       height: 80px;
 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
       color: ${theme.getColorStyle("LIGHT_100")};
-      background-color: ${theme.getColorStyle("DARK_800")};
       border: none;
-      border-radius: 8px 8px 0 0;
-      /* border: 1px solid ${theme.getColorStyle("LIGHT_600")}; */
+      > img {
+        background: none;
+      }
+    }
+
+    .pix {
+      background-color: ${theme.getColorStyle("DARK_800")};
+      border-radius: 8px 0 0 0;
+      border: 1px solid ${theme.getColorStyle("LIGHT_600")};
+    }
+
+    .credit {
+      background-color: ${theme.getColorStyle("DARK_800")};
+      border-radius: 0 8px 0 0;
+      border: 1px solid ${theme.getColorStyle("LIGHT_600")};
     }
   }
   .method {
     width: 100%;
     height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     padding: 1px;
+
     border: 1px solid ${theme.getColorStyle("LIGHT_600")};
-    border-radius: 8px;
+    border-top-style: none;
+    border-radius: 0 0 8px 8px;
+
+    > img {
+      max-width: 300px;
+      height: 300px;
+    }
   }
 `;
