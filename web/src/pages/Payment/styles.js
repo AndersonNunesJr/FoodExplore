@@ -58,15 +58,20 @@ export const Form = styled.form`
     }
 
     .pix {
-      background-color: ${theme.getColorStyle("DARK_800")};
+      background-color: ${theme.getColorStyle("DARK_400")};
       border-radius: 8px 0 0 0;
       border: 1px solid ${theme.getColorStyle("LIGHT_600")};
     }
-
-    .credit {
+    .pix.active {
       background-color: ${theme.getColorStyle("DARK_800")};
+    }
+    .credit {
+      background-color: ${theme.getColorStyle("DARK_400")};
       border-radius: 0 8px 0 0;
       border: 1px solid ${theme.getColorStyle("LIGHT_600")};
+    }
+    .credit.active {
+      background-color: ${theme.getColorStyle("DARK_800")};
     }
   }
   .method {
