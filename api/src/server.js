@@ -1,10 +1,11 @@
 require("express-async-errors");
+require("dotenv/config");
 
 const cors = require("cors");
 const express = require("express");
 const routes = require("./routes");
 const cookieParser = require("cookie-parser");
-const AppError = require("./utils/appError");
+const AppError = require("./utils/AppError");
 
 const app = express();
 app.use(express.json());
@@ -17,7 +18,6 @@ app.use(
 );
 
 app.use(routes);
-
 app.use((err, request, response, next) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
