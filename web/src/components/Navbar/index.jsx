@@ -18,8 +18,8 @@ export function Navbar() {
         placeholder="Busque por pratos ou ingredientes"
         icon={CiSearch}
       />
-      <Link href="">Meus favoritos</Link>
-      <Link href="">Pedidos</Link>
+      <Link to="/favorites">Meus favoritos</Link>
+      <Link to="/historic">Histórico de pedidos</Link>
       <Link to="/pay">
         <Button title={`Pedidos (${numeroDePedidos})`} icon={PiReceiptLight} />
       </Link>

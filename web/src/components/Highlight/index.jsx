@@ -6,13 +6,19 @@ export function Highlight({ img, amount, value, title }) {
       <img src={img} alt="" />
       <div className="head">
         <div className="heading">
-          <p>
-            {amount}X {title}
-          </p>
-          <span>R${value}</span>
+          {amount === undefined || amount === "" ? (
+            <p>{title}</p>
+          ) : (
+            <>
+              <p>
+                {amount}X {title}
+              </p>
+              <span>R${value}</span>
+            </>
+          )}
         </div>
         <button type="button" className="excluir">
-          Excluir
+          Excluir iten
         </button>
       </div>
     </Container>

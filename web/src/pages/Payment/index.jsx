@@ -1,10 +1,12 @@
-import { Footer, Highlight, Navbar } from "../../components";
+import { Button, Footer, Highlight, Navbar } from "../../components";
 import { Container, Checkout, Form } from "./styles";
 import img from "../../assets/image3.png";
 import Pix from "../../assets/Pix.png";
 import Credit from "../../assets/Credit.png";
 import Qrcode from "../../assets/Qrcode.svg";
 import { useState } from "react";
+
+import { PiReceiptLight } from "react-icons/pi";
 
 export function Payment() {
   const [methodPayment, setMethodPayment] = useState("pix");
@@ -13,9 +15,11 @@ export function Payment() {
   const value = "25,00";
   const total = "25,00";
 
-  const handlePayment = (buttonTitle) => {
+  const handleMethodPayment = (buttonTitle) => {
     setMethodPayment(buttonTitle);
   };
+
+  const handlePayment = () => {};
 
   return (
     <Container>
@@ -24,36 +28,6 @@ export function Payment() {
         <Checkout>
           <h2>Meu pedido</h2>
           <div className="list">
-            <Highlight
-              img={img}
-              title="Salada Radish"
-              value={value}
-              amount={amount}
-            />
-            <Highlight
-              img={img}
-              title="Salada Radish"
-              value={value}
-              amount={amount}
-            />
-            <Highlight
-              img={img}
-              title="Salada Radish"
-              value={value}
-              amount={amount}
-            />
-            <Highlight
-              img={img}
-              title="Salada Radish"
-              value={value}
-              amount={amount}
-            />
-            <Highlight
-              img={img}
-              title="Salada Radish"
-              value={value}
-              amount={amount}
-            />
             <Highlight
               img={img}
               title="Salada Radish"
@@ -69,7 +43,7 @@ export function Payment() {
             <button
               type="button"
               className={`pix ${methodPayment === "pix" ? "active" : ""}`}
-              onClick={() => handlePayment("pix")}
+              onClick={() => handleMethodPayment("pix")}
             >
               <img src={Pix} alt="" />
               Pix
@@ -77,7 +51,7 @@ export function Payment() {
             <button
               type="button"
               className={`credit ${methodPayment === "credit" ? "active" : ""}`}
-              onClick={() => handlePayment("credit")}
+              onClick={() => handleMethodPayment("credit")}
             >
               <img src={Credit} alt="" />
               Crédito
@@ -88,7 +62,15 @@ export function Payment() {
               <img src={Qrcode} alt="" />
             ) : (
               <form>
-                <label htmlFor=""></label>
+                <label htmlFor="Número do cartão">Número do cartão</label>
+                <input type="text" placeholder="0000 0000 0000 0000" />
+                <div>
+                  <label htmlFor="Validade">Validade</label>
+                  <input type="text" placeholder="04/25" />
+                  <label htmlFor="CVC">CVC</label>
+                  <input type="text" placeholder="000" />
+                </div>
+                <Button title={"Finalizar pagamento"} icon={PiReceiptLight} />
               </form>
             )}
           </div>

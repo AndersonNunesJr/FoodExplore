@@ -89,8 +89,58 @@ export const Form = styled.form`
     border-radius: 0 0 8px 8px;
 
     > img {
-      max-width: 300px;
-      height: 300px;
+      margin: 25px 0;
+      max-width: 270px;
+      height: 270px;
+    }
+    > form {
+      margin: 50px 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      padding: 0 40px;
+
+      color: ${theme.getColorStyle("LIGHT_400")};
+
+      ${theme.getFontStyle("Roboto_Small_normal")}
+
+      > input {
+        height: 40px;
+        margin-bottom: 20px;
+        margin-top: 5px;
+
+        padding: 15px;
+
+        border-radius: 5px;
+        border: 1px solid ${theme.getColorStyle("LIGHT_600")};
+        color: ${theme.getColorStyle("LIGHT_400")};
+      }
+      > div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        gap: 0 15px;
+
+        > input {
+          height: 40px;
+          margin-bottom: 20px;
+          margin-top: 5px;
+
+          padding: 15px;
+
+          border-radius: 5px;
+          border: 1px solid ${theme.getColorStyle("LIGHT_600")};
+          color: ${theme.getColorStyle("LIGHT_400")};
+        }
+        :nth-child(3) {
+          grid-row: 1;
+          grid-column: 2;
+        }
+      }
+      > button {
+        height: 50px;
+      }
     }
   }
 `;

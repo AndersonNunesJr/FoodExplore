@@ -20,7 +20,9 @@ export const Container = styled.div`
       display: flex;
       gap: 5px;
       ${theme.getFontStyle("Poppins_200_medium")}
-
+      >p {
+        color: ${theme.getColorStyle("LIGHT_400")};
+      }
       > span {
         ${theme.getFontStyle("Roboto_Smallest_normal")}
         color: ${theme.getColorStyle("LIGHT_400")};
