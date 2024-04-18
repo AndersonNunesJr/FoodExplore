@@ -76,11 +76,14 @@ export const Form = styled.form`
   }
   .method {
     width: 100%;
-    height: 100%;
+    height: 320px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+
+    color: ${theme.getColorStyle("LIGHT_400")};
 
     padding: 1px;
 
@@ -93,6 +96,14 @@ export const Form = styled.form`
       max-width: 270px;
       height: 270px;
     }
+    .status {
+      height: 100px;
+    }
+
+    .status-container . {
+      
+    }
+
     > form {
       margin: 50px 0;
       width: 100%;
@@ -101,16 +112,14 @@ export const Form = styled.form`
 
       padding: 0 40px;
 
-      color: ${theme.getColorStyle("LIGHT_400")};
-
       ${theme.getFontStyle("Roboto_Small_normal")}
 
       > input {
         height: 40px;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
         margin-top: 5px;
 
-        padding: 15px;
+        padding: 0 0 0 15px;
 
         border-radius: 5px;
         border: 1px solid ${theme.getColorStyle("LIGHT_600")};
@@ -124,10 +133,10 @@ export const Form = styled.form`
 
         > input {
           height: 40px;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
           margin-top: 5px;
 
-          padding: 15px;
+          padding: 0 0 0 15px;
 
           border-radius: 5px;
           border: 1px solid ${theme.getColorStyle("LIGHT_600")};

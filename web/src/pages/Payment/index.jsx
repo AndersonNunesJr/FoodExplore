@@ -1,15 +1,36 @@
 import { Button, Footer, Highlight, Navbar } from "../../components";
 import { Container, Checkout, Form } from "./styles";
-import img from "../../assets/image3.png";
-import Pix from "../../assets/Pix.png";
-import Credit from "../../assets/Credit.png";
-import Qrcode from "../../assets/Qrcode.svg";
-import { useState } from "react";
+import {
+  image3,
+  pix,
+  credit,
+  delivered,
+  qrcode,
+  analyzing,
+  requestIsComing,
+  checked
+} from "../../assets/_index";
+
+import { useRef, useState } from "react";
 
 import { PiReceiptLight } from "react-icons/pi";
 
 export function Payment() {
   const [methodPayment, setMethodPayment] = useState("pix");
+  const [cardNumber, setCardNumber] = useState("");
+  const refTimer = useRef(null);
+  const [analyzingPayment, setAnalyzingPayment] = useState(false);
+  const [checkedAnalysis, setCheckedAnalysis] = useState(false);
+  const [coming, setComing] = useState(false);
+  const [orderDelivered, setOrderDelivered] = useState(false);
+
+  const img = image3;
+
+  const nameLoja = null;
+
+  const Qrcode = qrcode;
+  // ? `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${nameLoja}`
+  // : qrcode;
 
   const amount = 1;
   const value = "25,00";
@@ -19,7 +40,24 @@ export function Payment() {
     setMethodPayment(buttonTitle);
   };
 
-  const handlePayment = () => {};
+  const handlePayment = () => {
+    setAnalyzingPayment(true);
+    if (refTimer.current) {
+      clearTimeout(refTimer.current);
+    }
+    refTimer.current = setTimeout(() => {
+      setAnalyzingPayment(false);
+      setCheckedAnalysis(true);
+    }, 3000);
+    refTimer.current = setTimeout(() => {
+      setCheckedAnalysis(false);
+      setComing(true);
+    }, 4000);
+    refTimer.current = setTimeout(() => {
+      setComing(false);
+      // setOrderDelivered(true);
+    }, 10000);
+  };
 
   return (
     <Container>
@@ -45,7 +83,7 @@ export function Payment() {
               className={`pix ${methodPayment === "pix" ? "active" : ""}`}
               onClick={() => handleMethodPayment("pix")}
             >
-              <img src={Pix} alt="" />
+              <img src={pix} alt="" />
               Pix
             </button>
             <button
@@ -53,24 +91,53 @@ export function Payment() {
               className={`credit ${methodPayment === "credit" ? "active" : ""}`}
               onClick={() => handleMethodPayment("credit")}
             >
-              <img src={Credit} alt="" />
+              <img src={credit} alt="" />
               Crédito
             </button>
           </div>
           <div className="method">
-            {methodPayment === "pix" ? (
+            {analyzingPayment === true ? (
+              <>
+                <img src={analyzing} alt="" className="status" />
+                <p>Aguardando pagamento no caixa!</p>
+              </>
+            ) : checkedAnalysis === true ? (
+              <>
+                <img src={checked} alt="" className="status" />
+                <p>Pagamento aprovado!</p>
+              </>
+            ) : coming === true ? (
+              <>
+                <img src={requestIsComing} alt="" className="status" />
+                <p>Pedido a caminho!</p>
+              </>
+            ) : orderDelivered === true ? (
+              <>
+                <img src={delivered} alt="" className="status" />
+                <p>Pedido entregue!</p>
+              </>
+            ) : methodPayment === "pix" ? (
               <img src={Qrcode} alt="" />
             ) : (
               <form>
                 <label htmlFor="Número do cartão">Número do cartão</label>
-                <input type="text" placeholder="0000 0000 0000 0000" />
+                <input
+                  type="text"
+                  placeholder="0000 0000 0000 0000"
+                  maxLength={19}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                />
                 <div>
                   <label htmlFor="Validade">Validade</label>
                   <input type="text" placeholder="04/25" />
                   <label htmlFor="CVC">CVC</label>
                   <input type="text" placeholder="000" />
                 </div>
-                <Button title={"Finalizar pagamento"} icon={PiReceiptLight} />
+                <Button
+                  title={"Finalizar pagamento"}
+                  icon={PiReceiptLight}
+                  onClick={handlePayment}
+                />
               </form>
             )}
           </div>
