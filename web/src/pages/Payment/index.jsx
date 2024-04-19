@@ -55,7 +55,7 @@ export function Payment() {
     }, 4000);
     refTimer.current = setTimeout(() => {
       setComing(false);
-      // setOrderDelivered(true);
+      setOrderDelivered(true);
     }, 10000);
   };
 
