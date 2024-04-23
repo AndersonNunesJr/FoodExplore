@@ -50,7 +50,7 @@ const theme = {
     },
     Poppins_300_bold: {
       fontFamily: "Poppins",
-      fontWeight: "Bold",
+      fontWeight: "bold",
       fontSize: "24px",
       lineHeight: "140%",
       letterSpacing: "0",
@@ -98,7 +98,7 @@ const theme = {
     },
     Roboto_Smaller_bold: {
       fontFamily: "Roboto",
-      fontWeight: "Bold",
+      fontWeight: "bold",
       fontSize: "14px",
       lineHeight: "160%",
       letterSpacing: "0",
@@ -122,7 +122,7 @@ const theme = {
     },
     Roboto_Big_bold: {
       fontFamily: "Roboto",
-      fontWeight: "Bold",
+      fontWeight: "bold",
       fontSize: "20px",
       lineHeight: "160%",
       letterSpacing: "0",
@@ -130,7 +130,7 @@ const theme = {
     },
     Roboto_Bigger_bold: {
       fontFamily: "Roboto",
-      fontWeight: "Bold",
+      fontWeight: "bold",
       fontSize: "24px",
       lineHeight: "Auto",
       letterSpacing: "0",
@@ -146,7 +146,7 @@ const theme = {
     },
     Roboto_Giant_bold: {
       fontFamily: "Roboto",
-      fontWeight: "Bold",
+      fontWeight: "bold",
       fontSize: "42px",
       lineHeight: "Auto",
       letterSpacing: "0",

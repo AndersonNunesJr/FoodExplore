@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../styles/theme";
 
 export const Container = styled.div`
   height: 100vh;
@@ -6,62 +7,99 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  color: aliceblue;
+  .content {
+    height: 100%;
+    padding: 32px 75px 50px;
 
-  > h1 {
-    margin-top: 32px;
-    margin-bottom: 32px;
-    padding-left: 75px;
+    > h1 {
+      margin-bottom: 32px;
+      ${theme.getFontStyle("Poppins_400_medium")}
+      color: ${theme.getColorStyle("LIGHT_300")};
+    }
   }
 `;
 
 export const Board = styled.div`
-  height: 100%;
-
-  margin: 0 75px 75px;
-
   display: grid;
-  grid-area: "name" "status" "code" "details" "data";
-  grid-template-columns: 1fr 1fr 5fr 1fr;
-  grid-template-rows: 50px auto;
+  grid-template-columns: 1.2fr 1fr 4fr 1fr;
+  grid-template-rows: 60px auto;
 
   p {
-    border-bottom: solid 1px red;
-    padding: 5px 10px;
+    border-bottom: solid 2px ${theme.getColorStyle("DARK_1000")};
+    padding: 20px 0 20px 10px;
   }
 
   .name {
     display: flex;
     align-items: center;
-    border: solid 1px red;
+    border: solid 2px ${theme.getColorStyle("DARK_1000")};
 
     padding: 5px 10px;
+
+    ${theme.getFontStyle("Roboto_Smaller_bold")}
+    color: ${theme.getColorStyle("LIGHT_300")};
   }
-  .left {
+
+  .name:nth-of-type(1) {
     border-radius: 8px 0 0 0;
   }
-  .right {
+  .name:nth-of-type(2) {
+    border-left: 0;
+    border-right: 0;
+  }
+  .name:nth-of-type(4) {
     border-radius: 0 8px 0 0;
+    border-left: 0;
   }
+
   .status {
-    border-right: solid 1px red;
-    border-left: solid 1px red;
-    border-bottom: solid 1px red;
-    padding: 5px 0 10px 0;
+    border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
+    border-left: solid 2px ${theme.getColorStyle("DARK_1000")};
+
+    ${theme.getFontStyle("Roboto_Smaller_normal")}
+    color: ${theme.getColorStyle("LIGHT_400")};
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      padding: 10px 15px;
+
+      border-bottom: solid 2px ${theme.getColorStyle("DARK_1000")};
+
+      > select {
+        width: 100%;
+        /* height: 100%; */
+
+        background-color: ${theme.getColorStyle("DARK_800")};
+
+        color: ${theme.getColorStyle("LIGHT_400")};
+        outline: none;
+        border: none;
+        > option {
+          padding: 10px 0 10px 10px;
+        }
+      }
+    }
   }
+
   .code {
-    border-bottom: solid 1px red;
-    padding: 5px 0 10px 0;
+    ${theme.getFontStyle("Roboto_Smaller_normal")}
+    color: ${theme.getColorStyle("LIGHT_400")};
   }
   .details {
-    border-bottom: solid 1px red;
-    border-right: solid 1px red;
-    border-left: solid 1px red;
-    padding: 5px 0 10px 0;
+    border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
+    border-left: solid 2px ${theme.getColorStyle("DARK_1000")};
+
+    ${theme.getFontStyle("Roboto_Smaller_normal")}
+    color: ${theme.getColorStyle("LIGHT_400")};
   }
   .data {
-    border-right: solid 1px red;
-    border-bottom: solid 1px red;
-    padding: 5px 0 10px 0;
+    border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
+
+    ${theme.getFontStyle("Roboto_Smaller_normal")}
+    color: ${theme.getColorStyle("LIGHT_400")};
   }
 `;
