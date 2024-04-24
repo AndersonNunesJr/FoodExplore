@@ -72,26 +72,8 @@ export function Home() {
             img={img}
             imgText={""}
           />
-          {/* <Card
-            title={"Torradas de Parma"}
-            description={"Massa fresca com camarões e pesto. "}
-            value={"79,97"}
-            img={img}
-            imgText={""}
-          />
-          <Card
-            title={"Torradas de Parma"}
-            description={"Massa fresca com camarões e pesto. "}
-            value={"79,97"}
-            img={img}
-            imgText={""}
-          /> */}
         </Carrossel>
         <Carrossel title={"Sobremesas"}></Carrossel>
-        <Carrossel title={"Bebidas"}></Carrossel>
-        <Carrossel title={"Bebidas"}></Carrossel>
-        <Carrossel title={"Bebidas"}></Carrossel>
-        <Carrossel title={"Bebidas"}></Carrossel>
         <Carrossel title={"Bebidas"}></Carrossel>
       </div>
       <Footer />

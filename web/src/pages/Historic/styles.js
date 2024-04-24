@@ -59,28 +59,39 @@ export const Board = styled.div`
     ${theme.getFontStyle("Roboto_Smaller_normal")}
     color: ${theme.getColorStyle("LIGHT_400")};
 
-    > div {
+    .heading {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
-
-      padding: 10px 15px;
 
       border-bottom: solid 2px ${theme.getColorStyle("DARK_1000")};
+      padding: 10px 0;
+    }
+
+    .orderStatus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      padding: 12px 16px;
+      background-color: ${theme.getColorStyle("DARK_900")};
+      border-bottom: solid 2px transparent;
+
+      > svg {
+        background: none;
+      }
 
       > select {
         width: 100%;
-        /* height: 100%; */
 
-        background-color: ${theme.getColorStyle("DARK_800")};
+        background: none;
 
         color: ${theme.getColorStyle("LIGHT_400")};
+
         outline: none;
         border: none;
-        > option {
-          padding: 10px 0 10px 10px;
-        }
       }
     }
   }
