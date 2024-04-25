@@ -1,6 +1,6 @@
 import { Container } from "./styles";
 
-export function Highlight({ img, amount, value, title }) {
+export function Highlight({ img, amount, value, title, buttonText }) {
   return (
     <Container>
       <img src={img} alt="" />
@@ -18,7 +18,7 @@ export function Highlight({ img, amount, value, title }) {
           )}
         </div>
         <button type="button" className="excluir">
-          Excluir iten
+          {!buttonText ? "Excluir" : buttonText}
         </button>
       </div>
     </Container>

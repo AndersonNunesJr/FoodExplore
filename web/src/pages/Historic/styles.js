@@ -8,8 +8,11 @@ export const Container = styled.div`
   justify-content: space-between;
 
   .content {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     padding: 32px 75px 50px;
+    overflow-y: hidden;
 
     > h1 {
       margin-bottom: 32px;
@@ -23,6 +26,24 @@ export const Board = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 1fr 4fr 1fr;
   grid-template-rows: 60px auto;
+  /* height: 100%; */
+  overflow-y: auto;
+  margin: 0 6px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${theme.getColorStyle("LIGHT_700")};
+    border-radius: 5px;
+  }
+
+  .table {
+    grid-column: 1 / span 4;
+    border: solid 2px ${theme.getColorStyle("DARK_1000")};
+    border-top: none;
+  }
 
   p {
     border-bottom: solid 2px ${theme.getColorStyle("DARK_1000")};
@@ -57,6 +78,7 @@ export const Board = styled.div`
     border-left: solid 2px ${theme.getColorStyle("DARK_1000")};
 
     ${theme.getFontStyle("Roboto_Smaller_normal")}
+    line-height: normal;
     color: ${theme.getColorStyle("LIGHT_400")};
 
     .heading {
@@ -72,17 +94,28 @@ export const Board = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: row-reverse;
 
       gap: 8px;
 
       padding: 12px 16px;
       background-color: ${theme.getColorStyle("DARK_900")};
-      border-bottom: solid 2px transparent;
 
       > svg {
         background: none;
+        border-top: solid 2px #0d1d25;
       }
+      > p {
+        width: 100%;
 
+        padding: 0;
+        background: none;
+
+        color: ${theme.getColorStyle("LIGHT_400")};
+
+        border-top: solid 2px #0d1d25;
+        border-bottom: none;
+      }
       > select {
         width: 100%;
 
@@ -91,7 +124,16 @@ export const Board = styled.div`
         color: ${theme.getColorStyle("LIGHT_400")};
 
         outline: none;
-        border: none;
+        border: solid 1px transparent;
+      }
+      .Pendente {
+        fill: ${theme.getColorStyle("TOMATO_300")};
+      }
+      .Entregue {
+        fill: ${theme.getColorStyle("MINT_100")};
+      }
+      .Preparando {
+        fill: ${theme.getColorStyle("CARROT_100")};
       }
     }
   }
