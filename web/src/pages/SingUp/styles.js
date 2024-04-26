@@ -24,7 +24,7 @@ export const Form = styled.form`
   background-color: ${theme.getColorStyle("DARK_700")};
 
   > button {
-    margin: 32px 0 0;
+    margin: 8px 0 0;
   }
   > h1 {
     text-align: center;
@@ -32,16 +32,26 @@ export const Form = styled.form`
     background: none;
     ${theme.getFontStyle("Poppins_400_medium")}
   }
-  > p {
+  label {
     color: ${theme.getColorStyle("LIGHT_400")};
     ${theme.getFontStyle("Roboto_Small_normal")};
-    margin: 24px 0 0;
+    margin: 12px 0 0;
     background: none;
   }
   > a {
     width: fit-content;
     margin: 24px auto 0;
     color: ${theme.getColorStyle("LIGHT_100")};
+    background: none;
+  }
+  > div {
+    width: 100%;
+  }
+  .userRole {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
     background: none;
   }
 `;

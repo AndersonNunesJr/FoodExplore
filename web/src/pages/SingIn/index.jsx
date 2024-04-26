@@ -8,9 +8,10 @@ export function SingIn() {
       <Background />
       <Form>
         <h1>Faça login</h1>
-        <p>Email</p>
+        <label htmlFor="Email">Email:</label>
         <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
-        <p>Senha</p>
+
+        <label htmlFor="Password">Senha:</label>
         <Input type="text" placeholder="No mínimo 6 caracteres " />
         <Button title="Entrar" />
         <Link to="/register">Criar uma conta</Link>
