@@ -4,32 +4,77 @@ import { Button, Input } from "../../components";
 import { useState } from "react";
 
 export function SingUp() {
-  const [userRole, setUserRole] = useState("customer");
+  const [selectedRole, setSelectedRole] = useState("customer");
 
-  function handleSelectRoleUer(event) {}
+  const handleSelectRole = (role) => {
+    setSelectedRole(role);
+  };
+
   return (
     <Container>
       <Background />
-      <Form>
-        <h1>Crie sua conta</h1>
+      {selectedRole === "customer" ? (
+        <Form>
+          <h1>Crie sua conta</h1>
 
-        <label htmlFor="Name">Seu nome:</label>
-        <Input type="text" placeholder="Ex: Maria da Silva" />
+          <label htmlFor="Name">Seu nome:</label>
+          <Input type="text" placeholder="Ex: Maria da Silva" />
 
-        <label htmlFor="Email">Email:</label>
-        <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
+          <label htmlFor="Email">Email:</label>
+          <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
 
-        <label htmlFor="Password">Senha:</label>
-        <Input type="text" placeholder="No mínimo 6 caracteres " />
-        <div className="userRole">
-          <label htmlFor="admin">Administrador:</label>
-          <input type="radio" onClick={handleSelectRoleUer()} />
-          <label htmlFor="customer">Usuário:</label>
-          <input type="radio" onClick={setUserRole} />
-        </div>
-        <Button title="Criar conta" />
-        <Link to="/">Já tenho uma conta</Link>
-      </Form>
+          <label htmlFor="Password">Senha:</label>
+          <Input type="text" placeholder="No mínimo 6 caracteres " />
+          <div className="userRole">
+            <label htmlFor="admin">Administrador:</label>
+            <input
+              type="radio"
+              checked={selectedRole === "admin"}
+              onChange={() => handleSelectRole("admin")}
+            />
+            <label htmlFor="customer">Usuário:</label>
+            <input
+              type="radio"
+              checked={selectedRole === "customer"}
+              onChange={() => handleSelectRole("customer")}
+            />
+          </div>
+          <Button title="Criar conta" />
+          <Link to="/">Já tenho uma conta</Link>
+        </Form>
+      ) : (
+        <Form>
+          <h1>Crie a conta da loja</h1>
+
+          <label htmlFor="Name">Seu nome:</label>
+          <Input type="text" placeholder="Ex: Maria da Silva" />
+
+          <label htmlFor="Name">Nome da loja</label>
+          <Input type="text" placeholder="Ex: Mc dona" />
+
+          <label htmlFor="Email">Email:</label>
+          <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
+
+          <label htmlFor="Password">Senha:</label>
+          <Input type="text" placeholder="No mínimo 6 caracteres " />
+          <div className="userRole">
+            <label htmlFor="admin">Administrador:</label>
+            <input
+              type="radio"
+              checked={selectedRole === "admin"}
+              onChange={() => handleSelectRole("admin")}
+            />
+            <label htmlFor="customer">Usuário:</label>
+            <input
+              type="radio"
+              checked={selectedRole === "customer"}
+              onChange={() => handleSelectRole("customer")}
+            />
+          </div>
+          <Button title="Criar conta" />
+          <Link to="/">Já tenho uma conta</Link>
+        </Form>
+      )}
     </Container>
   );
 }
