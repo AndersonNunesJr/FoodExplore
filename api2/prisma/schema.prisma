@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  name        String
+  role        String       @default("costumer")
+  Marketplace Marketplace?
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt
+
+  @@map("users")
+}
+
+model Marketplace {
+  id        Int      @id @default(autoincrement())
+  storename String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
+  isAdmin   Boolean
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt
+
+  Marketplace Products[]
+
+  @@unique([userId], name: "UniqueUserMarketplace", map: "unique_marketplace_userId")
+  @@map("markets-place")
+}
+
+model Products {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  price       String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt
+
+  Marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id])
+  marketplaceId Int?
+}
