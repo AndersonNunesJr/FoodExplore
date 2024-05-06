@@ -54,7 +54,7 @@ import {
   serializerCompiler,
   validatorCompiler
 } from "fastify-type-provider-zod";
-import routes from "./routes";
+import routes from "./routes/index";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -84,7 +84,7 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 // Registre suas rotas
-routes(app);
+app.register(routes);
 
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running!");

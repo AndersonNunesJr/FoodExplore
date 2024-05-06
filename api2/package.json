@@ -1,7 +1,7 @@
 {
     "name": "server-node",
     "version": "1.0.0",
-    "description": "O pass.in é uma aplicação de **gestão de participantes em eventos presenciais**.",
+    "description": "",
     "main": "index.js",
     "scripts": {
         "dev": "ts-node-dev --respawn --transpile-only src/server.ts",

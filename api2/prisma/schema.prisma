@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id     Int     @id @default(autoincrement())
-  email  String  @unique
-  name   String
-  role   String  @default("costumer")
-  Role   Role?   @relation(fields: [roleId], references: [id])
-  roleId String?
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String
+  password String
+  role     String  @default("costumer")
+  Role     Role?   @relation(fields: [roleId], references: [id])
+  roleId   String?
 
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt
