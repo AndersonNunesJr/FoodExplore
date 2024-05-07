@@ -1,0 +1,10 @@
+POST http://localhost:3333/user
+Content-Type: application/json
+
+{
+   "email":"vw5@email.com",
+   "name": "unes",
+   "password":"123",
+   "role":null,
+
+}
