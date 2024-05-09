@@ -8,15 +8,17 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(uuid())
   email    String @unique
   name     String
   password String
 
-  Role        Role?        @relation(fields: [roleId], references: [id])
-  roleId      String?
-  marketplace Marketplace? // Relação com o marketplace do usuário
-  favorits    Favorits[] // Nova relação com Favorits
+  Role   Role?   @relation(fields: [roleId], references: [id])
+  roleId String?
+
+  marketplace Marketplace?
+
+  favorits Favorits[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt
@@ -27,35 +29,24 @@ model User {
 model Role {
   id   String @id @default(uuid())
   name String @unique
+
   user User[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt
 }
 
-// model Marketplace {
-//   id        String @id @default(uuid())
-//   storename String @unique
-//   user      User   @relation(fields: [userId], references: [id])
-//   userId    Int    @unique
-
-//   createdAt DateTime   @default(now()) @map("created_at")
-//   updatedAt DateTime   @updatedAt
-//   Products  Products[]
-
-//   @@unique([userId], name: "UniqueUserMarketplace", map: "unique_marketplace_userId")
-//   @@map("markets-place")
-// }
-
 model Marketplace {
   id        String @id @default(uuid())
   storename String @unique
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String @unique
 
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt
-  Products  Products[]
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt
+
+  Products Products[]
 
   @@unique([userId], name: "UniqueUserMarketplace", map: "unique_marketplace_userId")
   @@map("markets-place")
@@ -69,12 +60,12 @@ model Products {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt
 
-  marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id])
-  marketplaceId Int?
+  Marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id])
+  marketplaceId String?
 }
 
 model Favorits {
   id     String @id @default(uuid())
-  user   User?  @relation(fields: [userId], references: [id])
-  userId Int?
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }

@@ -14,17 +14,18 @@ export async function userCreate(app: FastifyInstance) {
             .string({ invalid_type_error: "O nome precisa ser um texto" })
             .min(4),
           email: z.string().email(),
-          password: z.string(),
+          password: z.string().min(8),
           role: z.string(),
-          marketplace: z.string().nullish()
+          marketplace: z.string()
         }),
         response: {
           201: z.object({
             user: z.object({
-              id: z.number(),
+              id: z.string(),
               name: z.string(),
               email: z.string().email(),
-              Role: z.string().nullable()
+              Role: z.string().nullable(),
+              Marketplace: z.string().nullable()
             })
           })
         }
@@ -35,10 +36,6 @@ export async function userCreate(app: FastifyInstance) {
 
       const userRole = await prisma.role.create({
         data: { name: role }
-      });
-
-      const userMarketPlace = await prisma.marketplace.create({
-        data: { storename: marketplace || "null" }
       });
 
       const userWithSameEmail = await prisma.user.findUnique({
@@ -56,6 +53,7 @@ export async function userCreate(app: FastifyInstance) {
           storename: marketplace || "null"
         }
       });
+
       if (userWithSameMarketplace !== null) {
         throw new BadRequest(
           "Another marketplace with same title already exists."
@@ -72,8 +70,11 @@ export async function userCreate(app: FastifyInstance) {
           email,
           password,
           Role: { connect: { id: userWithSameRole?.id } },
-          marketplace: { connect: { id: userWithSameMarketplace } }
+          marketplace: { connect: { id: userWithSameRole?.id } }
         }
+      });
+      const userMarketPlace = await prisma.marketplace.create({
+        data: { storename: marketplace, user: { connect: { id: user.id } } }
       });
 
       return reply.status(201).send({
@@ -81,11 +82,10 @@ export async function userCreate(app: FastifyInstance) {
           id: user.id,
           name: user.name,
           email: user.email,
-          Role: userRole.name
+          Role: userRole.name,
+          Marketplace: userMarketPlace.storename
         }
       });
     }
   );
 }
-
-// role        String       @default("costumer")
