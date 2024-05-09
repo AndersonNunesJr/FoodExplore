@@ -2,9 +2,18 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"vw5@email.com",
-   "name": "unes",
+   "email":"anderson1@email.com",
+   "name":"anderson",
    "password":"123",
-   "role":null,
+   "role":"admin",
+   "marketplace":"so ze"
+}
 
+###
+
+POST http://localhost:3333/role
+Content-Type: application/json
+
+{
+   "role":"customer"
 }
