@@ -2,11 +2,11 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"anderson1@email.com",
+   "email":"anderson9@email.com",
    "name":"anderson",
    "password":"12345678",
-   "role":"admin",
-   "marketplace":"so ze"
+   "role":null,
+   "marketplace":"a4"
 }
 
 ###

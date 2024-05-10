@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../lib/prisma";
 import { BadRequest } from "../routes/_errors/bad-request";
+import bcrypt from "bcrypt";
 
 export async function userCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -15,7 +16,7 @@ export async function userCreate(app: FastifyInstance) {
             .min(4),
           email: z.string().email(),
           password: z.string().min(8),
-          role: z.string(),
+          role: z.string().nullable(),
           marketplace: z.string()
         }),
         response: {
@@ -23,6 +24,7 @@ export async function userCreate(app: FastifyInstance) {
             user: z.object({
               id: z.string(),
               name: z.string(),
+              // password: z.string(),
               email: z.string().email(),
               Role: z.string().nullable(),
               Marketplace: z.string().nullable()
@@ -34,9 +36,7 @@ export async function userCreate(app: FastifyInstance) {
     async (req, reply) => {
       const { name, password, role, email, marketplace } = req.body;
 
-      const userRole = await prisma.role.create({
-        data: { name: role }
-      });
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       const userWithSameEmail = await prisma.user.findUnique({
         where: {
@@ -48,9 +48,12 @@ export async function userCreate(app: FastifyInstance) {
         throw new BadRequest("Another email with same title already exists.");
       }
 
+      const userWithSameRole =
+        role === null || role === undefined || role === "" ? "customer" : role;
+
       const userWithSameMarketplace = await prisma.marketplace.findUnique({
         where: {
-          storename: marketplace || "null"
+          storename: marketplace
         }
       });
 
@@ -60,21 +63,24 @@ export async function userCreate(app: FastifyInstance) {
         );
       }
 
-      const userWithSameRole = await prisma.role.findUnique({
-        where: { name: role }
-      });
-
       const user = await prisma.user.create({
         data: {
           name,
           email,
-          password,
-          Role: { connect: { id: userWithSameRole?.id } },
-          marketplace: { connect: { id: userWithSameRole?.id } }
+          password: hashedPassword,
+          Role: {
+            connectOrCreate: {
+              where: { name: userWithSameRole },
+              create: { name: userWithSameRole }
+            }
+          },
+          marketplace: {
+            connectOrCreate: {
+              where: { storename: marketplace },
+              create: { storename: marketplace }
+            }
+          }
         }
-      });
-      const userMarketPlace = await prisma.marketplace.create({
-        data: { storename: marketplace, user: { connect: { id: user.id } } }
       });
 
       return reply.status(201).send({
@@ -82,8 +88,9 @@ export async function userCreate(app: FastifyInstance) {
           id: user.id,
           name: user.name,
           email: user.email,
-          Role: userRole.name,
-          Marketplace: userMarketPlace.storename
+          Role: userWithSameRole,
+          Marketplace: marketplace
+          // password: user.password
         }
       });
     }
