@@ -8,9 +8,7 @@ import {
   serializerCompiler,
   validatorCompiler
 } from "fastify-type-provider-zod";
-import routes from "./routes/index";
-import { userCreate } from "./controllers/userCreateController";
-import { roleCreate } from "./controllers/favoritsController";
+import { routes } from "./routes/routes";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -39,10 +37,7 @@ app.register(fastifySwaggerUi, {
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-// Registre suas rotas
 app.register(routes);
-app.register(userCreate);
-app.register(roleCreate);
 
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running!");

@@ -29,8 +29,9 @@
         "@fastify/swagger": "^8.14.0",
         "@fastify/swagger-ui": "^3.0.0",
         "@prisma/client": "5.11.0",
-        "bcryptjs": "^2.4.3",
+        "bcrypt": "^5.1.1",
         "cookie-parser": "^1.4.6",
+        "dotenv": "^16.4.5",
         "fastify": "^4.26.2",
         "fastify-type-provider-zod": "^1.1.9",
         "zod": "^3.22.4"
