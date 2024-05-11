@@ -10,7 +10,7 @@ import {
 } from "fastify-type-provider-zod";
 import routes from "./routes/index";
 import { userCreate } from "./controllers/userCreateController";
-import { roleCreate } from "./controllers/roleCreateController";
+import { roleCreate } from "./controllers/favoritsController";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
