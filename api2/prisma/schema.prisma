@@ -8,20 +8,16 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  name     String
-  password String
-
-  Role   Role?   @relation(fields: [roleId], references: [id])
-  roleId String?
-
-  marketplace Marketplace?
-
-  favorits Favorits[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt
+  id          String       @id @default(uuid())
+  email       String       @unique
+  name        String
+  password    String
+  Role        Role?        @relation(fields: [roleId], references: [id])
+  roleId      String?
+  marketplace Marketplace? // Relação com o marketplace do usuário
+  favorits    Favorites[] // Nova relação com Favorits
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt
 
   @@map("users")
 }
@@ -29,7 +25,6 @@ model User {
 model Role {
   id   String @id @default(uuid())
   name String @unique
-
   user User[]
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -37,16 +32,14 @@ model Role {
 }
 
 model Marketplace {
-  id        String @id @default(uuid())
-  storename String @unique
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  id        String     @id @default(uuid())
+  storename String?    @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String     @unique
+  Products  Products[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt
-
-  Products Products[]
 
   @@unique([userId], name: "UniqueUserMarketplace", map: "unique_marketplace_userId")
   @@map("markets-place")
@@ -60,11 +53,11 @@ model Products {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt
 
-  Marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id])
+  Marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id], onDelete: Cascade)
   marketplaceId String?
 }
 
-model Favorits {
+model Favorites {
   id     String @id @default(uuid())
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique

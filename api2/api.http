@@ -2,11 +2,11 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"anderson16@email.com",
+   "email":"anderson1@email.com",
    "name":"anderson",
    "password":"12345678",
-   "role":"admin",
-   "marketplace":"a10"
+   "role":null,
+   "marketplace":null
 }
 
 ###
@@ -17,3 +17,7 @@ Content-Type: application/json
 {
    "role":"customer"
 }
+
+###
+DELETE http://localhost:3333/delete
+Content-Type: application/json

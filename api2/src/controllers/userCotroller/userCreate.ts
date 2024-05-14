@@ -17,14 +17,13 @@ export async function userCreate(app: FastifyInstance) {
           email: z.string().email(),
           password: z.string().min(8),
           role: z.string().nullable(),
-          marketplace: z.string()
+          marketplace: z.string().nullable()
         }),
         response: {
           201: z.object({
             user: z.object({
               id: z.string(),
               name: z.string(),
-              // password: z.string(),
               email: z.string().email(),
               Role: z.string().nullable(),
               Marketplace: z.string().nullable()
@@ -35,6 +34,12 @@ export async function userCreate(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { name, password, role, email, marketplace } = req.body;
+      const marketplaceRequestDefinition =
+        !marketplace || marketplace === undefined || marketplace === ""
+          ? email
+          : marketplace;
+      const userWithSameRole =
+        role === null || role === undefined || role === "" ? "customer" : role;
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -48,24 +53,13 @@ export async function userCreate(app: FastifyInstance) {
         throw new BadRequest("Another email with same name already exists.");
       }
 
-      const isAdmin = role !== "admin";
+      const isAdmin = role === "admin";
 
       let marketplaceConnectOrCreate;
 
-      if (!isAdmin) {
-        marketplaceConnectOrCreate = {
-          create: { storename: marketplace }
-        };
-      } else {
-        throw new BadRequest("No permission to create/update marketplace");
-      }
-
-      const userWithSameRole =
-        role === null || role === undefined || role === "" ? "customer" : role;
-
       const userWithSameMarketplace = await prisma.marketplace.findUnique({
         where: {
-          storename: marketplace
+          storename: marketplaceRequestDefinition
         }
       });
 
@@ -73,6 +67,14 @@ export async function userCreate(app: FastifyInstance) {
         throw new BadRequest(
           "Another marketplace with same name already exists."
         );
+      }
+
+      if (!isAdmin) {
+        marketplaceConnectOrCreate = {
+          create: { storename: marketplaceRequestDefinition }
+        };
+      } else {
+        throw new BadRequest("No permission to create/update marketplace");
       }
 
       const user = await prisma.user.create({
@@ -97,7 +99,6 @@ export async function userCreate(app: FastifyInstance) {
           email: user.email,
           Role: userWithSameRole,
           Marketplace: marketplace
-          // password: user.password
         }
       });
     }
