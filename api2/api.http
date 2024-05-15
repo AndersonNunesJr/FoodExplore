@@ -2,7 +2,7 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"anderson1@email.com",
+   "email":"anderson20@email.com",
    "name":"anderson",
    "password":"12345678",
    "role":null,
@@ -21,3 +21,8 @@ Content-Type: application/json
 ###
 DELETE http://localhost:3333/delete
 Content-Type: application/json
+
+{
+   "email":"anderson20@email.com",
+   "password":"12345678"
+}

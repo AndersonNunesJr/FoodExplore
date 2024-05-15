@@ -3,7 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 import { BadRequest } from "../../routes/_errors/bad-request";
-import bcrypt from "bcrypt";
+import { hash } from "bcrypt";
 
 export async function userCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -41,7 +41,7 @@ export async function userCreate(app: FastifyInstance) {
       const userWithSameRole =
         role === null || role === undefined || role === "" ? "customer" : role;
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await hash(password, 10);
 
       const userWithSameEmail = await prisma.user.findUnique({
         where: {
