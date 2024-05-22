@@ -103,21 +103,23 @@ export function Historic() {
               1 x Salada Radish, 1 x Torradas de Parma, 1 x Chá de Canela, 1 x
               Suco de Maracujá
             </p>
-            <p>
-              1 x Salada Radish, 1 x Torradas de Parma, 1 x Chá de Canela, 1 x
-              Suco de Maracujá
-            </p>
-            <p>00000004</p>
           </div>
           <div className="data">
             {" "}
             <p>20/05 às 18h00</p>
             <p>20/05 às 18h00</p>
-            <p>00000004</p>
-            <p>00000004</p>
-            <p>00000004</p>
-            {/* <p>00000004</p> */}
-            {/* <p>00000004</p> */}
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
+            <p>20/05 às 18h00</p>
           </div>
         </Board>
       </div>

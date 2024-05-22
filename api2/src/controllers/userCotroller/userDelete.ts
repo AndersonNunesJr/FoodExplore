@@ -2,13 +2,13 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
-import { compare, hash } from "bcrypt";
+import bcrypt from "bcrypt";
 
 import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function userDelete(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/delete",
+    "/delete/user",
     {
       schema: {
         body: z.object({
@@ -38,16 +38,10 @@ export async function userDelete(app: FastifyInstance) {
 
       const oldPassword: string = oldPasswordResult.password;
 
-      console.log(oldPassword);
-
-      const correctOldPasswordComparison = await compare(
-        "12345678",
-        "12345678"
+      const correctOldPasswordComparison = await bcrypt.compare(
+        password,
+        oldPassword
       );
-
-      console.log("<<<<<<<<<<<<<<<<<<<<<");
-      console.log(correctOldPasswordComparison);
-      console.log(">>>>>>>>>>>>>>>>>>>>>");
 
       if (!correctOldPasswordComparison) {
         throw new BadRequest("Password does not match");

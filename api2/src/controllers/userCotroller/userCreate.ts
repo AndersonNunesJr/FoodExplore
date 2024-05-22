@@ -3,7 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 import { BadRequest } from "../../routes/_errors/bad-request";
-import { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 
 export async function userCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -17,7 +17,7 @@ export async function userCreate(app: FastifyInstance) {
           email: z.string().email(),
           password: z.string().min(8),
           role: z.string().nullable(),
-          marketplace: z.string().nullable()
+          marketplace: z.string().nullish()
         }),
         response: {
           201: z.object({
@@ -26,7 +26,7 @@ export async function userCreate(app: FastifyInstance) {
               name: z.string(),
               email: z.string().email(),
               Role: z.string().nullable(),
-              Marketplace: z.string().nullable()
+              Marketplace: z.string().nullish()
             })
           })
         }
@@ -34,14 +34,24 @@ export async function userCreate(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { name, password, role, email, marketplace } = req.body;
+
+      const userWithSameRole =
+        role === null || role === undefined || role === "" ? "customer" : role;
+
+      const roleAlreadyExists = await prisma.role.findUnique({
+        where: {
+          name: userWithSameRole
+        }
+      });
+
+      if (roleAlreadyExists === null) throw new BadRequest("Role not found.");
+
       const marketplaceRequestDefinition =
         !marketplace || marketplace === undefined || marketplace === ""
           ? email
           : marketplace;
-      const userWithSameRole =
-        role === null || role === undefined || role === "" ? "customer" : role;
 
-      const hashedPassword = await hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       const userWithSameEmail = await prisma.user.findUnique({
         where: {
@@ -54,7 +64,6 @@ export async function userCreate(app: FastifyInstance) {
       }
 
       const isAdmin = role === "admin";
-
       let marketplaceConnectOrCreate;
 
       const userWithSameMarketplace = await prisma.marketplace.findUnique({
@@ -63,18 +72,19 @@ export async function userCreate(app: FastifyInstance) {
         }
       });
 
+      if (isAdmin) {
+        marketplaceConnectOrCreate = {
+          create: { storename: marketplaceRequestDefinition }
+        };
+      }
+      if (!isAdmin && marketplace !== null && marketplace !== undefined) {
+        throw new BadRequest("No permission to create/update marketplace");
+      }
+
       if (userWithSameMarketplace !== null) {
         throw new BadRequest(
           "Another marketplace with same name already exists."
         );
-      }
-
-      if (!isAdmin) {
-        marketplaceConnectOrCreate = {
-          create: { storename: marketplaceRequestDefinition }
-        };
-      } else {
-        throw new BadRequest("No permission to create/update marketplace");
       }
 
       const user = await prisma.user.create({
@@ -83,12 +93,17 @@ export async function userCreate(app: FastifyInstance) {
           email,
           password: hashedPassword,
           Role: {
-            connectOrCreate: {
-              where: { name: userWithSameRole },
-              create: { name: userWithSameRole }
+            connect: {
+              name: roleAlreadyExists
+                ? roleAlreadyExists.name
+                : userWithSameRole
             }
-          },
-          marketplace: marketplaceConnectOrCreate
+          }
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true
         }
       });
 

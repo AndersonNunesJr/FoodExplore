@@ -15,7 +15,7 @@ model User {
   Role        Role?        @relation(fields: [roleId], references: [id])
   roleId      String?
   marketplace Marketplace? // Relação com o marketplace do usuário
-  favorits    Favorites[] // Nova relação com Favorits
+  favorites   Favorites[] // Nova relação com Favorits
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt
 
@@ -46,8 +46,9 @@ model Marketplace {
 }
 
 model Products {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   title       String
+  tag         String?
   description String?
   price       String
   createdAt   DateTime @default(now()) @map("created_at")

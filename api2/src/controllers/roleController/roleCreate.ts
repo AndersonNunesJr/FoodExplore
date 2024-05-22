@@ -15,10 +15,10 @@ export async function roleCreate(app: FastifyInstance) {
         }),
         response: {
           201: z.object({
-            role: {
+            role: z.object({
               id: z.string(),
               name: z.string()
-            }
+            })
           })
         }
       }

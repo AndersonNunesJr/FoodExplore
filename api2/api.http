@@ -1,13 +1,54 @@
+////////////////// USERS SECTION///////////////////////
+
+###
 POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"anderson20@email.com",
+   "email":"anderson2@email.com",
    "name":"anderson",
    "password":"12345678",
-   "role":null,
-   "marketplace":null
+   "role":"asdasd"
 }
+
+###
+DELETE http://localhost:3333/delete/user
+Content-Type: application/json
+
+{
+   "email":"anderson@email.com",
+   "password":"12345678"
+}
+
+###
+
+
+////////////////////PRODUCTS SECTION///////////////////////////
+
+
+###
+POST http://localhost:3333/bdaaa5ab-9e30-41dc-945a-96efa98dfae8/products
+Content-Type: application/json
+
+{
+   "name":"Pao Com Ovo",
+   "tag":["pao","ovo","alface"],
+   "description":"Pao molhado com ovo mole.",
+   "price":"18,50"
+}
+
+###
+
+DELETE http://localhost:3333/bdaaa5ab-9e30-41dc-945a-96efa98dfae8/delete/products
+Content-Type: application/json
+
+{
+   "idProduct":"8c2748e4-03e2-4bf9-ae60-d197b3c2ab7a",
+   "name":"Pao Com Ovo"
+}
+
+
+////////////////////ROLE SECTION///////////////////////////
 
 ###
 
@@ -19,10 +60,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3333/delete
-Content-Type: application/json
 
-{
-   "email":"anderson20@email.com",
-   "password":"12345678"
-}
+////////////////////FAVORITES SECTION///////////////////////////
+
+###
+
+POST http://localhost:3333/
+Content-Type: application/json
