@@ -15,7 +15,7 @@ model User {
   Role        Role?        @relation(fields: [roleId], references: [id])
   roleId      String?
   marketplace Marketplace? // Relação com o marketplace do usuário
-  favorites   Favorites[] // Nova relação com Favorits
+  Favorites   Favorite[] // Nova relação com Favorits
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt
 
@@ -32,11 +32,11 @@ model Role {
 }
 
 model Marketplace {
-  id        String     @id @default(uuid())
-  storename String?    @unique
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String     @unique
-  Products  Products[]
+  id        String    @id @default(uuid())
+  storename String?   @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String    @unique
+  Products  Product[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt
@@ -45,7 +45,7 @@ model Marketplace {
   @@map("markets-place")
 }
 
-model Products {
+model Product {
   id          String   @id @default(uuid())
   title       String
   tag         String?
@@ -56,10 +56,15 @@ model Products {
 
   Marketplace   Marketplace? @relation(fields: [marketplaceId], references: [id], onDelete: Cascade)
   marketplaceId String?
+  Favorites     Favorite[]
 }
 
-model Favorites {
-  id     String @id @default(uuid())
+model Favorite {
+  id String @id @default(uuid())
+
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
+
+  Products   Product? @relation(fields: [productsId], references: [id])
+  productsId String?
 }

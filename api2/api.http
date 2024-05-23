@@ -5,10 +5,10 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"anderson2@email.com",
+   "email":"a03@email.com",
    "name":"anderson",
    "password":"12345678",
-   "role":"asdasd"
+   "role":"customer"
 }
 
 ###
@@ -21,17 +21,27 @@ Content-Type: application/json
 }
 
 ###
+                            //////////userId/////////////
+POST  http://localhost:3333/6a7d2d40-8364-4b55-9689-e70636cf48eb
+Content-Type: application/json
 
+{
+   "email":"a03@email.com",
+   "password":"12345678"
+}
+
+###
 
 ////////////////////PRODUCTS SECTION///////////////////////////
 
 
-###
-POST http://localhost:3333/bdaaa5ab-9e30-41dc-945a-96efa98dfae8/products
+###                           
+                              ////////MarketId//////////////
+POST http://localhost:3333/8e23de1a-02f0-44cd-a1bf-6084ca55635d/products
 Content-Type: application/json
 
 {
-   "name":"Pao Com Ovo",
+   "name":"Pao Com O",
    "tag":["pao","ovo","alface"],
    "description":"Pao molhado com ovo mole.",
    "price":"18,50"
@@ -39,13 +49,16 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3333/bdaaa5ab-9e30-41dc-945a-96efa98dfae8/delete/products
+DELETE http://localhost:3333/8a7508d6-b110-4a07-b603-b780ea299ad7/delete/products
 Content-Type: application/json
 
 {
-   "idProduct":"8c2748e4-03e2-4bf9-ae60-d197b3c2ab7a",
+   "idProduct":"0bb82f51-fe55-4707-bda3-0f35c2fef643",
    "name":"Pao Com Ovo"
 }
+
+
+
 
 
 ////////////////////ROLE SECTION///////////////////////////
@@ -64,6 +77,11 @@ Content-Type: application/json
 ////////////////////FAVORITES SECTION///////////////////////////
 
 ###
-
-POST http://localhost:3333/
+                                    ////userId////
+POST http://localhost:3333/6a7d2d40-8364-4b55-9689-e70636cf48eb/favorites
 Content-Type: application/json
+
+{
+      "marketId": "8e23de1a-02f0-44cd-a1bf-6084ca55635d",
+      "productsId":"90a7bac6-9851-45b0-9b76-5520ee3350f6" 
+}

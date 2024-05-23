@@ -92,6 +92,7 @@ export async function userCreate(app: FastifyInstance) {
           name,
           email,
           password: hashedPassword,
+          marketplace: marketplaceConnectOrCreate,
           Role: {
             connect: {
               name: roleAlreadyExists
