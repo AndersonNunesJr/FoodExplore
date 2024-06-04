@@ -78,10 +78,11 @@ Content-Type: application/json
 
 ###
                                     ////userId////
+
 POST http://localhost:3333/6a7d2d40-8364-4b55-9689-e70636cf48eb/favorites
 Content-Type: application/json
 
 {
       "marketId": "8e23de1a-02f0-44cd-a1bf-6084ca55635d",
-      "productsId":"90a7bac6-9851-45b0-9b76-5520ee3350f6" 
+      "productsId":"ca6df4da-b02b-44a9-b2eb-89e9d734ec32" 
 }

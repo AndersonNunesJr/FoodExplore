@@ -25,36 +25,54 @@ export async function favoritesCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { marketId, productsId } = req.body;
+      const { productsId } = req.body; // marketId,
       const { userId } = req.params;
 
-      const a = await prisma.favorites.findFirst({
+      // Verifique se o usuário existe
+      const user = await prisma.user.findUnique({
+        where: { id: userId }
+      });
+      if (!user) {
+        throw new BadRequest("User not found");
+      }
+
+      // Verifique se o produto existe
+      const product = await prisma.product.findUnique({
+        where: { id: productsId }
+      });
+      if (!product) {
+        throw new BadRequest("Product not found");
+      }
+
+      // Tente encontrar um registro de favorito existente
+      const existingFavorite = await prisma.favorite.findFirst({
         where: {
           userId
         }
       });
 
-      if (!a) {
-        const favorites = await prisma.favorites.create({
+      if (!existingFavorite) {
+        // Cria um novo favorito se não existir
+        const newFavorite = await prisma.favorite.create({
           data: {
             userId,
-            productsId
+            products: { connect: { id: product.id } }
           }
         });
-        return reply.status(201).send({ favorites });
-        // throw new BadRequest("User not found");
+        return reply.status(201).send({ favorites: newFavorite });
+      } else {
+        // Atualiza o favorito existente se já existir
+        const updatedFavorite = await prisma.favorite.update({
+          where: {
+            id: existingFavorite.id // Usando o ID do favorito existente
+          },
+          data: {
+            userId,
+            products: { connect: { id: product.id } }
+          }
+        });
+        return reply.status(200).send({ favorites: updatedFavorite });
       }
-      const favorites = await prisma.favorites.update({
-        where: {
-          userId
-        },
-        data: {
-          userId,
-          productsId
-        }
-      });
-
-      return reply.status(201).send({ favorites });
     }
   );
 }

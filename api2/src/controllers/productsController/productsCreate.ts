@@ -36,7 +36,7 @@ export async function productsCreate(app: FastifyInstance) {
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
-      const a = await prisma.products.findFirst({
+      const a = await prisma.product.findFirst({
         where: {
           title: name,
           marketplaceId: marketId
@@ -47,7 +47,7 @@ export async function productsCreate(app: FastifyInstance) {
         throw new BadRequest("There is already a product with that name");
       }
 
-      const products = await prisma.products.create({
+      const products = await prisma.product.create({
         data: {
           title: name,
           tag: tagString,
