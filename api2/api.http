@@ -5,10 +5,12 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"a03@email.com",
+   "email":"a10@email.com",
    "name":"anderson",
    "password":"12345678",
-   "role":"customer"
+   "role":"admin",
+   "marketplace":"ze"
+
 }
 
 ###
@@ -22,11 +24,11 @@ Content-Type: application/json
 
 ###
                             //////////userId/////////////
-POST  http://localhost:3333/6a7d2d40-8364-4b55-9689-e70636cf48eb
+POST  http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a
 Content-Type: application/json
 
 {
-   "email":"a03@email.com",
+   "email":"a50@email.com",
    "password":"12345678"
 }
 
@@ -37,11 +39,11 @@ Content-Type: application/json
 
 ###                           
                               ////////MarketId//////////////
-POST http://localhost:3333/8e23de1a-02f0-44cd-a1bf-6084ca55635d/products
+POST http://localhost:3333/cf116e9c-c566-46a6-bc95-9c117fd0ee9c/products
 Content-Type: application/json
 
 {
-   "name":"Pao Com O",
+   "name":"Pao Com Ov",
    "tag":["pao","ovo","alface"],
    "description":"Pao molhado com ovo mole.",
    "price":"18,50"
@@ -79,10 +81,10 @@ Content-Type: application/json
 ###
                                     ////userId////
 
-POST http://localhost:3333/6a7d2d40-8364-4b55-9689-e70636cf48eb/favorites
+POST http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a/favorites
 Content-Type: application/json
 
 {
-      "marketId": "8e23de1a-02f0-44cd-a1bf-6084ca55635d",
-      "productsId":"ca6df4da-b02b-44a9-b2eb-89e9d734ec32" 
+      
+      "productsId":"e06289d6-ac6d-4c33-8786-b3778c7fc2a5" 
 }

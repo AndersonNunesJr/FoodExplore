@@ -7,12 +7,14 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function favoritesDelete(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/delete/favorites",
+    "/:userId/delete/favorites",
     {
       schema: {
         body: z.object({
-          userId: z.string(),
           productsId: z.string()
+        }),
+        params: z.object({
+          userId: z.string().uuid()
         }),
         response: {
           201: z.object({
@@ -22,7 +24,8 @@ export async function favoritesDelete(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { userId, productsId } = req.body;
+      const { productsId } = req.body;
+      const { userId } = req.params;
 
       const u = await prisma.user.findUnique({
         select: {
@@ -35,11 +38,14 @@ export async function favoritesDelete(app: FastifyInstance) {
         throw new BadRequest("User not found");
       }
 
-      await prisma.favorites.delete({
+      await prisma.favorite.delete({
         select: {
           user: true
         },
-        where: { id: productsId }
+        where: {
+          userId,
+          products: { connect: { id: productsId } }
+        }
       });
 
       return reply.status(201).send({ message: "User deleted successfully" });

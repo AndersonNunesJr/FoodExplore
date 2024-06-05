@@ -64,7 +64,7 @@ export async function userCreate(app: FastifyInstance) {
       }
 
       const isAdmin = role === "admin";
-      let marketplaceConnectOrCreate;
+      let marketplaceCreate;
 
       const userWithSameMarketplace = await prisma.marketplace.findUnique({
         where: {
@@ -73,14 +73,13 @@ export async function userCreate(app: FastifyInstance) {
       });
 
       if (isAdmin) {
-        marketplaceConnectOrCreate = {
+        marketplaceCreate = {
           create: { storename: marketplaceRequestDefinition }
         };
       }
       if (!isAdmin && marketplace !== null && marketplace !== undefined) {
         throw new BadRequest("No permission to create/update marketplace");
       }
-
       if (userWithSameMarketplace !== null) {
         throw new BadRequest(
           "Another marketplace with same name already exists."
@@ -92,7 +91,7 @@ export async function userCreate(app: FastifyInstance) {
           name,
           email,
           password: hashedPassword,
-          marketplace: marketplaceConnectOrCreate,
+          marketplace: marketplaceCreate,
           Role: {
             connect: {
               name: roleAlreadyExists

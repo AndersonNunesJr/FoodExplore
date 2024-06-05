@@ -11,7 +11,6 @@ export async function favoritesCreate(app: FastifyInstance) {
     {
       schema: {
         body: z.object({
-          marketId: z.string().uuid(),
           productsId: z.string().uuid()
         }),
         params: z.object({
@@ -25,10 +24,9 @@ export async function favoritesCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { productsId } = req.body; // marketId,
+      const { productsId } = req.body;
       const { userId } = req.params;
 
-      // Verifique se o usuário existe
       const user = await prisma.user.findUnique({
         where: { id: userId }
       });
@@ -36,15 +34,14 @@ export async function favoritesCreate(app: FastifyInstance) {
         throw new BadRequest("User not found");
       }
 
-      // Verifique se o produto existe
       const product = await prisma.product.findUnique({
         where: { id: productsId }
       });
+
       if (!product) {
         throw new BadRequest("Product not found");
       }
 
-      // Tente encontrar um registro de favorito existente
       const existingFavorite = await prisma.favorite.findFirst({
         where: {
           userId
@@ -52,7 +49,6 @@ export async function favoritesCreate(app: FastifyInstance) {
       });
 
       if (!existingFavorite) {
-        // Cria um novo favorito se não existir
         const newFavorite = await prisma.favorite.create({
           data: {
             userId,
@@ -61,10 +57,9 @@ export async function favoritesCreate(app: FastifyInstance) {
         });
         return reply.status(201).send({ favorites: newFavorite });
       } else {
-        // Atualiza o favorito existente se já existir
         const updatedFavorite = await prisma.favorite.update({
           where: {
-            id: existingFavorite.id // Usando o ID do favorito existente
+            id: existingFavorite.id
           },
           data: {
             userId,
