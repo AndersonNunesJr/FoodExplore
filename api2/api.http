@@ -24,11 +24,11 @@ Content-Type: application/json
 
 ###
                             //////////userId/////////////
-POST  http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a
+POST  http://localhost:3333/90b5d9f8-6e3d-4fd3-9f55-d1258e98c7cb
 Content-Type: application/json
 
 {
-   "email":"a50@email.com",
+   "email":"a10@email.com",
    "password":"12345678"
 }
 
@@ -39,26 +39,30 @@ Content-Type: application/json
 
 ###                           
                               ////////MarketId//////////////
-POST http://localhost:3333/cf116e9c-c566-46a6-bc95-9c117fd0ee9c/products
+POST http://localhost:3333/8ed865b6-b705-46b3-bb9b-61896dc63de3/products
 Content-Type: application/json
 
 {
-   "name":"Pao Com Ov",
+   "name":"Pao Com Ovo",
    "tag":["pao","ovo","alface"],
    "description":"Pao molhado com ovo mole.",
+   "category":"refeição",
    "price":"18,50"
 }
 
 ###
 
-DELETE http://localhost:3333/8a7508d6-b110-4a07-b603-b780ea299ad7/delete/products
+DELETE http://localhost:3333/8ed865b6-b705-46b3-bb9b-61896dc63de3/delete/products
 Content-Type: application/json
 
 {
-   "idProduct":"0bb82f51-fe55-4707-bda3-0f35c2fef643",
+   "idProduct":"95e7b1b8-0af7-44ab-98cb-d43785adec03",
    "name":"Pao Com Ovo"
 }
 
+### 
+GET  http://localhost:3333/products
+Content-Type: application/json
 
 
 
@@ -86,5 +90,20 @@ Content-Type: application/json
 
 {
       
-      "productsId":"e06289d6-ac6d-4c33-8786-b3778c7fc2a5" 
+      "productsId":"4066abf5-2852-4540-99e5-8f2c61d0ab02" 
 }
+
+###
+DELETE http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a/favorites/delete
+Content-Type: application/json
+
+{
+   "productsId":"149969ce-9128-4a2b-91d8-382f774958fb" 
+}
+
+###
+GET  http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a/favorites
+Content-Type: application/json
+
+
+###

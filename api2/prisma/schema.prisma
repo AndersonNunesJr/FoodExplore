@@ -49,6 +49,7 @@ model Marketplace {
 model Product {
   id          String   @id @default(uuid())
   title       String
+  category    String?
   tag         String?
   description String?
   price       String

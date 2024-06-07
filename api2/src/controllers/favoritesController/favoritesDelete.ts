@@ -7,7 +7,7 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function favoritesDelete(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/:userId/delete/favorites",
+    "/:userId/favorites/delete",
     {
       schema: {
         body: z.object({
@@ -27,28 +27,53 @@ export async function favoritesDelete(app: FastifyInstance) {
       const { productsId } = req.body;
       const { userId } = req.params;
 
-      const u = await prisma.user.findUnique({
+      const user = await prisma.user.findUnique({
         select: {
           favorites: true
         },
         where: { id: userId }
       });
 
-      if (!u) {
+      const product = await prisma.product.findUnique({
+        where: { id: productsId }
+      });
+
+      if (!user) {
         throw new BadRequest("User not found");
       }
 
-      await prisma.favorite.delete({
-        select: {
-          user: true
-        },
+      // const favorite = await prisma.favorite.findFirst({
+      //   where: {
+      //     id: userId,
+      //     products: {
+      //       some: { id: productsId }
+      //     }
+      //   },
+      //   include: {
+      //     products: {
+      //       where: { id: productsId }
+      //     }
+      //   }
+      // });
+
+      // if (favorite) {
+      //   throw new BadRequest("Favorite or Product not found");
+      // }
+
+      await prisma.favorite.update({
         where: {
-          userId,
-          products: { connect: { id: productsId } }
+          id: user.favorites?.id
+        },
+        data: {
+          products: {
+            disconnect: [{ id: product?.id }]
+          }
         }
       });
 
-      return reply.status(201).send({ message: "User deleted successfully" });
+      return reply
+        .status(201)
+        .send({ message: "Favorites deleted successfully" });
     }
   );
 }

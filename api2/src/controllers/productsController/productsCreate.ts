@@ -13,6 +13,7 @@ export async function productsCreate(app: FastifyInstance) {
           name: z.string(),
           tag: z.array(z.string()).nullish(),
           description: z.string(),
+          category: z.string(),
           price: z.string()
         }),
         params: z.object({
@@ -24,6 +25,7 @@ export async function productsCreate(app: FastifyInstance) {
               id: z.string().uuid(),
               title: z.string(),
               description: z.string().nullish(),
+              category: z.string().nullish(),
               price: z.string()
             })
           })
@@ -31,7 +33,7 @@ export async function productsCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { name, description, tag, price } = req.body;
+      const { name, description, tag, price, category } = req.body;
       const { marketId } = req.params;
 
       const tagString = tag ? JSON.stringify(tag) : null;
@@ -52,6 +54,7 @@ export async function productsCreate(app: FastifyInstance) {
           title: name,
           tag: tagString,
           description,
+          category,
           price,
           marketplaceId: marketId
         },
@@ -59,6 +62,7 @@ export async function productsCreate(app: FastifyInstance) {
           id: true,
           title: true,
           description: true,
+          category: true,
           price: true
         }
       });
