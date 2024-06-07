@@ -12,7 +12,6 @@ export async function productsDelete(app: FastifyInstance) {
         body: z.object({
           name: z.string(),
           idProduct: z.string().uuid()
-          idProduct: z.string()
         }),
         params: z.object({
           marketId: z.string().uuid()
