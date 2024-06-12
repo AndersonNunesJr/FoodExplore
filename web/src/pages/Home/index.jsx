@@ -10,9 +10,9 @@ export function Home() {
         <Header />
         <Carrossel title={"Refeição"}>
           <Card
-            title={"Torradas de Parma"}
-            description={"Massa fresca com camarões e pesto. "}
-            value={"79,97"}
+            title={"ovo1"}
+            description={"ovo "}
+            value={"ovo"}
             img={img}
             imgText={""}
           />
@@ -24,9 +24,23 @@ export function Home() {
             imgText={""}
           />
           <Card
+            title={"ovo2"}
+            description={"ovo "}
+            value={"ovo"}
+            img={img}
+            imgText={""}
+          />
+          <Card
             title={"Torradas de Parma"}
             description={"Massa fresca com camarões e pesto. "}
             value={"79,97"}
+            img={img}
+            imgText={""}
+          />
+          <Card
+            title={"ovo3"}
+            description={"ovo "}
+            value={"ovo"}
             img={img}
             imgText={""}
           />

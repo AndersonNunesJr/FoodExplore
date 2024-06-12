@@ -29,7 +29,22 @@ export async function userGet(app: FastifyInstance) {
                 id: z.string().nullish(),
                 storename: z.string().nullish()
               }),
-              favorites: z.string().nullish()
+              favorites: z
+                .object({
+                  products: z.array(
+                    z.object({
+                      id: z.string(),
+                      title: z.string(),
+                      tag: z.string().nullable(),
+                      description: z.string().nullable(),
+                      category: z.string().nullable(),
+                      price: z.string(),
+                      marketplaceId: z.string().nullable()
+                    })
+                  )
+                })
+                .nullable(),
+              historic: z.object({}).nullish()
             })
           })
         }
@@ -71,7 +86,21 @@ export async function userGet(app: FastifyInstance) {
           name: true,
           Role: true,
           favorites: true,
-          marketplace: true
+          marketplace: true,
+          historic: true
+        }
+      });
+
+      const result = await prisma.favorite.findFirst({
+        include: {
+          products: {
+            orderBy: {
+              createdAt: "desc"
+            }
+          }
+        },
+        where: {
+          id: user?.favorites?.id
         }
       });
 
@@ -85,7 +114,7 @@ export async function userGet(app: FastifyInstance) {
             id: user?.marketplace?.id,
             storename: user?.marketplace?.storename
           },
-          favorites: user?.favorites?.id
+          favorites: result
         }
       });
     }
