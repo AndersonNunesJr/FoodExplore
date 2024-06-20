@@ -10,9 +10,10 @@ export async function orderCreate(app: FastifyInstance) {
     "/:userId/order",
     {
       schema: {
+        summary: "Create purchase order.",
+        tags: ["Post"],
         body: z.object({
           marketplaceId: z.string().uuid(),
-          status: z.string(),
           details: z.array(z.string()),
           code: z.string().cuid().nullish()
         }),
@@ -32,7 +33,7 @@ export async function orderCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { status, details, code, marketplaceId } = req.body;
+      const { details, marketplaceId } = req.body;
       const { userId } = req.params;
 
       const detailsString = JSON.stringify(details);
@@ -50,69 +51,34 @@ export async function orderCreate(app: FastifyInstance) {
       if (!marketplace) {
         throw new BadRequest("Marketplace not found");
       }
-
-      const historic = await prisma.historic.findFirst({
-        where: {
-          userId,
-          marketplaceId
-        },
-        include: {
-          orders: true
-        }
-      });
-
-      if (!code) {
-        const newOrder = await prisma.orders.create({
-          data: {
-            status,
-            details: detailsString,
-            historic: {
-              connectOrCreate: {
-                where: {
-                  userId_marketplaceId: {
-                    userId,
-                    marketplaceId
-                  }
-                },
-                create: {
+      const newOrder = await prisma.orders.create({
+        data: {
+          status: "🟡 Pendente",
+          details: detailsString,
+          historic: {
+            connectOrCreate: {
+              where: {
+                userId_marketplaceId: {
                   userId,
                   marketplaceId
                 }
+              },
+              create: {
+                userId,
+                marketplaceId
               }
             }
           }
-        });
-        return reply.status(201).send({
-          order: {
-            status: newOrder.status,
-            code: newOrder.code,
-            details: newOrder.details,
-            data: newOrder.createdAt
-          }
-        });
-      } else {
-        const existingOrder = historic?.orders.find(
-          (order) => order.code === code
-        );
-
-        if (existingOrder) {
-          const updatedOrder = await prisma.orders.update({
-            where: { id: existingOrder.id },
-            data: {
-              status,
-              details: detailsString
-            }
-          });
-          return reply.status(200).send({
-            order: {
-              status: updatedOrder.status,
-              code: updatedOrder.code,
-              details: updatedOrder.details,
-              data: updatedOrder.createdAt
-            }
-          });
         }
-      }
+      });
+      return reply.status(201).send({
+        order: {
+          status: newOrder.status,
+          code: newOrder.code,
+          details: newOrder.details,
+          data: newOrder.createdAt
+        }
+      });
     }
   );
 }

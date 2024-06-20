@@ -23,11 +23,11 @@ Content-Type: application/json
 
 ###
                             //////////userId/////////////
-POST  http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a
+POST  http://localhost:3333/4a06855e-b9ce-466f-bfba-c5006474bf19
 Content-Type: application/json
 
 {
-   "email":"a50@email.com",
+   "email":"a1@email.com",
    "password":"12345678"
 }
 
@@ -38,11 +38,11 @@ Content-Type: application/json
 
 ###                           
                               ////////MarketId//////////////
-POST http://localhost:3333/cf116e9c-c566-46a6-bc95-9c117fd0ee9c/products
+POST http://localhost:3333/b26113ca-a6e2-4726-8b12-2358cc2c11a5/products
 Content-Type: application/json
 
 {
-   "name":"ovo",
+   "name":"ovo2",
    "tag":["pao","ovo","alface"],
    "description":"Pao molhado com ovo mole.",
    "category":"refeição",
@@ -51,11 +51,11 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3333/8ed865b6-b705-46b3-bb9b-61896dc63de3/delete/products
+DELETE http://localhost:3333/b26113ca-a6e2-4726-8b12-2358cc2c11a5/delete/products
 Content-Type: application/json
 
 {
-   "idProduct":"0d48996b-a853-4248-9445-b54055b30c54",
+   "idProduct":"a6fb590e-2108-454a-a7ad-9da844b2721d",
    "name":"Pao Com Ovo"
 }
 
@@ -63,8 +63,9 @@ Content-Type: application/json
 GET  http://localhost:3333/products
 Content-Type: application/json
 
-
-
+###                         ////////MarketId//////////////
+GET http://localhost:3333/b26113ca-a6e2-4726-8b12-2358cc2c11a5
+Content-Type: application/json
 
 ////////////////////ROLE SECTION///////////////////////////
 
@@ -110,15 +111,32 @@ Content-Type: application/json
 ////////////////////ORDER SECTION///////////////////////////
 
 ###
-POST   http://localhost:3333/40e51da9-e789-4fe0-883c-ca92e8a142e3/order
+POST   http://localhost:3333/4a06855e-b9ce-466f-bfba-c5006474bf19/order
 Content-Type: application/json
 
 {  
    
    "marketplaceId":"b26113ca-a6e2-4726-8b12-2358cc2c11a5",
-   "status":"🟢 Entregue",
    "details":["1x pao","2x ovo"]
 }
 
 ////a0b9d168-6fb2-49d9-a585-82cce8827f5a/////clxami5sk0001xyft0oouf50g  
 ///  🟡 Pendente  🟠 Preparando 🟢 Entregue  🔴 Cancelado
+
+
+###                              /////user-id ou  marketid//////
+GET http://localhost:3333/40e51da9-e789-4fe0-883c-ca92e8a142e3/status
+Content-Type: application/json
+ 
+
+###                              ////marketId////                      
+POST  http://localhost:3333/cf116e9c-c566-46a6-bc95-9c117fd0ee9c/status
+Content-Type: application/json
+
+{
+   "code":"clxay2nu30000lluspwykn7wf",
+   "status":" 🟢 aki foi",
+   "userId":"4a06855e-b9ce-466f-bfba-c5006474bf19"
+}
+
+###

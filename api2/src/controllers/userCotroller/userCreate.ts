@@ -10,6 +10,8 @@ export async function userCreate(app: FastifyInstance) {
     "/user",
     {
       schema: {
+        summary: "Creation of user.",
+        tags: ["Post"],
         body: z.object({
           name: z
             .string({ invalid_type_error: "O nome precisa ser um texto" })

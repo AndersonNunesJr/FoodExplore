@@ -18,7 +18,7 @@ model User {
   favorites   Favorite?
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt
-  historic    Historic?
+  historic    Historic[]
 
   @@map("users")
 }
@@ -33,10 +33,12 @@ model Role {
 }
 
 model Marketplace {
-  id        String  @id @default(uuid())
-  storename String? @unique
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String  @unique
+  id             String  @id @default(uuid())
+  storename      String? @unique
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String  @unique
+  profilePicture String?
+  description    String?
 
   products Product[]
 
@@ -56,6 +58,7 @@ model Product {
   tag         String?
   description String?
   price       String
+  productImg  String?
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt
 
@@ -65,6 +68,7 @@ model Product {
   favorites Favorite[]
 }
 
+// @@unique([id, marketplaceId])
 model Favorite {
   id String @id @default(uuid())
 
@@ -75,20 +79,24 @@ model Favorite {
 }
 
 model Orders {
-  id         String   @id @default(uuid())
-  status     String
-  code       String   @unique @default(cuid())
-  details    String
-  createdAt  DateTime @default(now()) @map("created_at")
+  id      String @id @default(uuid())
+  status  String
+  code    String @unique @default(cuid())
+  details String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
   historicId String
   historic   Historic @relation(fields: [historicId], references: [id], onDelete: Cascade)
+
+  @@unique([historicId, code])
 }
 
 model Historic {
   id String @id @default(uuid())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
+  userId String
 
   marketplace   Marketplace @relation(fields: [marketplaceId], references: [id], onDelete: Cascade)
   marketplaceId String

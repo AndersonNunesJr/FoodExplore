@@ -11,6 +11,8 @@ export async function userGet(app: FastifyInstance) {
     "/:userId",
     {
       schema: {
+        summary: "Get user information.",
+        tags: ["Get"],
         body: z.object({
           email: z.string().email(),
           password: z.string()
@@ -44,7 +46,21 @@ export async function userGet(app: FastifyInstance) {
                   )
                 })
                 .nullable(),
-              historic: z.object({}).nullish()
+              historic: z
+                .array(
+                  z.object({
+                    orders: z.array(
+                      z.object({
+                        status: z.string().nullish(),
+                        code: z.string().nullish(),
+                        details: z.string().nullish(),
+                        data: z.date().nullish(),
+                        historicId: z.string().nullish()
+                      })
+                    )
+                  })
+                )
+                .nullable()
             })
           })
         }
@@ -104,6 +120,23 @@ export async function userGet(app: FastifyInstance) {
         }
       });
 
+      const historic = await prisma.historic.findMany({
+        where: {
+          userId
+        },
+        include: {
+          orders: {
+            select: {
+              status: true,
+              code: true,
+              details: true,
+              createdAt: true,
+              historicId: true
+            }
+          }
+        }
+      });
+
       return reply.status(201).send({
         user: {
           id: user?.id,
@@ -114,7 +147,8 @@ export async function userGet(app: FastifyInstance) {
             id: user?.marketplace?.id,
             storename: user?.marketplace?.storename
           },
-          favorites: result
+          favorites: result,
+          historic
         }
       });
     }

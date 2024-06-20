@@ -3,27 +3,21 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 
-import { BadRequest } from "../../routes/_errors/bad-request";
-
-export async function favoritesGet(app: FastifyInstance) {
+export async function marketGet(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/:userId/favorites",
+    "/:marketplaceId",
     {
       schema: {
-        summary: "Get products from user favorites.",
+        summary: "marketplace information.",
         tags: ["Get"],
         params: z.object({
-          userId: z.string().uuid()
-        }),
-        querystring: z.object({
-          query: z.string().nullish(),
-          pageIndex: z.string().nullish().default("0").transform(Number)
+          marketplaceId: z.string().uuid()
         }),
         response: {
           201: z.object({
             result: z
               .object({
-                id: z.string(),
+                storename: z.string().nullish(),
                 products: z.array(
                   z.object({
                     id: z.string(),
@@ -31,8 +25,7 @@ export async function favoritesGet(app: FastifyInstance) {
                     tag: z.string().nullable(),
                     description: z.string().nullable(),
                     category: z.string().nullable(),
-                    price: z.string(),
-                    marketplaceId: z.string().nullable()
+                    price: z.string()
                   })
                 )
               })
@@ -42,19 +35,9 @@ export async function favoritesGet(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { userId } = req.params;
+      const { marketplaceId } = req.params;
 
-      const user = await prisma.user.findUnique({
-        select: {
-          favorites: true
-        },
-        where: { id: userId }
-      });
-      if (!user) {
-        throw new BadRequest("User not found");
-      }
-
-      const result = await prisma.favorite.findFirst({
+      const result = await prisma.marketplace.findFirst({
         include: {
           products: {
             orderBy: {
@@ -63,7 +46,7 @@ export async function favoritesGet(app: FastifyInstance) {
           }
         },
         where: {
-          id: user.favorites?.id
+          id: marketplaceId
         }
       });
 

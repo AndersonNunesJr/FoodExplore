@@ -9,6 +9,8 @@ export async function productsDelete(app: FastifyInstance) {
     "/:marketId/delete/products",
     {
       schema: {
+        summary: "Delete marketplace product.",
+        tags: ["Delete"],
         body: z.object({
           name: z.string(),
           idProduct: z.string().uuid()
@@ -26,6 +28,13 @@ export async function productsDelete(app: FastifyInstance) {
     async (req, reply) => {
       const { name, idProduct } = req.body;
       const { marketId } = req.params;
+
+      const marketplace = await prisma.marketplace.findUnique({
+        where: { id: marketId }
+      });
+      if (!marketplace) {
+        throw new BadRequest("Marketplace not found");
+      }
 
       const product = await prisma.product.findFirst({
         where: {

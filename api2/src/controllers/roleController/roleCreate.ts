@@ -8,6 +8,8 @@ export async function roleCreate(app: FastifyInstance) {
     "/role",
     {
       schema: {
+        summary: "Creation of role.",
+        tags: ["Post"],
         body: z.object({
           roleName: z.string({
             invalid_type_error: "O nome precisa ser um texto"

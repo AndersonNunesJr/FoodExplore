@@ -10,6 +10,8 @@ export async function favoritesCreate(app: FastifyInstance) {
     "/:userId/favorites",
     {
       schema: {
+        summary: "Adding products from user favorites.",
+        tags: ["Post"],
         body: z.object({
           productsId: z.string().uuid()
         }),

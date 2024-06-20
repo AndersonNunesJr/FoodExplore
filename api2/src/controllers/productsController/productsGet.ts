@@ -3,13 +3,13 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 
-// import { BadRequest } from "../../routes/_errors/bad-request";
-
 export async function productsGet(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     "/products",
     {
       schema: {
+        summary: "Get product from all marketplace.",
+        tags: ["Get"],
         response: {
           201: z.object({
             result: z.array(

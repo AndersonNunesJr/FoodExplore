@@ -10,6 +10,8 @@ export async function favoritesDelete(app: FastifyInstance) {
     "/:userId/favorites/delete",
     {
       schema: {
+        summary: "Delete products from user favorites.",
+        tags: ["Delete"],
         body: z.object({
           productsId: z.string()
         }),

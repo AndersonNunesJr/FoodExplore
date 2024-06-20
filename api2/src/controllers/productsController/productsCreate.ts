@@ -9,12 +9,15 @@ export async function productsCreate(app: FastifyInstance) {
     "/:marketId/products",
     {
       schema: {
+        summary: "Create marketplace product.",
+        tags: ["Post"],
         body: z.object({
           name: z.string(),
           tag: z.array(z.string()).nullish(),
           description: z.string(),
           category: z.string(),
-          price: z.string()
+          price: z.string(),
+          productImg: z.string().nullish()
         }),
         params: z.object({
           marketId: z.string().uuid()
@@ -33,19 +36,26 @@ export async function productsCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { name, description, tag, price, category } = req.body;
+      const { name, description, tag, price, category, productImg } = req.body;
       const { marketId } = req.params;
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
-      const a = await prisma.product.findFirst({
+      const marketplace = await prisma.marketplace.findUnique({
+        where: { id: marketId }
+      });
+      if (!marketplace) {
+        throw new BadRequest("Marketplace not found");
+      }
+
+      const findProduct = await prisma.product.findFirst({
         where: {
           title: name,
           marketplaceId: marketId
         }
       });
 
-      if (a) {
+      if (findProduct) {
         throw new BadRequest("There is already a product with that name");
       }
 
@@ -56,14 +66,16 @@ export async function productsCreate(app: FastifyInstance) {
           description,
           category,
           price,
-          marketplaceId: marketId
+          marketplaceId: marketId,
+          productImg
         },
         select: {
           id: true,
           title: true,
           description: true,
           category: true,
-          price: true
+          price: true,
+          productImg: true
         }
       });
 

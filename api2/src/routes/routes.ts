@@ -1,4 +1,5 @@
 import { favoritesRotes } from "../controllers/favoritesController/favoritesRoutes";
+import { marketRotes } from "../controllers/marketController/marketRoutes";
 import { orderRotes } from "../controllers/orderController/orderRotes";
 import { productsRotes } from "../controllers/productsController/productsRoutes";
 import { roleCreate } from "../controllers/roleController/roleCreate";
@@ -11,4 +12,5 @@ export const routes = async () => {
   app.register(productsRotes);
   app.register(favoritesRotes);
   app.register(orderRotes);
+  app.register(marketRotes);
 };

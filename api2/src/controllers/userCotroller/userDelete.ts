@@ -11,6 +11,8 @@ export async function userDelete(app: FastifyInstance) {
     "/delete/user",
     {
       schema: {
+        summary: "Delete user.",
+        tags: ["Delete"],
         body: z.object({
           email: z.string().email(),
           password: z.string()
