@@ -7,8 +7,8 @@ import { userRotes } from "../controllers/userCotroller/userRotes";
 import { app } from "../server";
 
 export const routes = async () => {
-  app.register(userRotes);
   app.register(roleCreate);
+  app.register(userRotes);
   app.register(productsRotes);
   app.register(favoritesRotes);
   app.register(orderRotes);
