@@ -9,9 +9,13 @@ import {
   validatorCompiler
 } from "fastify-type-provider-zod";
 import { routes } from "./routes/routes";
+// import fastifyMultipart from "@fastify/multipart";
+
+// Registro do plugin fastify-multipart
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
+// app.register(fastifyMultipart);
 app.register(fastifyCors, {
   origin: "*"
 });

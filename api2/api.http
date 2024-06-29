@@ -39,7 +39,7 @@ Content-Type: application/json
 
 ###                           
                               ////////MarketId//////////////
-POST http://localhost:3333/11faaed1-3f5a-40e5-a167-8639f8eabbc9/products
+POST http://localhost:3333/b20596ac-46f9-4ccd-bd54-e4ad01afb607/products
 Content-Type: application/json
 
 {
