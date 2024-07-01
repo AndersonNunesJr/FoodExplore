@@ -9,20 +9,20 @@ import {
   validatorCompiler
 } from "fastify-type-provider-zod";
 import { routes } from "./routes/routes";
-// import fastifyMultipart from "@fastify/multipart";
+import fastifyMultipart from "@fastify/multipart";
 
 // Registro do plugin fastify-multipart
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
-// app.register(fastifyMultipart);
+app.register(fastifyMultipart);
 app.register(fastifyCors, {
   origin: "*"
 });
 
 app.register(fastifySwagger, {
   swagger: {
-    consumes: ["application/json"],
+    consumes: ["application/json", "multipart/form-data"],
     produces: ["application/json"],
     info: {
       title: "FoodExplore",

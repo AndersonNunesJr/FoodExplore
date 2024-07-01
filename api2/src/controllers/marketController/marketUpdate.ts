@@ -16,8 +16,7 @@ export async function marketUpdate(app: FastifyInstance) {
         }),
         body: z.object({
           name: z.string().optional(),
-          description: z.string().optional(),
-          profileImg: z.string().nullish()
+          description: z.string().optional()
         }),
         response: {
           201: z.object({
@@ -28,7 +27,7 @@ export async function marketUpdate(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { marketplaceId } = req.params;
-      const { name, description, profileImg } = req.body;
+      const { name, description } = req.body;
 
       const marketplace = await prisma.marketplace.findUnique({
         where: { id: marketplaceId }
@@ -43,8 +42,7 @@ export async function marketUpdate(app: FastifyInstance) {
         },
         data: {
           storename: name,
-          description,
-          profilePicture: profileImg
+          description
         }
       });
       if (!updateMarket) {

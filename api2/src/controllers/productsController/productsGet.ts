@@ -20,6 +20,7 @@ export async function productsGet(app: FastifyInstance) {
                 description: z.string().nullable(),
                 category: z.string().nullable(),
                 price: z.string(),
+                productImg: z.string().nullable(),
                 marketplace: z
                   .object({
                     storename: z.string().nullable()
@@ -40,6 +41,7 @@ export async function productsGet(app: FastifyInstance) {
           description: true,
           category: true,
           price: true,
+          productImg: true,
           marketplace: {
             select: {
               storename: true
