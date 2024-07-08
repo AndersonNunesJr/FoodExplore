@@ -7,7 +7,7 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function favoritesCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/:userId/favorites",
+    "/:userId/create",
     {
       schema: {
         summary: "Adding products from user favorites.",

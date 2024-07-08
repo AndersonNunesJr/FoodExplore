@@ -5,7 +5,7 @@ import { prisma } from "../../lib/prisma";
 
 export async function roleCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/role",
+    "/",
     {
       schema: {
         summary: "Creation of role.",

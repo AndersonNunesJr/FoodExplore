@@ -1,24 +1,34 @@
 ////////////////// USERS SECTION///////////////////////
 
 ###
-POST http://localhost:3333/user
+
+POST http://localhost:3333/sign
 Content-Type: application/json
 
 {
    "email":"a10@email.com",
+   "password":"12345678"
+}
+
+###
+POST http://localhost:3333/user
+Content-Type: application/json
+
+{
+   "email":"a007@email.com",
    "name":"anderson",
    "password":"12345678",
    "role":"admin",
-   "marketplace":"ze1"
+   "marketplace":"ze2"
 
 }
 
 ###
-DELETE http://localhost:3333/delete/user
+DELETE http://localhost:3333/delete/946c2444-6e65-4d5f-a2ed-7393c6e61b61
 Content-Type: application/json
 
 {
-   "email":"anderson@email.com",
+   "email":"a10@email.com",
    "password":"12345678"
 }
 
@@ -39,7 +49,7 @@ Content-Type: application/json
 
 ###                           
                               ////////MarketId//////////////
-POST http://localhost:3333/b20596ac-46f9-4ccd-bd54-e4ad01afb607/products
+POST http://localhost:3333/products/29004bf6-dd96-485d-b2eb-036c1b4ab37b
 Content-Type: application/json
 
 {
@@ -76,7 +86,7 @@ POST http://localhost:3333/role
 Content-Type: application/json
 
 {
-   "roleName":"admin"
+   "roleName":"lol"
 }
 
 ###

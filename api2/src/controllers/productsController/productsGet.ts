@@ -5,7 +5,7 @@ import { prisma } from "../../lib/prisma";
 
 export async function productsGet(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/products",
+    "/",
     {
       schema: {
         summary: "Get product from all marketplace.",

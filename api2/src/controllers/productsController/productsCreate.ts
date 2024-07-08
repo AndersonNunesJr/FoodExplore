@@ -6,7 +6,7 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function productsCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/:marketId/products",
+    "/:marketId",
     {
       schema: {
         summary: "Create marketplace product.",

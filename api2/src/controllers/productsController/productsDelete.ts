@@ -6,7 +6,7 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function productsDelete(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/:marketId/delete/products",
+    "/:marketId/delete",
     {
       schema: {
         summary: "Delete marketplace product.",

@@ -8,16 +8,23 @@ import {
   serializerCompiler,
   validatorCompiler
 } from "fastify-type-provider-zod";
-import { routes } from "./routes/routes";
 import fastifyMultipart from "@fastify/multipart";
+import fastifyJwt from "@fastify/jwt";
+import { routes } from "./routes/routes";
 
-// Registro do plugin fastify-multipart
+import { env } from "process";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(fastifyMultipart);
 app.register(fastifyCors, {
   origin: "*"
+});
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET_PASSWORD
+    ? env.JWT_SECRET_PASSWORD
+    : "env.JWT_SECRET_PASSWORD"
 });
 
 app.register(fastifySwagger, {
@@ -43,6 +50,15 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.register(routes);
 
-app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
-  console.log("HTTP server running!");
-});
+const start = async () => {
+  try {
+    app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
+      console.log("HTTP server running!");
+    });
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();

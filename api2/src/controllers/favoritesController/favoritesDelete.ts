@@ -7,7 +7,7 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function favoritesDelete(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/:userId/favorites/delete",
+    "/:userId/delete",
     {
       schema: {
         summary: "Delete products from user favorites.",

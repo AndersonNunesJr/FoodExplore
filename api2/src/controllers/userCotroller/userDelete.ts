@@ -8,7 +8,7 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function userDelete(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/delete/user",
+    "/delete/:userId",
     {
       schema: {
         summary: "Delete user.",
@@ -16,6 +16,9 @@ export async function userDelete(app: FastifyInstance) {
         body: z.object({
           email: z.string().email(),
           password: z.string()
+        }),
+        params: z.object({
+          userId: z.string().uuid()
         }),
         response: {
           201: z.object({
@@ -26,14 +29,30 @@ export async function userDelete(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { email, password } = req.body;
+      const { userId } = req.params;
+
+      const userID = await prisma.user.findUnique({
+        select: {
+          id: true
+        },
+        where: {
+          id: userId
+        }
+      });
 
       const oldPasswordResult = await prisma.user.findUnique({
         select: {
-          password: true
+          password: true,
+          id: true
         },
         where: { email }
       });
 
+      if (userID?.id !== oldPasswordResult?.id) {
+        throw new BadRequest(
+          "User not compatible due to lack of compatibility"
+        );
+      }
       if (!oldPasswordResult) {
         throw new BadRequest("User not found");
       }
