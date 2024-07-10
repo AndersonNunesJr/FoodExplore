@@ -71,8 +71,12 @@ Content-Type: application/json
 }
 
 ### 
-GET  http://localhost:3333/products
+POST   http://localhost:3333/products
 Content-Type: application/json
+
+{
+   "name": "pao"
+}
 
 ###                         ////////MarketId//////////////
 GET http://localhost:3333/b26113ca-a6e2-4726-8b12-2358cc2c11a5
