@@ -7,16 +7,13 @@ import { roleCreate } from "../controllers/roleController/roleCreate";
 import { userRotes } from "../controllers/userCotroller/@userRotes";
 import { app } from "../server";
 import { AuthMiddleware } from "../utils/AuthMiddleware";
-import { AuthController } from "../utils/AuthController";
+import { Sign } from "../sign/signOut/Sign";
 import { userCreate } from "../controllers/userCotroller/userCreate";
 import { productsGet } from "../controllers/productsController/productsGet";
 
 async function privateRoutes(app: FastifyInstance) {
   app.addHook("preHandler", AuthMiddleware);
 
-  app.register(roleCreate, {
-    prefix: "/role"
-  });
   app.register(userRotes, { prefix: "/user" });
 
   app.register(productsRotes, {
@@ -32,12 +29,19 @@ async function privateRoutes(app: FastifyInstance) {
 }
 
 async function publicRoutes(app: FastifyInstance) {
-  app.register(AuthController, { prefix: "/sign" });
+  app.register(Sign, { prefix: "/sign" });
   app.register(userCreate, { prefix: "/user" });
   app.register(productsGet, { prefix: "/products" });
+}
+
+async function projectAdmin(app: FastifyInstance) {
+  app.register(roleCreate, {
+    prefix: "/role"
+  });
 }
 
 export const routes = async () => {
   app.register(privateRoutes);
   app.register(publicRoutes);
+  app.register(projectAdmin);
 };

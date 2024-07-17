@@ -4,6 +4,7 @@ import z from "zod";
 import { prisma } from "../../lib/prisma";
 import { BadRequest } from "../../routes/_errors/bad-request";
 import { createClient } from "@supabase/supabase-js";
+import { CookieController } from "../../utils/CookieController";
 
 const supabaseUrl = process.env.SUPABASE_URI!;
 const supabaseKey = process.env.SUPABASE_KEY!;
@@ -31,12 +32,23 @@ export async function marketPicture(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { marketId } = req.params;
+      const token = req.cookies.token;
+      const userCookie = await CookieController(token);
 
       const marketplace = await prisma.marketplace.findUnique({
         where: { id: marketId }
       });
       if (!marketplace) {
         throw new BadRequest("Marketplace not found");
+      }
+      const findUser = await prisma.user.findFirst({
+        where: {
+          AND: [{ id: marketplace.userId }, { email: userCookie.email }]
+        }
+      });
+
+      if (!findUser) {
+        throw new BadRequest("Operation not permitted");
       }
 
       const data = await req.file();

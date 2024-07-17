@@ -1,12 +1,13 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 import bcrypt from "bcrypt";
 
-import { BadRequest } from "../routes/_errors/bad-request";
+import { BadRequest } from "../../routes/_errors/bad-request";
+import { env } from "process";
 
-export async function AuthController(app: FastifyInstance) {
+export async function Sign(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/",
     {
@@ -59,14 +60,21 @@ export async function AuthController(app: FastifyInstance) {
 
       const token = app.jwt.sign({ email });
 
-      return reply.status(201).send({
-        user: {
-          id: oldPasswordResult.id,
-          name: oldPasswordResult.name,
-          email: oldPasswordResult.email
-        },
-        token
-      });
+      return reply
+        .status(201)
+        .send({
+          user: {
+            id: oldPasswordResult.id,
+            name: oldPasswordResult.name,
+            email: oldPasswordResult.email
+          },
+          token
+        })
+        .setCookie("token", token, {
+          maxAge: 86400,
+          httpOnly: true,
+          secure: env.NODE_ENV === "production"
+        });
     }
   );
 }

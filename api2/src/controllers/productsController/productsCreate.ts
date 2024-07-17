@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 import { BadRequest } from "../../routes/_errors/bad-request";
+import { CookieController } from "../../utils/CookieController";
 
 export async function productsCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -39,6 +40,8 @@ export async function productsCreate(app: FastifyInstance) {
     async (req, reply) => {
       const { name, description, tag, price, category, productImg } = req.body;
       const { marketId } = req.params;
+      const token = req.cookies.token;
+      const userCookie = await CookieController(token);
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
@@ -47,6 +50,16 @@ export async function productsCreate(app: FastifyInstance) {
       });
       if (!marketplace) {
         throw new BadRequest("Marketplace not found");
+      }
+
+      const findUser = await prisma.user.findFirst({
+        where: {
+          AND: [{ id: marketplace.userId }, { email: userCookie.email }]
+        }
+      });
+
+      if (!findUser) {
+        throw new BadRequest("Operation not permitted");
       }
 
       const findProduct = await prisma.product.findFirst({
@@ -58,6 +71,21 @@ export async function productsCreate(app: FastifyInstance) {
 
       if (findProduct) {
         throw new BadRequest("There is already a product with that name");
+      }
+
+      if (tag) {
+        const createTagsPromises = tag.map((tagName) =>
+          prisma.tag
+            .create({
+              data: {
+                name: tagName
+              }
+            })
+            .catch((error) => {
+              console.error(`Erro ao criar tag ${tagName}:`, error);
+            })
+        );
+        console.log(createTagsPromises);
       }
 
       const products = await prisma.product.create({

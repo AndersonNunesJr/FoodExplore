@@ -5,7 +5,6 @@ export async function AuthMiddleware(
   reply: FastifyReply
 ) {
   try {
-    console.log(request.jwtVerify());
     await request.jwtVerify();
   } catch (err) {
     reply.send(err);

@@ -15,12 +15,10 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"a007@email.com",
+   "email":"anunes25@email.com",
    "name":"anderson",
-   "password":"12345678",
-   "role":"admin",
-   "marketplace":"ze2"
-
+   "password":"",
+   "role":"projectAdmin"
 }
 
 ###
@@ -53,7 +51,7 @@ POST http://localhost:3333/products/29004bf6-dd96-485d-b2eb-036c1b4ab37b
 Content-Type: application/json
 
 {
-   "name":"ovo2",
+   "name":"ovo27",
    "tag":["pao","ovo","alface"],
    "description":"Pao molhado com ovo mole.",
    "category":"refeição",

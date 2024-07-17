@@ -6,7 +6,7 @@ import { prisma } from "../../lib/prisma";
 import { BadRequest } from "../../routes/_errors/bad-request";
 
 export async function orderUpdate(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().post(
+  app.withTypeProvider<ZodTypeProvider>().put(
     "/:marketplaceId/status",
     {
       schema: {

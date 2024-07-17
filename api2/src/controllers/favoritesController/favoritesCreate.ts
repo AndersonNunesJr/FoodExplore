@@ -4,6 +4,7 @@ import z from "zod";
 import { prisma } from "../../lib/prisma";
 
 import { BadRequest } from "../../routes/_errors/bad-request";
+import { CookieController } from "../../utils/CookieController";
 
 export async function favoritesCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -28,12 +29,23 @@ export async function favoritesCreate(app: FastifyInstance) {
     async (req, reply) => {
       const { productsId } = req.body;
       const { userId } = req.params;
+      const token = req.cookies.token;
+      const userCookie = await CookieController(token);
 
       const user = await prisma.user.findUnique({
         where: { id: userId }
       });
       if (!user) {
         throw new BadRequest("User not found");
+      }
+
+      const findUser = await prisma.user.findFirst({
+        where: {
+          AND: [{ id: userId }, { email: userCookie.email }]
+        }
+      });
+      if (!findUser) {
+        throw new BadRequest("Operation not permitted");
       }
 
       const product = await prisma.product.findUnique({

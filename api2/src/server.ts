@@ -10,6 +10,8 @@ import {
 } from "fastify-type-provider-zod";
 import fastifyMultipart from "@fastify/multipart";
 import fastifyJwt from "@fastify/jwt";
+import cookie from "@fastify/cookie";
+import type { FastifyCookieOptions } from "@fastify/cookie";
 import { routes } from "./routes/routes";
 
 import { env } from "process";
@@ -17,8 +19,10 @@ import { env } from "process";
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(fastifyMultipart);
+
 app.register(fastifyCors, {
-  origin: "*"
+  origin: "*",
+  credentials: true
 });
 
 app.register(fastifyJwt, {
@@ -26,6 +30,11 @@ app.register(fastifyJwt, {
     ? env.JWT_SECRET_PASSWORD
     : "env.JWT_SECRET_PASSWORD"
 });
+
+app.register(cookie, {
+  secret: process.env.COOKIE_SECRET,
+  parseOptions: {}
+} as FastifyCookieOptions);
 
 app.register(fastifySwagger, {
   swagger: {
