@@ -6,8 +6,8 @@ POST http://localhost:3333/sign
 Content-Type: application/json
 
 {
-   "email":"a10@email.com",
-   "password":"12345678"
+   "email":"",
+   "password":""
 }
 
 ###
@@ -15,29 +15,29 @@ POST http://localhost:3333/user
 Content-Type: application/json
 
 {
-   "email":"anunes25@email.com",
-   "name":"anderson",
+   "email":"",
+   "name":"",
    "password":"",
-   "role":"projectAdmin"
+   "role":""
 }
 
 ###
-DELETE http://localhost:3333/delete/946c2444-6e65-4d5f-a2ed-7393c6e61b61
+DELETE http://localhost:3333/delete///////////userId/////////////
 Content-Type: application/json
 
 {
-   "email":"a10@email.com",
-   "password":"12345678"
+   "email":"",
+   "password":""
 }
 
 ###
-                            //////////userId/////////////
-POST  http://localhost:3333/4a06855e-b9ce-466f-bfba-c5006474bf19
+                            
+POST  http://localhost:3333///////////userId/////////////
 Content-Type: application/json
 
 {
-   "email":"a1@email.com",
-   "password":"12345678"
+   "email":"",
+   "password":""
 }
 
 ###
@@ -46,26 +46,26 @@ Content-Type: application/json
 
 
 ###                           
-                              ////////MarketId//////////////
-POST http://localhost:3333/products/29004bf6-dd96-485d-b2eb-036c1b4ab37b
+                              
+POST http://localhost:3333/products/////////MarketId//////////////
 Content-Type: application/json
 
 {
-   "name":"ovo27",
-   "tag":["pao","ovo","alface"],
-   "description":"Pao molhado com ovo mole.",
-   "category":"refeição",
-   "price":"18,50"
+   "name":"",
+   "tag":[""],
+   "description":"",
+   "category":"",
+   "price":""
 }
 
 ###
 
-DELETE http://localhost:3333/b26113ca-a6e2-4726-8b12-2358cc2c11a5/delete/products
+DELETE http://localhost:3333/////////MarketId///////////////delete/products
 Content-Type: application/json
 
 {
-   "idProduct":"a6fb590e-2108-454a-a7ad-9da844b2721d",
-   "name":"Pao Com Ovo"
+   "idProduct":"",
+   "name":""
 }
 
 ### 
@@ -73,11 +73,11 @@ POST   http://localhost:3333/products
 Content-Type: application/json
 
 {
-   "name": "pao"
+   "name": ""
 }
 
-###                         ////////MarketId//////////////
-GET http://localhost:3333/b26113ca-a6e2-4726-8b12-2358cc2c11a5
+###                        
+GET http://localhost:3333/////////MarketId//////////////
 Content-Type: application/json
 
 ////////////////////ROLE SECTION///////////////////////////
@@ -88,7 +88,7 @@ POST http://localhost:3333/role
 Content-Type: application/json
 
 {
-   "roleName":"lol"
+   "roleName":""
 }
 
 ###
@@ -96,26 +96,26 @@ Content-Type: application/json
 ////////////////////FAVORITES SECTION///////////////////////////
 
 ###
-                                    ////userId////
+                                   
 
-POST http://localhost:3333/4a06855e-b9ce-466f-bfba-c5006474bf19/favorites
+POST http://localhost:3333/ ////userId/////favorites
 Content-Type: application/json
 
 {
       
-      "productsId":"f7f37546-acc9-4837-8560-56febeb4b615" 
+      "productsId":"" 
 }
 
 ###
-DELETE http://localhost:3333/894d58c6-4f02-4ae7-b3c2-d3bc47775b3a/favorites/delete
+DELETE http://localhost:3333/ ////userId/////favorites/delete
 Content-Type: application/json
 
 {
-   "productsId":"f7f37546-acc9-4837-8560-56febeb4b615" 
+   "productsId":"" 
 }
 
 ###
-GET  http://localhost:3333/4a06855e-b9ce-466f-bfba-c5006474bf19/favorites
+GET  http://localhost:3333/ ////userId/////favorites
 Content-Type: application/json
 
 
@@ -124,32 +124,30 @@ Content-Type: application/json
 ////////////////////ORDER SECTION///////////////////////////
 
 ###
-POST   http://localhost:3333/4a06855e-b9ce-466f-bfba-c5006474bf19/order
+POST   http://localhost:3333///////user-id///////order
 Content-Type: application/json
 
 {  
    
-   "marketplaceId":"b26113ca-a6e2-4726-8b12-2358cc2c11a5",
-   "details":["1x pao","2x ovo"]
+   "marketplaceId":"",
+   "details":[""]
 }
 
-////a0b9d168-6fb2-49d9-a585-82cce8827f5a/////clxami5sk0001xyft0oouf50g  
-///  🟡 Pendente  🟠 Preparando 🟢 Entregue  🔴 Cancelado
 
 
-###                              /////user-id ou  marketid//////
-GET http://localhost:3333/40e51da9-e789-4fe0-883c-ca92e8a142e3/status
+###                              
+GET http://localhost:3333//////user-id ou  marketid///////status
 Content-Type: application/json
  
 
-###                              ////marketId////                      
-POST  http://localhost:3333/cf116e9c-c566-46a6-bc95-9c117fd0ee9c/status
+###                                                  
+POST  http://localhost:3333/ ////marketId//// /status
 Content-Type: application/json
 
 {
-   "code":"clxay2nu30000lluspwykn7wf",
-   "status":" 🟢 aki foi",
-   "userId":"4a06855e-b9ce-466f-bfba-c5006474bf19"
+   "code":"",
+   "status":"",
+   "userId":""
 }
 
 ###

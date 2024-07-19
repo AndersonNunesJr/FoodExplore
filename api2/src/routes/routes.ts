@@ -7,7 +7,7 @@ import { roleCreate } from "../controllers/roleController/roleCreate";
 import { userRotes } from "../controllers/userCotroller/@userRotes";
 import { app } from "../server";
 import { AuthMiddleware } from "../utils/AuthMiddleware";
-import { Sign } from "../sign/signOut/Sign";
+import { Sign } from "../controllers/sign/Sign";
 import { userCreate } from "../controllers/userCotroller/userCreate";
 import { productsGet } from "../controllers/productsController/productsGet";
 
@@ -35,6 +35,7 @@ async function publicRoutes(app: FastifyInstance) {
 }
 
 async function projectAdmin(app: FastifyInstance) {
+  app.addHook("preHandler", AuthMiddleware);
   app.register(roleCreate, {
     prefix: "/role"
   });

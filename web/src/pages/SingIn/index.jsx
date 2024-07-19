@@ -1,19 +1,38 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Form, Background } from "./styles.js";
 import { Button, Input } from "../../components";
+import { useAuth } from "../../hooks/auth";
 
 export function SingIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { signIn } = useAuth();
+
+  function handleSignIn() {
+    signIn({ email, password });
+  }
+
   return (
     <Container>
       <Background />
       <Form>
         <h1>Faça login</h1>
         <label htmlFor="Email">Email:</label>
-        <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
+        <Input
+          type="text"
+          placeholder="Ex: exemplo@exemplo.com.br"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <label htmlFor="Password">Senha:</label>
-        <Input type="text" placeholder="No mínimo 6 caracteres " />
-        <Button title="Entrar" />
+        <Input
+          type="text"
+          placeholder="No mínimo 6 caracteres "
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button title="Entrar" onClick={handleSignIn} />
         <Link to="/register">Criar uma conta</Link>
       </Form>
     </Container>

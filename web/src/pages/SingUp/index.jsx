@@ -1,14 +1,40 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Form, Background } from "./styles.js";
 import { Button, Input } from "../../components";
-import { useState } from "react";
+import { api } from "../../services/api.js";
 
 export function SingUp() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState("customer");
+
+  const navigate = useNavigate();
 
   const handleSelectRole = (role) => {
     setSelectedRole(role);
   };
+
+  function handleSingUp() {
+    if (!name || !email || !password) {
+      return alert("Preencha todos os campos!");
+    }
+
+    api
+      .post("/user", { name, email, password })
+      .then(() => {
+        alert("Usuário cadastrado com sucesso!");
+        navigate("/");
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert("Não foi possível cadastrar.");
+        }
+      });
+  }
 
   return (
     <Container>
