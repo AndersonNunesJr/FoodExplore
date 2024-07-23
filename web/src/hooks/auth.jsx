@@ -9,7 +9,7 @@ function AuthProvider({ children }) {
 
   async function signIn({ email, password }) {
     try {
-      const response = await api.post("/sign", { email, password });
+      const response = await api.post("/sing", { email, password });
       const { user, token } = response.data;
 
       localStorage.setItem("@Foodexplore:user", JSON.stringify(user));

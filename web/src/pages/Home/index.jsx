@@ -8,7 +8,7 @@ export function Home() {
       <Navbar />
       <div className="content">
         <Header />
-        <Carrossel title={"Refeição"}>
+        {/* <Carrossel title={"Refeição"}>
           <Card
             title={"ovo1"}
             description={"ovo "}
@@ -86,7 +86,7 @@ export function Home() {
             img={img}
             imgText={""}
           />
-        </Carrossel>
+        </Carrossel> */}
         <Carrossel title={"Sobremesas"}></Carrossel>
         <Carrossel title={"Bebidas"}></Carrossel>
       </div>

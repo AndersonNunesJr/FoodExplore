@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import { BadRequest } from "../../routes/_errors/bad-request";
 import { env } from "process";
 
-export async function Sign(app: FastifyInstance) {
+export async function Sing(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     "/",
     {

@@ -9,6 +9,7 @@ export function SingUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState("customer");
+  const [marketPlace, setMarketPlace] = useState("");
 
   const navigate = useNavigate();
 
@@ -20,9 +21,9 @@ export function SingUp() {
     if (!name || !email || !password) {
       return alert("Preencha todos os campos!");
     }
-
+    const role = selectedRole;
     api
-      .post("/user", { name, email, password })
+      .post("/user", { name, email, password, role, marketPlace })
       .then(() => {
         alert("Usuário cadastrado com sucesso!");
         navigate("/");
@@ -44,13 +45,25 @@ export function SingUp() {
           <h1>Crie sua conta</h1>
 
           <label htmlFor="Name">Seu nome:</label>
-          <Input type="text" placeholder="Ex: Maria da Silva" />
+          <Input
+            type="text"
+            placeholder="Ex: Maria da Silva"
+            onChange={(e) => setName(e.target.value)}
+          />
 
           <label htmlFor="Email">Email:</label>
-          <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
+          <Input
+            type="text"
+            placeholder="Ex: exemplo@exemplo.com.br"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label htmlFor="Password">Senha:</label>
-          <Input type="text" placeholder="No mínimo 6 caracteres " />
+          <Input
+            type="password"
+            placeholder="No mínimo 6 caracteres "
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <div className="userRole">
             <label htmlFor="admin">Administrador:</label>
             <input
@@ -65,7 +78,7 @@ export function SingUp() {
               onChange={() => handleSelectRole("customer")}
             />
           </div>
-          <Button title="Criar conta" />
+          <Button title="Criar conta" onClick={handleSingUp} />
           <Link to="/">Já tenho uma conta</Link>
         </Form>
       ) : (
@@ -76,13 +89,17 @@ export function SingUp() {
           <Input type="text" placeholder="Ex: Maria da Silva" />
 
           <label htmlFor="Name">Nome da loja</label>
-          <Input type="text" placeholder="Ex: Mc dona" />
+          <Input
+            type="text"
+            placeholder="Ex: Mc dona"
+            onChange={(e) => setMarketPlace(e.target.value)}
+          />
 
           <label htmlFor="Email">Email:</label>
           <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
 
           <label htmlFor="Password">Senha:</label>
-          <Input type="text" placeholder="No mínimo 6 caracteres " />
+          <Input type="password" placeholder="No mínimo 6 caracteres " />
           <div className="userRole">
             <label htmlFor="admin">Administrador:</label>
             <input
@@ -97,7 +114,7 @@ export function SingUp() {
               onChange={() => handleSelectRole("customer")}
             />
           </div>
-          <Button title="Criar conta" />
+          <Button title="Criar conta" onClick={handleSingUp} />
           <Link to="/">Já tenho uma conta</Link>
         </Form>
       )}

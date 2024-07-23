@@ -3,12 +3,18 @@ import { PiReceiptLight, PiSignOutBold } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
 import { logo, adminLogo } from "../../assets/_index";
 import { Input, Button } from "../index";
+import { useAuth } from "../../hooks/auth";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export function Navbar() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const { signOut } = useAuth();
+
+  function handleSignout() {
+    signOut({});
+  }
 
   const numeroDePedidos = 5;
   return (
@@ -30,7 +36,7 @@ export function Navbar() {
       <Link to="/pay">
         <Button title={`Pedidos (${numeroDePedidos})`} icon={PiReceiptLight} />
       </Link>
-      <button className="Signout">
+      <button className="Signout" onClick={handleSignout}>
         <PiSignOutBold size={26} />
       </button>
     </Container>

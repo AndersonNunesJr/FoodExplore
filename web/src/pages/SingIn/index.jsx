@@ -28,7 +28,7 @@ export function SingIn() {
 
         <label htmlFor="Password">Senha:</label>
         <Input
-          type="text"
+          type="password"
           placeholder="No mínimo 6 caracteres "
           onChange={(e) => setPassword(e.target.value)}
         />
