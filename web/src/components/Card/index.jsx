@@ -3,7 +3,7 @@ import { Container } from "./styles";
 import { IoMdRemove, IoMdAdd, IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 
-export function Card({ title, description, value, img, imgText }) {
+export function Card({ data, ...rest }) {
   const [quantidade, setQuantidade] = useState("1");
   const [isTyping, setIsTyping] = useState(false);
   const titleTransition = useRef(null);
@@ -38,15 +38,15 @@ export function Card({ title, description, value, img, imgText }) {
           {!isTyping ? <IoMdHeartEmpty size={24} /> : <IoMdHeart size={24} />}
         </button>
       </div>
-      <img src={img} alt={imgText} className="img" />
+      <img src={data.productImg} alt={data.title} className="img" />
       <div className="title">
         <h1 ref={titleTransition}>
-          {title}
+          {data.title}
           {" >"}
         </h1>
       </div>
-      <p className="description">{description}</p>
-      <h2 className="value">R$ {value}</h2>
+      <p className="description">{data.description}</p>
+      <h2 className="value">R$ {data.price}</h2>
       <div className="btn-display">
         <button className="btn" onClick={handleButton} title="btn-remove">
           <IoMdRemove size={24} />

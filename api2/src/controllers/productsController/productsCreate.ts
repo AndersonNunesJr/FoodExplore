@@ -40,8 +40,8 @@ export async function productsCreate(app: FastifyInstance) {
     async (req, reply) => {
       const { name, description, tag, price, category, productImg } = req.body;
       const { marketId } = req.params;
-      const token = req.cookies.token;
-      const userCookie = await CookieController(token);
+      // const token = req.cookies.token;
+      // const userCookie = await CookieController(token);
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
@@ -52,15 +52,15 @@ export async function productsCreate(app: FastifyInstance) {
         throw new BadRequest("Marketplace not found");
       }
 
-      const findUser = await prisma.user.findFirst({
-        where: {
-          AND: [{ id: marketplace.userId }, { email: userCookie.email }]
-        }
-      });
+      // const findUser = await prisma.user.findFirst({
+      //   where: {
+      //     AND: [{ id: marketplace.userId }, { email: userCookie.email }]
+      //   }
+      // });
 
-      if (!findUser) {
-        throw new BadRequest("Operation not permitted");
-      }
+      // if (!findUser) {
+      //   throw new BadRequest("Operation not permitted");
+      // }
 
       const findProduct = await prisma.product.findFirst({
         where: {

@@ -86,7 +86,11 @@ export function SingUp() {
           <h1>Crie a conta da loja</h1>
 
           <label htmlFor="Name">Seu nome:</label>
-          <Input type="text" placeholder="Ex: Maria da Silva" />
+          <Input
+            type="text"
+            placeholder="Ex: Maria da Silva"
+            onChange={(e) => setName(e.target.value)}
+          />
 
           <label htmlFor="Name">Nome da loja</label>
           <Input
@@ -96,10 +100,19 @@ export function SingUp() {
           />
 
           <label htmlFor="Email">Email:</label>
-          <Input type="text" placeholder="Ex: exemplo@exemplo.com.br" />
+          <Input
+            type="text"
+            placeholder="Ex: exemplo@exemplo.com.br"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label htmlFor="Password">Senha:</label>
-          <Input type="password" placeholder="No mínimo 6 caracteres " />
+          <Input
+            type="password"
+            placeholder="No mínimo 6 caracteres "
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
           <div className="userRole">
             <label htmlFor="admin">Administrador:</label>
             <input
@@ -114,6 +127,7 @@ export function SingUp() {
               onChange={() => handleSelectRole("customer")}
             />
           </div>
+
           <Button title="Criar conta" onClick={handleSingUp} />
           <Link to="/">Já tenho uma conta</Link>
         </Form>

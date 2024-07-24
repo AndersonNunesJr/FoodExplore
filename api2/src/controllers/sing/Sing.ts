@@ -23,7 +23,8 @@ export async function Sing(app: FastifyInstance) {
             user: z.object({
               id: z.string().nullish(),
               name: z.string().nullish(),
-              email: z.string().nullish()
+              email: z.string().nullish(),
+              role: z.string().nullish()
             }),
             token: z.string()
           })
@@ -33,21 +34,22 @@ export async function Sing(app: FastifyInstance) {
     async (req, reply) => {
       const { email, password } = req.body;
 
-      const oldPasswordResult = await prisma.user.findUnique({
+      const findUser = await prisma.user.findUnique({
         select: {
           id: true,
           name: true,
           email: true,
-          password: true
+          password: true,
+          Role: true
         },
         where: { email }
       });
 
-      if (!oldPasswordResult) {
+      if (!findUser) {
         throw new BadRequest("email/Password does not match");
       }
 
-      const oldPassword: string = oldPasswordResult.password;
+      const oldPassword: string = findUser.password;
 
       const correctOldPasswordComparison = await bcrypt.compare(
         password,
@@ -64,9 +66,10 @@ export async function Sing(app: FastifyInstance) {
         .status(201)
         .send({
           user: {
-            id: oldPasswordResult.id,
-            name: oldPasswordResult.name,
-            email: oldPasswordResult.email
+            id: findUser.id,
+            name: findUser.name,
+            email: findUser.email,
+            role: findUser.Role?.name
           },
           token
         })

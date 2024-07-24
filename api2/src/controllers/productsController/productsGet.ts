@@ -40,8 +40,8 @@ export async function productsGet(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { name } = req.body;
-
-      if (!name) {
+      const x = 1;
+      if (!name && x !== 1) {
         const result = await prisma.product.findMany({
           select: {
             id: true,
@@ -65,7 +65,7 @@ export async function productsGet(app: FastifyInstance) {
         where: {
           OR: [
             {
-              title: name
+              // title: name
             },
             {
               category: name
