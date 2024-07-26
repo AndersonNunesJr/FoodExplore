@@ -10,6 +10,7 @@ export function Carrossel({ children, title }) {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
+  
   // const refTimer = useRef(null);
 
   // setSearchTerm(title);
@@ -24,7 +25,6 @@ export function Carrossel({ children, title }) {
   //   }, 500);
   // };
 
-  const a = "sobremesa";
 
   useEffect(() => {
     async function fetchProducts() {
