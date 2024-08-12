@@ -48,8 +48,26 @@ export const Form = styled.form`
     }
 
     .add_img {
-      > button {
-        background: ${theme.getColorStyle("DARK_800")};
+      .custom-file-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        border-radius: 8px;
+        cursor: pointer;
+        gap: 15px;
+
+        background-color: ${theme.getColorStyle("DARK_800")};
+
+        color: ${theme.getColorStyle("LIGHT_400")};
+
+        > svg {
+          background: transparent;
+        }
+      }
+      .custom-file-input {
+        display: none;
       }
     }
 

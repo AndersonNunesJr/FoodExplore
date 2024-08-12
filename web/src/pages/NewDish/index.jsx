@@ -16,12 +16,14 @@ import {
 } from "react-icons/pi";
 import { api } from "../../services/api.js";
 import { useAuth } from "../../hooks/auth";
+import { Link } from "react-router-dom";
 
 export function New() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [productImg, setProductImg] = useState("");
+  const [defaulImg, setDefaulImg] = useState("");
   const [description, setDescription] = useState("");
   const [newTag, setNewTag] = useState("");
   const [tags, setTags] = useState([]);
@@ -32,9 +34,21 @@ export function New() {
     setNewTag("");
   }
 
+  function handleChangeImage(event) {
+    const file = event.target.files[0];
+    setProductImg(file);
+  }
+
+  function handleRemoveTag(deleted) {
+    setTags((prevState) => prevState.filter((tag) => tag !== deleted));
+  }
+
   function handleNewDish() {
-    if (!name || !tags || !price || !category || !description) {
+    if (!name || !price || !category || !description) {
       return alert("Preencha todos os campos!");
+    }
+    if (newTag) {
+      return alert("Confirme a tag , para adcionar-la.");
     }
     api
       .post(`/products/${user.marketId}`, {
@@ -42,7 +56,8 @@ export function New() {
         price,
         category,
         description,
-        tags
+        tags,
+        productImg
       })
       .then(() => {
         alert("Cadastrado com sucesso!");
@@ -60,16 +75,25 @@ export function New() {
     <Container>
       <Navbar />
       <Section>
-        <a href="/" className="back">
+        <Link href="/" className="back">
           <PiCaretLeftBold size={24} />
           <p>Voltar</p>
-        </a>
+        </Link>
         <Form>
           <h1>Adcionar prato</h1>
           <div className="details">
             <div className="add_img">
               <p>Imagem do prato</p>
-              <Button icon={PiUploadSimpleBold} title={"Selecione imagem"} />
+              <input
+                id="file-upload"
+                className="custom-file-input"
+                type="file"
+                onChange={handleChangeImage}
+              />
+              <label htmlFor="file-upload" className="custom-file-label">
+                <PiUploadSimpleBold />
+                Selecione uma imagem
+              </label>
             </div>
             <div className="name">
               <p>Nome</p>
@@ -87,20 +111,22 @@ export function New() {
                   id="seuSelect"
                   onChange={(e) => setCategory(e.target.value)}
                 >
-                  <option value="opcao1">Opção 1</option>
-                  <option value="opcao2">Opção 2</option>
-                  <option value="opcao3">Opção 3</option>
+                  <option value="Refeição">Refeição</option>
+                  <option value="Sobremesas">Sobremesas</option>
+                  <option value="Bebidas">Bebidas</option>
                 </select>
               </div>
             </div>
             <div className="tags">
               <p>Ingredientes</p>
               <div className="section_tag">
-                {/* <NewTag
-                  onChange={(e) => setNewTag(e.target.value)}
-                  value={"Pão Naan"}
-                  onClick={handleAddTag}
-                /> */}
+                {tags.map((tag, index) => (
+                  <NewTag
+                    key={String(index)}
+                    value={tag}
+                    onClick={() => handleRemoveTag(tag)}
+                  />
+                ))}
                 <NewTag
                   isNew
                   placeholder="Adicionar"

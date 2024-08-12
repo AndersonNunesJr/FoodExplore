@@ -3,7 +3,12 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../../lib/prisma";
 import { BadRequest } from "../../routes/_errors/bad-request";
-import { CookieController } from "../../utils/CookieController";
+import { createClient } from "@supabase/supabase-js";
+// import { CookieController } from "../../utils/CookieController";
+
+const supabaseUrl = process.env.SUPABASE_URI!;
+const supabaseKey = process.env.SUPABASE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function productsCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -25,13 +30,14 @@ export async function productsCreate(app: FastifyInstance) {
         }),
         response: {
           201: z.object({
-            products: z.object({
+            updatedProduct: z.object({
               id: z.string().uuid(),
               title: z.string(),
               tag: z.string().nullable(),
               description: z.string().nullish(),
               category: z.string().nullish(),
-              price: z.string()
+              price: z.string(),
+              productImg: z.string().nullable()
             })
           })
         }
@@ -42,6 +48,12 @@ export async function productsCreate(app: FastifyInstance) {
       const { marketId } = req.params;
       // const token = req.cookies.token;
       // const userCookie = await CookieController(token);
+      const data = await req.file();
+      if (!data) {
+        throw new BadRequest("File not uploaded");
+      }
+
+      const buffer = await data.toBuffer();
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
@@ -108,8 +120,51 @@ export async function productsCreate(app: FastifyInstance) {
           productImg: true
         }
       });
+      const filename = `${products.id}-${data.filename.replace(/\s+/g, "")}`;
 
-      return reply.status(201).send({ products });
+      if (products) {
+        // Delete the old image if it exists
+        const oldImagePath = products.productImg?.split("/").pop();
+        if (oldImagePath) {
+          const { error: deleteError } = await supabase.storage
+            .from("product-images")
+            .remove([oldImagePath]);
+
+          if (deleteError) {
+            throw new BadRequest("Failed to delete old image");
+          }
+        }
+      }
+
+      const { data: uploadData, error } = await supabase.storage
+        .from("product-images")
+        .upload(filename, buffer, {
+          contentType: data.mimetype
+        });
+
+      if (error) {
+        throw new BadRequest("Failed to upload image");
+      }
+
+      const productImgUrl = uploadData
+        ? `${supabaseUrl}/storage/v1/object/public/product-images/${uploadData.path}`
+        : null;
+
+      const updatedProduct = await prisma.product.update({
+        where: { id: products.id },
+        data: { productImg: productImgUrl },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          category: true,
+          price: true,
+          tag: true,
+          productImg: true
+        }
+      });
+
+      return reply.status(201).send({ updatedProduct });
     }
   );
 }
