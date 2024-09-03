@@ -12,14 +12,15 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function productsPicture(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/:productId/img",
+    "/:marketId/:name/img",
     {
       schema: {
         summary: "Create marketplace product.",
         tags: ["Post"],
         consumes: ["multipart/form-data"],
         params: z.object({
-          productId: z.string().uuid()
+          marketId: z.string().uuid(),
+          name: z.string()
         }),
         response: {
           201: z.object({
@@ -31,22 +32,12 @@ export async function productsPicture(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { productId } = req.params;
+      const { marketId, name } = req.params;
       // const token = req.cookies.token;
       // const userCookie = await CookieController(token);
 
-      const product = await prisma.product.findFirst({
-        where: {
-          id: productId
-        }
-      });
-
-      if (!product) {
-        throw new BadRequest("Product name not found.");
-      }
-
       // const findMarket = await prisma.marketplace.findFirst({
-      //   where: { id: product?.marketplaceId || "null" }
+      //   where: { id: marketId  }
       // });
 
       // const findUser = await prisma.user.findFirst({
@@ -59,17 +50,27 @@ export async function productsPicture(app: FastifyInstance) {
       //   throw new BadRequest("Operation not permitted");
       // }
 
+      const product = await prisma.product.findFirst({
+        where: {
+          AND: [{ marketplaceId: marketId }, { title: name }]
+        }
+      });
+
+      if (!product) {
+        throw new BadRequest("Product name not found.");
+      }
+
       const data = await req.file();
       if (!data) {
         throw new BadRequest("File not uploaded");
       }
 
       const buffer = await data.toBuffer();
-      const filename = `${productId}-${data.filename.replace(/\s+/g, "")}`;
+      const filename = `${marketId}-${name}-${data.filename.replace(/\s+/g, "")}`;
 
       const existingProduct = await prisma.product.findFirst({
         where: {
-          id: productId
+          AND: [{ marketplaceId: marketId }, { title: name }]
         }
       });
 
@@ -94,6 +95,7 @@ export async function productsPicture(app: FastifyInstance) {
         });
 
       if (error) {
+        console.error("Upload Error:", error);
         throw new BadRequest("Failed to upload image");
       }
 
@@ -102,7 +104,7 @@ export async function productsPicture(app: FastifyInstance) {
         : null;
 
       const updatedProduct = await prisma.product.update({
-        where: { id: productId },
+        where: { id: existingProduct?.id },
         data: { productImg: productImgUrl },
         select: { productImg: true }
       });

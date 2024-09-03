@@ -1,6 +1,6 @@
 import { Navbar, Footer, Header, Carrossel } from "../../components";
 import { Card } from "../../components/Card";
-import img from "../../assets/image3.png";
+
 import { Container } from "./styles";
 import { useEffect, useRef, useState } from "react";
 import { api } from "../../services/api";

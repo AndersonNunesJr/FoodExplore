@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { api } from "../services/api";
 
 export const AuthContext = createContext({});
@@ -26,34 +25,13 @@ function AuthProvider({ children }) {
     }
   }
 
-  function signOut() {
+  function signOut(navigate) {
     localStorage.removeItem("@Foodexplore:user");
     localStorage.removeItem("@Foodexplore:token");
 
     setData({});
+    navigate("/");
   }
-
-  //   async function updateProfile({ user, avatarFile }) {
-  //     try {
-  //       if (avatarFile) {
-  //         const fileUploadForm = new FormData();
-  //         fileUploadForm.append("avatar", avatarFile);
-  //         const response = await api.patch("/users/avatar", fileUploadForm);
-  //         user.avatar = response.data.avatar;
-  //       }
-
-  //       await api.put("/users", user);
-  //       localStorage.setItem("@Foodexplore:user", JSON.stringify(user));
-  //       setData({ user, token: data.token });
-  //       alert("Perfil atualizado!");
-  //     } catch (error) {
-  //       if (error.response) {
-  //         alert(error.response.data.message);
-  //       } else {
-  //         alert("Erro na atualização do perfil.");
-  //       }
-  //     }
-  //   }
 
   useEffect(() => {
     const token = localStorage.getItem("@Foodexplore:token");
@@ -67,6 +45,24 @@ function AuthProvider({ children }) {
         user: JSON.parse(user)
       });
     }
+
+    // Interceptor para lidar com falhas de autenticação
+    const interceptor = api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 403)
+        ) {
+          signOut();
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      api.interceptors.response.eject(interceptor);
+    };
   }, []);
 
   return (

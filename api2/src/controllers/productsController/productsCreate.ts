@@ -17,13 +17,13 @@ export async function productsCreate(app: FastifyInstance) {
       schema: {
         summary: "Create marketplace product.",
         tags: ["Post"],
+        // consumes: ["multipart/form-data"],
         body: z.object({
           name: z.string(),
           tag: z.array(z.string()).nullish(),
           description: z.string(),
           category: z.string(),
-          price: z.string(),
-          productImg: z.string().nullish()
+          price: z.string()
         }),
         params: z.object({
           marketId: z.string().uuid()
@@ -44,16 +44,16 @@ export async function productsCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { name, description, tag, price, category, productImg } = req.body;
+      const { name, description, tag, price, category } = req.body;
       const { marketId } = req.params;
       // const token = req.cookies.token;
       // const userCookie = await CookieController(token);
-      const data = await req.file();
-      if (!data) {
-        throw new BadRequest("File not uploaded");
-      }
+      // const data = await req.file();
+      // if (!data) {
+      //   throw new BadRequest("File not uploaded");
+      // }
 
-      const buffer = await data.toBuffer();
+      // const buffer = await data.toBuffer();
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
@@ -107,8 +107,7 @@ export async function productsCreate(app: FastifyInstance) {
           description,
           category,
           price,
-          marketplaceId: marketId,
-          productImg
+          marketplaceId: marketId
         },
         select: {
           id: true,
@@ -120,39 +119,39 @@ export async function productsCreate(app: FastifyInstance) {
           productImg: true
         }
       });
-      const filename = `${products.id}-${data.filename.replace(/\s+/g, "")}`;
+      // const filename = `${products.id}-${data.filename.replace(/\s+/g, "")}`;
 
-      if (products) {
-        // Delete the old image if it exists
-        const oldImagePath = products.productImg?.split("/").pop();
-        if (oldImagePath) {
-          const { error: deleteError } = await supabase.storage
-            .from("product-images")
-            .remove([oldImagePath]);
+      // if (products) {
+      //   // Delete the old image if it exists
+      //   const oldImagePath = products.productImg?.split("/").pop();
+      //   if (oldImagePath) {
+      //     const { error: deleteError } = await supabase.storage
+      //       .from("product-images")
+      //       .remove([oldImagePath]);
 
-          if (deleteError) {
-            throw new BadRequest("Failed to delete old image");
-          }
-        }
-      }
+      //     if (deleteError) {
+      //       throw new BadRequest("Failed to delete old image");
+      //     }
+      //   }
+      // }
 
-      const { data: uploadData, error } = await supabase.storage
-        .from("product-images")
-        .upload(filename, buffer, {
-          contentType: data.mimetype
-        });
+      // const { data: uploadData, error } = await supabase.storage
+      //   .from("product-images")
+      //   .upload(filename, buffer, {
+      //     contentType: data.mimetype
+      //   });
 
-      if (error) {
-        throw new BadRequest("Failed to upload image");
-      }
+      // if (error) {
+      //   throw new BadRequest("Failed to upload image");
+      // }
 
-      const productImgUrl = uploadData
-        ? `${supabaseUrl}/storage/v1/object/public/product-images/${uploadData.path}`
-        : null;
+      // const productImgUrl = uploadData
+      //   ? `${supabaseUrl}/storage/v1/object/public/product-images/${uploadData.path}`
+      //   : null;
 
       const updatedProduct = await prisma.product.update({
         where: { id: products.id },
-        data: { productImg: productImgUrl },
+        data: { price },
         select: {
           id: true,
           title: true,

@@ -11,8 +11,16 @@ export function SingIn() {
   const { signIn } = useAuth();
 
   function handleSignIn() {
-    signIn({ email, password });
+    if (!email || !password) {
+      alert("Preencha todos os campos");
+    } else signIn({ email, password });
   }
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSignIn();
+    }
+  };
 
   return (
     <Container>
@@ -24,6 +32,7 @@ export function SingIn() {
           type="text"
           placeholder="Ex: exemplo@exemplo.com.br"
           onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
 
         <label htmlFor="Password">Senha:</label>
@@ -31,6 +40,7 @@ export function SingIn() {
           type="password"
           placeholder="No mínimo 6 caracteres "
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
         <Button title="Entrar" onClick={handleSignIn} />
         <Link to="/register">Criar uma conta</Link>

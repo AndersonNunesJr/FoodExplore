@@ -1,7 +1,6 @@
 import { Button, Footer, Highlight, Navbar } from "../../components";
 import { Container, Checkout, Form } from "./styles";
 import {
-  image3,
   pix,
   credit,
   delivered,
@@ -24,7 +23,7 @@ export function Payment() {
   const [coming, setComing] = useState(false);
   const [orderDelivered, setOrderDelivered] = useState(false);
 
-  const img = image3;
+  const img = "*";
 
   const nameLoja = null;
 

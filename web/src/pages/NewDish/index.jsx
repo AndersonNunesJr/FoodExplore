@@ -16,7 +16,7 @@ import {
 } from "react-icons/pi";
 import { api } from "../../services/api.js";
 import { useAuth } from "../../hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function New() {
   const [name, setName] = useState("");
@@ -26,8 +26,10 @@ export function New() {
   const [defaulImg, setDefaulImg] = useState("");
   const [description, setDescription] = useState("");
   const [newTag, setNewTag] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tag, setTags] = useState([]);
   const { user } = useAuth();
+
+  const navigate = useNavigate();
 
   function handleAddTag() {
     setTags((prevState) => [...prevState, newTag]);
@@ -36,6 +38,7 @@ export function New() {
 
   function handleChangeImage(event) {
     const file = event.target.files[0];
+
     setProductImg(file);
   }
 
@@ -50,23 +53,33 @@ export function New() {
     if (newTag) {
       return alert("Confirme a tag , para adcionar-la.");
     }
+    const fileUploadForm = new FormData();
+    fileUploadForm.append("productImg", productImg);
+
     api
       .post(`/products/${user.marketId}`, {
         name,
         price,
         category,
         description,
-        tags,
-        productImg
+        tag
+      })
+      .then(async () => {
+        await api.post(
+          `/products/${user.marketId}/${name}/img`,
+          fileUploadForm
+        );
       })
       .then(() => {
         alert("Cadastrado com sucesso!");
+        navigate("/");
       })
       .catch((error) => {
         if (error.response) {
           alert(error.response.data.message);
         } else {
           alert("Não foi possível cadastrar.");
+          navigate("/");
         }
       });
   }
@@ -111,6 +124,7 @@ export function New() {
                   id="seuSelect"
                   onChange={(e) => setCategory(e.target.value)}
                 >
+                  <option value=""></option>
                   <option value="Refeição">Refeição</option>
                   <option value="Sobremesas">Sobremesas</option>
                   <option value="Bebidas">Bebidas</option>
@@ -120,7 +134,7 @@ export function New() {
             <div className="tags">
               <p>Ingredientes</p>
               <div className="section_tag">
-                {tags.map((tag, index) => (
+                {tag.map((tag, index) => (
                   <NewTag
                     key={String(index)}
                     value={tag}

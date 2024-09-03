@@ -28,7 +28,10 @@ app.register(fastifyCors, {
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET_PASSWORD
     ? env.JWT_SECRET_PASSWORD
-    : "env.JWT_SECRET_PASSWORD"
+    : "env.JWT_SECRET_PASSWORD",
+  sign: {
+    expiresIn: "60s"
+  }
 });
 
 app.register(cookie, {

@@ -1,6 +1,5 @@
 import { Container } from "./styles";
 import { Tag, Button } from "../index";
-import img2 from "../../assets/image2.png";
 
 import { IoMdRemove, IoMdAdd } from "react-icons/io";
 import { useState } from "react";
@@ -21,7 +20,7 @@ export function Iten() {
   const valor = "25,50";
   return (
     <Container>
-      <img src={img2} alt="" />
+      <img src={"*"} alt="" />
       <div className="description">
         <h1>Salada Ravanello</h1>
         <p>
