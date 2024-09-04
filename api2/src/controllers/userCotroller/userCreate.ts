@@ -17,7 +17,7 @@ export async function userCreate(app: FastifyInstance) {
             .string({ invalid_type_error: "O nome precisa ser um texto" })
             .min(4),
           email: z.string().email(),
-          password: z.string().min(8),
+          password: z.string().min(6),
           role: z.string().nullable(),
           marketplace: z.string().nullish()
         }),

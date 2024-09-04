@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Footer, Navbar, Section } from "../../components";
 import { Container, Board } from "./styles";
 import { BsCircleFill } from "react-icons/bs";
+import { api } from "../../services/api.js";
+import { useAuth } from "../../hooks/auth";
 
 export function Historic() {
   const [orderCondition, setOrderCondition] = useState([]);
   const [orderId, setOrderId] = useState([..."1"]);
   const isAdmin = false;
+  const { user } = useAuth();
 
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await api.post(`/products/${user.idKey}`);
+    }
+    fetchProducts();
+  }, []);
   // orderId  é um array com todos os codigos de pedidos entao passar a condiçao orderId.length > 0 no local marcado
 
   const addOrderStatus = (status, orderIndexId) => {
@@ -38,10 +47,10 @@ export function Historic() {
       <div className="content">
         <h1>Histórico de pedidos</h1>
         <Board>
-          <h2 className="name ">Status</h2>
-          <h2 className="name ">Código</h2>
+          <h2 className="name">Status</h2>
+          <h2 className="name">Código</h2>
           <h2 className="name">Detalhamento</h2>
-          <h2 className="name ">Data e hora</h2>
+          <h2 className="name">Data e hora</h2>
 
           {/* A CONDIÇAO DO ORDERID DEVE SER ULTILIZADA ATE DATA */}
           {/* <div className="table"></div> */}
@@ -105,20 +114,6 @@ export function Historic() {
             </p>
           </div>
           <div className="data">
-            {" "}
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
-            <p>20/05 às 18h00</p>
             <p>20/05 às 18h00</p>
           </div>
         </Board>

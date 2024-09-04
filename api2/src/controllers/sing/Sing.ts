@@ -25,7 +25,8 @@ export async function Sing(app: FastifyInstance) {
               name: z.string().nullish(),
               email: z.string().nullish(),
               role: z.string().nullish(),
-              marketId: z.string().nullish()
+              marketId: z.string().nullish(),
+              idKey: z.string().nullish()
             }),
             token: z.string()
           })
@@ -72,7 +73,11 @@ export async function Sing(app: FastifyInstance) {
             name: findUser.name,
             email: findUser.email,
             role: findUser.Role?.name,
-            marketId: findUser.marketplace?.id
+            marketId: findUser.marketplace?.id,
+            idKey:
+              findUser.marketplace?.id == null
+                ? findUser.id
+                : findUser.marketplace.id
           },
           token
         })

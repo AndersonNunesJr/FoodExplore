@@ -26,9 +26,11 @@ export const Board = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 1fr 4fr 1fr;
   grid-template-rows: 60px auto;
-  /* height: 100%; */
+  height: 100%;
   overflow-y: auto;
   margin: 0 6px;
+  border: solid 2px ${theme.getColorStyle("DARK_1000")};
+  border-radius: 8px 8px 0 0;
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -53,7 +55,7 @@ export const Board = styled.div`
   .name {
     display: flex;
     align-items: center;
-    border: solid 2px ${theme.getColorStyle("DARK_1000")};
+    border-bottom: solid 2px ${theme.getColorStyle("DARK_1000")};
 
     padding: 5px 10px;
 
@@ -62,20 +64,17 @@ export const Board = styled.div`
   }
 
   .name:nth-of-type(1) {
-    border-radius: 8px 0 0 0;
+    border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
   }
-  .name:nth-of-type(2) {
-    border-left: 0;
-    border-right: 0;
-  }
-  .name:nth-of-type(4) {
-    border-radius: 0 8px 0 0;
-    border-left: 0;
+
+  .name:nth-of-type(3) {
+    border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
+    border-left: solid 2px ${theme.getColorStyle("DARK_1000")};
   }
 
   .status {
     border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
-    border-left: solid 2px ${theme.getColorStyle("DARK_1000")};
+    /* border-left: solid 2px ${theme.getColorStyle("DARK_1000")}; */
 
     ${theme.getFontStyle("Roboto_Smaller_normal")}
     line-height: normal;
@@ -150,7 +149,7 @@ export const Board = styled.div`
     color: ${theme.getColorStyle("LIGHT_400")};
   }
   .data {
-    border-right: solid 2px ${theme.getColorStyle("DARK_1000")};
+    /* border-right: solid 2px ${theme.getColorStyle("DARK_1000")}; */
 
     ${theme.getFontStyle("Roboto_Smaller_normal")}
     color: ${theme.getColorStyle("LIGHT_400")};
