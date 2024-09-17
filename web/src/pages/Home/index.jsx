@@ -10,6 +10,7 @@ export function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
   const refTimer = useRef(null);
+  const navigate = useNavigate();
 
   const handleSearch = (search) => {
     if (refTimer.current) {
@@ -21,13 +22,22 @@ export function Home() {
     }, 500);
   };
 
+  /// COMO RESOLVER O FETCH  PRA DEIXAR SEPARADA AS CATEGORIAS
+  /// 1-
+
+  /// 2- USESTATES SEPARADOSS
+
   useEffect(() => {
     async function fetchProducts() {
-      const response = await api.post("/products", { name: searchTerm });
+      const response = await api.post("/products/", { name: searchTerm });
       setProducts(response.data.result);
     }
     fetchProducts();
   }, [searchTerm]);
+
+  function handleDetails(id) {
+    navigate(`/details/${id}`);
+  }
 
   return (
     <Container>
@@ -36,7 +46,15 @@ export function Home() {
         <Header />
         <Carrossel title={"Refeição"}></Carrossel>
         <Carrossel title={"Sobremesas"}></Carrossel>
-        <Carrossel title={"Bebidas"}></Carrossel>
+        <Carrossel title={"Bebidas"}>
+          {products.map((product) => (
+            <Card
+              key={String(product.id)}
+              data={product}
+              onClick={() => handleDetails(product.id)}
+            />
+          ))}
+        </Carrossel>
       </div>
       <Footer />
     </Container>

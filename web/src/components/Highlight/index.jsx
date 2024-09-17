@@ -1,6 +1,6 @@
 import { Container } from "./styles";
 
-export function Highlight({ img, amount, value, title, buttonText }) {
+export function Highlight({ img, amount, value, title, buttonText, data }) {
   return (
     <Container>
       <img src={img} alt="" />

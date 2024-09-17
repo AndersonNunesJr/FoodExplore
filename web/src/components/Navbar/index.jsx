@@ -6,14 +6,17 @@ import { Input, Button } from "../index";
 import { useAuth } from "../../hooks/auth";
 import { api } from "../../services/api.js";
 
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Navbar({ onSearch }) {
   const { signOut } = useAuth();
   const { user } = useAuth();
 
+  const navigate = useNavigate();
+
   function handleSignout() {
+    navigate("/");
     signOut({});
   }
 
@@ -47,12 +50,11 @@ export function Navbar({ onSearch }) {
               icon={PiReceiptLight}
             />
           </Link>
-          <Link to="/new">
-            <Button title={`Novo Prato`} />
-          </Link>
+          {/* <Link to="/"> */}
           <button className="Signout" onClick={handleSignout}>
             <PiSignOutBold size={26} />
           </button>
+          {/* </Link> */}
         </Container>
       ) : (
         <Container>

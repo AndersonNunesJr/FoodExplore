@@ -23,7 +23,7 @@ export function New() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [productImg, setProductImg] = useState("");
-  const [defaulImg, setDefaulImg] = useState("");
+  // const [defaulImg, setDefaulImg] = useState("");
   const [description, setDescription] = useState("");
   const [newTag, setNewTag] = useState("");
   const [tag, setTags] = useState([]);

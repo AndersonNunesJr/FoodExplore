@@ -8,8 +8,8 @@ import { useAuth } from "../../hooks/auth";
 export function Historic() {
   const [orderCondition, setOrderCondition] = useState([]);
   const [orderId, setOrderId] = useState([..."1"]);
-  const isAdmin = false;
   const { user } = useAuth();
+  const isAdmin = user.role;
 
   useEffect(() => {
     async function fetchProducts() {

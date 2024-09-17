@@ -2,13 +2,17 @@ import { Button } from "../Button";
 import { Container } from "./styles";
 import { IoMdRemove, IoMdAdd, IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
+import { api } from "../../services/api";
+import { useAuth } from "../../hooks/auth";
 
 export function Card({ data, ...rest }) {
   const [quantidade, setQuantidade] = useState("1");
   const [isTyping, setIsTyping] = useState(false);
   const titleTransition = useRef(null);
+  const { user } = useAuth();
+  const productId = data.id;
 
-  const handleButton = (e) => {
+  const handleButton = async (e) => {
     const buttonTitle = e.currentTarget.title;
     if (buttonTitle === "btn-add") {
       setQuantidade(Number(quantidade) + 1);
@@ -20,6 +24,14 @@ export function Card({ data, ...rest }) {
     }
     if (buttonTitle === "btn-favorite") {
       setIsTyping(!isTyping);
+      /// //////// arrumar esse post
+      const response = await api.post(`/favorites/${user.id}/create`, {
+        productId
+      });
+      console.log(
+        response,
+        "AKIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+      );
     }
   };
 

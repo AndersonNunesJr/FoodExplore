@@ -40,9 +40,23 @@ export async function productsGet(app: FastifyInstance) {
     },
     async (req, reply) => {
       const { name } = req.body;
-      const x = 1;
-      if (!name && x !== 1) {
+
+      if (name) {
+        console.log(
+          "AKIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+        );
         const result = await prisma.product.findMany({
+          where: {
+            OR: [
+              {
+                title: name || ""
+              },
+              {
+                category: name
+              },
+              { marketplace: { storename: name } }
+            ]
+          },
           select: {
             id: true,
             title: true,
@@ -58,20 +72,14 @@ export async function productsGet(app: FastifyInstance) {
             }
           }
         });
+
+        if (Array.isArray(result) && result.length === 0) {
+          return reply.status(404).send({ message: "Product not found" });
+        }
         return reply.status(201).send({ result });
       }
 
       const result = await prisma.product.findMany({
-        where: {
-          OR: [
-            {
-              // title: name
-            },
-            {
-              category: name
-            }
-          ]
-        },
         select: {
           id: true,
           title: true,
@@ -87,10 +95,6 @@ export async function productsGet(app: FastifyInstance) {
           }
         }
       });
-
-      if (Array.isArray(result) && result.length === 0) {
-        return reply.status(404).send({ message: "Product not found" });
-      }
 
       return reply.status(201).send({ result });
     }

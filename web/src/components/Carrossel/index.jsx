@@ -10,7 +10,7 @@ export function Carrossel({ children, title }) {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
-  
+
   // const refTimer = useRef(null);
 
   // setSearchTerm(title);
@@ -24,7 +24,6 @@ export function Carrossel({ children, title }) {
   //     setSearchTerm(search);
   //   }, 500);
   // };
-
 
   useEffect(() => {
     async function fetchProducts() {
@@ -40,9 +39,10 @@ export function Carrossel({ children, title }) {
         <Container>
           <h2 className="title-container">{title}</h2>
           <div className="carrossel">
-            {products.map((product) => (
+            {/* {products.map((product) => (
               <Card key={String(product.id)} data={product} />
-            ))}
+            ))} */}
+            {children}
           </div>
         </Container>
       ) : (

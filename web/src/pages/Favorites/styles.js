@@ -24,7 +24,7 @@ export const Container = styled.div`
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
       grid-template-rows: 60px;
       row-gap: 32px;
-      /* height: 100%; */
+      height: 100%;
       overflow-y: auto;
       border: solid 2px ${theme.getColorStyle("DARK_1000")};
       border-radius: 8px;
