@@ -103,19 +103,19 @@ Content-Type: application/json
 
 {
       
-      "productsId":"92878404-60ae-42b3-8fc9-df6e9c432d64" 
+      "productsId":"85d91731-08e0-4011-abe7-22ad23357c01" 
 }
 
 ###     ////userId/////favorites/delete
-DELETE http://localhost:3333
+DELETE http://localhost:3333/favorites/123fdb96-39c7-4d64-83ac-081ec7b30edd/delete
 Content-Type: application/json
 
 {
-   "productsId":"" 
+   "productsId":"f486114e-2b6a-4849-a9ff-c7350c0c189e" 
 }
 
 ###
-GET  http://localhost:3333/ ////userId/////favorites
+GET  http://localhost:3333/favorites/502885cd-4169-4dce-a5a3-976ef54132b0
 Content-Type: application/json
 
 

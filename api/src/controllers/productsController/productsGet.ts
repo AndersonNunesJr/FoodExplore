@@ -42,9 +42,6 @@ export async function productsGet(app: FastifyInstance) {
       const { name } = req.body;
 
       if (name) {
-        console.log(
-          "AKIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
-        );
         const result = await prisma.product.findMany({
           where: {
             OR: [

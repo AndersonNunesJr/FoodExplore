@@ -14,7 +14,7 @@ export async function favoritesDelete(app: FastifyInstance) {
         summary: "Delete products from user favorites.",
         tags: ["Delete"],
         body: z.object({
-          productsId: z.string()
+          productsId: z.string().uuid()
         }),
         params: z.object({
           userId: z.string().uuid()
@@ -29,8 +29,10 @@ export async function favoritesDelete(app: FastifyInstance) {
     async (req, reply) => {
       const { productsId } = req.body;
       const { userId } = req.params;
-      const token = req.cookies.token;
-      const userCookie = await CookieController(token);
+      // const token = req.cookies.token;
+      // const userCookie = await CookieController(token);
+
+      console.log("4");
 
       const user = await prisma.user.findUnique({
         select: {
@@ -42,47 +44,57 @@ export async function favoritesDelete(app: FastifyInstance) {
       if (!user) {
         throw new BadRequest("User not found");
       }
-      const findUser = await prisma.user.findFirst({
+
+      const existingFavorite = await prisma.favorite.findFirst({
         where: {
-          AND: [{ id: userId }, { email: userCookie.email }]
+          userId
         }
       });
-      if (!findUser) {
-        throw new BadRequest("Operation not permitted");
+      if (!existingFavorite) {
+        throw new BadRequest(
+          "This product cannot be deleted from your favorites!"
+        );
       }
 
-      const product = await prisma.product.findUnique({
-        where: { id: productsId }
-      });
-      // const favorite = await prisma.favorite.findFirst({
+      console.log("3");
+      // const findUser = await prisma.user.findFirst({
       //   where: {
-      //     id: userId,
-      //     products: {
-      //       some: { id: productsId }
-      //     }
-      //   },
-      //   include: {
-      //     products: {
-      //       where: { id: productsId }
-      //     }
+      //     AND: [{ id: userId }, { email: userCookie.email }]
       //   }
       // });
-
-      // if (favorite) {
-      //   throw new BadRequest("Favorite or Product not found");
+      // if (!findUser) {
+      //   throw new BadRequest("Operation not permitted");
       // }
 
+      const findProductInFavorites = await prisma.favorite.findFirst({
+        include: {
+          products: {
+            where: {
+              id: productsId
+            }
+          }
+        },
+        where: {
+          id: user.favorites?.id,
+          products: { some: { id: productsId } }
+        }
+      });
+
+      if (!findProductInFavorites) {
+        throw new BadRequest("Favorite or Product not found");
+      }
+      console.log("2");
       await prisma.favorite.update({
         where: {
           id: user.favorites?.id
         },
         data: {
           products: {
-            disconnect: [{ id: product?.id }]
+            disconnect: [{ id: productsId }]
           }
         }
       });
-
+      console.log("1");
       return reply
         .status(201)
         .send({ message: "Favorites deleted successfully" });

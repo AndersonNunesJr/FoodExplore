@@ -22,11 +22,11 @@ export async function favoritesGet(app: FastifyInstance) {
         }),
         response: {
           201: z.object({
-            result: z
-              .object({
-                id: z.string(),
-                products: z.array(
-                  z.object({
+            result: z.object({
+              id: z.string(),
+              products: z.array(
+                z
+                  .object({
                     id: z.string(),
                     title: z.string(),
                     tag: z.string().nullable(),
@@ -35,17 +35,17 @@ export async function favoritesGet(app: FastifyInstance) {
                     price: z.string(),
                     marketplaceId: z.string().nullable()
                   })
-                )
-              })
-              .nullable()
+                  .nullable()
+              )
+            })
           })
         }
       }
     },
     async (req, reply) => {
       const { userId } = req.params;
-      const token = req.cookies.token;
-      const userCookie = await CookieController(token);
+      // const token = req.cookies.token;
+      // const userCookie = await CookieController(token);
 
       const user = await prisma.user.findUnique({
         select: {
@@ -56,14 +56,15 @@ export async function favoritesGet(app: FastifyInstance) {
       if (!user) {
         throw new BadRequest("User not found");
       }
-      const findUser = await prisma.user.findFirst({
-        where: {
-          AND: [{ id: userId }, { email: userCookie.email }]
-        }
-      });
-      if (!findUser) {
-        throw new BadRequest("Operation not permitted");
-      }
+
+      // const findUser = await prisma.user.findFirst({
+      //   where: {
+      //     AND: [{ id: userId }, { email: userCookie.email }]
+      //   }
+      // });
+      // if (!findUser) {
+      //   throw new BadRequest("Operation not permitted");
+      // }
 
       const result = await prisma.favorite.findFirst({
         include: {
@@ -74,9 +75,13 @@ export async function favoritesGet(app: FastifyInstance) {
           }
         },
         where: {
-          id: user.favorites?.id
+          AND: [{ userId }, { id: user.favorites?.id }]
         }
       });
+
+      if (!result) {
+        throw new BadRequest("There is nothing registered in favorites!");
+      }
 
       return reply.status(201).send({ result });
     }

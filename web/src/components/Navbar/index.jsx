@@ -73,11 +73,11 @@ export function Navbar({ onSearch }) {
           <Link to="/new">
             <Button title={`Novo Prato`} />
           </Link>
-          <Link to="/">
-            <button className="Signout" onClick={handleSignout}>
-              <PiSignOutBold size={26} />
-            </button>
-          </Link>
+          {/* <Link to="/"> */}
+          <button className="Signout" onClick={handleSignout}>
+            <PiSignOutBold size={26} />
+          </button>
+          {/* </Link> */}
         </Container>
       )}
     </div>

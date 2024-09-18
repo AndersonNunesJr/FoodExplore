@@ -4,7 +4,7 @@ import z from "zod";
 import { prisma } from "../../lib/prisma";
 
 import { BadRequest } from "../../routes/_errors/bad-request";
-import { CookieController } from "../../utils/CookieController";
+// import { CookieController } from "../../utils/CookieController";
 
 export async function favoritesCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -21,7 +21,8 @@ export async function favoritesCreate(app: FastifyInstance) {
         }),
         response: {
           201: z.object({
-            favorites: z.object({})
+            // favorites: z.object({})
+            message: z.string()
           })
         }
       }
@@ -29,8 +30,8 @@ export async function favoritesCreate(app: FastifyInstance) {
     async (req, reply) => {
       const { productsId } = req.body;
       const { userId } = req.params;
-      const token = req.cookies.token;
-      const userCookie = await CookieController(token);
+      // const token = req.cookies.token;
+      // const userCookie = await CookieController(token);
 
       const user = await prisma.user.findUnique({
         where: { id: userId }
@@ -39,14 +40,14 @@ export async function favoritesCreate(app: FastifyInstance) {
         throw new BadRequest("User not found");
       }
 
-      const findUser = await prisma.user.findFirst({
-        where: {
-          AND: [{ id: userId }, { email: userCookie.email }]
-        }
-      });
-      if (!findUser) {
-        throw new BadRequest("Operation not permitted");
-      }
+      // const findUser = await prisma.user.findFirst({
+      //   where: {
+      //     AND: [{ id: userId }, { email: userCookie.email }]
+      //   }
+      // });
+      // if (!findUser) {
+      //   throw new BadRequest("Operation not permitted");
+      // }
 
       const product = await prisma.product.findUnique({
         where: { id: productsId }
@@ -63,15 +64,14 @@ export async function favoritesCreate(app: FastifyInstance) {
       });
 
       if (!existingFavorite) {
-        const newFavorite = await prisma.favorite.create({
+        await prisma.favorite.create({
           data: {
             userId,
             products: { connect: { id: product.id } }
           }
         });
-        return reply.status(201).send({ favorites: newFavorite });
       } else {
-        const updatedFavorite = await prisma.favorite.update({
+        await prisma.favorite.update({
           where: {
             id: existingFavorite.id
           },
@@ -80,8 +80,11 @@ export async function favoritesCreate(app: FastifyInstance) {
             products: { connect: { id: product.id } }
           }
         });
-        return reply.status(200).send({ favorites: updatedFavorite });
+        return reply
+          .status(200)
+          .send({ message: "Favorites add successfully" });
       }
+      return reply.status(200).send({ message: "Favorites add successfully" });
     }
   );
 }
