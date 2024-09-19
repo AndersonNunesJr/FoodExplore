@@ -20,6 +20,10 @@ async function privateRoutes(app: FastifyInstance) {
     prefix: "/products"
   });
 
+  app.register(favoritesRotes, {
+    prefix: "/favorites"
+  });
+
   app.register(orderRotes, {
     prefix: "/order"
   });
@@ -31,10 +35,6 @@ async function publicRoutes(app: FastifyInstance) {
   app.register(userCreate, { prefix: "/user" });
   app.register(productsGet, { prefix: "/products" });
 
-  /// VOLTAR PRO PIVATE
-  app.register(favoritesRotes, {
-    prefix: "/favorites"
-  });
 }
 
 async function projectAdmin(app: FastifyInstance) {

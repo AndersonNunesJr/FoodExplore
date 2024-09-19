@@ -30,7 +30,7 @@ export async function productsCreate(app: FastifyInstance) {
         }),
         response: {
           201: z.object({
-            updatedProduct: z.object({
+            products: z.object({
               id: z.string().uuid(),
               title: z.string(),
               tag: z.string().nullable(),
@@ -48,12 +48,6 @@ export async function productsCreate(app: FastifyInstance) {
       const { marketId } = req.params;
       // const token = req.cookies.token;
       // const userCookie = await CookieController(token);
-      // const data = await req.file();
-      // if (!data) {
-      //   throw new BadRequest("File not uploaded");
-      // }
-
-      // const buffer = await data.toBuffer();
 
       const tagString = tag ? JSON.stringify(tag) : null;
 
@@ -119,51 +113,22 @@ export async function productsCreate(app: FastifyInstance) {
           productImg: true
         }
       });
-      // const filename = `${products.id}-${data.filename.replace(/\s+/g, "")}`;
 
-      // if (products) {
-      //   // Delete the old image if it exists
-      //   const oldImagePath = products.productImg?.split("/").pop();
-      //   if (oldImagePath) {
-      //     const { error: deleteError } = await supabase.storage
-      //       .from("product-images")
-      //       .remove([oldImagePath]);
-
-      //     if (deleteError) {
-      //       throw new BadRequest("Failed to delete old image");
-      //     }
+      // const updatedProduct = await prisma.product.update({
+      //   where: { id: products.id },
+      //   data: { price },
+      //   select: {
+      //     id: true,
+      //     title: true,
+      //     description: true,
+      //     category: true,
+      //     price: true,
+      //     tag: true,
+      //     productImg: true
       //   }
-      // }
+      // });
 
-      // const { data: uploadData, error } = await supabase.storage
-      //   .from("product-images")
-      //   .upload(filename, buffer, {
-      //     contentType: data.mimetype
-      //   });
-
-      // if (error) {
-      //   throw new BadRequest("Failed to upload image");
-      // }
-
-      // const productImgUrl = uploadData
-      //   ? `${supabaseUrl}/storage/v1/object/public/product-images/${uploadData.path}`
-      //   : null;
-
-      const updatedProduct = await prisma.product.update({
-        where: { id: products.id },
-        data: { price },
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          category: true,
-          price: true,
-          tag: true,
-          productImg: true
-        }
-      });
-
-      return reply.status(201).send({ updatedProduct });
+      return reply.status(201).send({ products });
     }
   );
 }

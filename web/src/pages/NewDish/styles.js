@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import theme from "../../styles/theme";
-import { PiCaretDownBold } from "react-icons/pi";
 
 export const Container = styled.div`
   display: flex;

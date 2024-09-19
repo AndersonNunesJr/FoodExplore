@@ -1,21 +1,25 @@
 import { Button } from "../Button";
 import { Container } from "./styles";
 import { IoMdRemove, IoMdAdd, IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { PiPencilSimple } from "react-icons/pi";
 import { useEffect, useRef, useState } from "react";
 import { api } from "../../services/api";
 import { useAuth } from "../../hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 export function Card({ data, ...rest }) {
   const [quantidade, setQuantidade] = useState("1");
   const [products, setProducts] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
   const titleTransition = useRef(null);
   const { user } = useAuth();
+  const navigate = useNavigate();
+
   const productsId = data.id;
+  const isAdmin = user.role;
 
   const foundProduct = products.some((product) => product.id === productsId);
 
-  const handleButton = async (e) => {
+  const handleButton = (e) => {
     const buttonTitle = e.currentTarget.title;
     if (buttonTitle === "btn-add") {
       setQuantidade(Number(quantidade) + 1);
@@ -32,7 +36,7 @@ export function Card({ data, ...rest }) {
       const response = await api.get(`/favorites/${user.id}`);
       setProducts(response.data.result.products);
     } catch (error) {
-      // console.error("Erro ao buscar produtos favoritos:", error);
+      console.error("Erro ao buscar produtos favoritos:", error);
     }
   }
 
@@ -47,17 +51,13 @@ export function Card({ data, ...rest }) {
   }, [user]);
 
   const handleButtonFavoritesDelete = async (productId) => {
-    console.log(`Button clicked for product: ${productId},  >DELETED<`);
-    setIsTyping(!isTyping);
-
     await api.delete(`/favorites/${user.id}/delete`, {
       data: { productsId: productId }
     });
+    fetchFavorites();
   };
 
   const handleButtonFavoritesAdd = async (productId) => {
-    console.log(`Button clicked for product: ${productId},  >ADD<`);
-    setIsTyping(!isTyping);
     try {
       await api.post(`/favorites/${user.id}/create`, {
         productsId: productId
@@ -65,66 +65,93 @@ export function Card({ data, ...rest }) {
     } catch (error) {
       console.error("Erro ao buscar produtos favoritos:", error);
     }
+
+    fetchFavorites();
+  };
+
+  const handleButtonEditDish = (productId) => {
+    navigate("/edit", { state: { data } });
+    console.log(`Editando prato com ID: ${productId}`);
   };
 
   return (
     <Container>
-      {products.map((product) => (
-        <div className="btn-favorite" key={product.id}>
-          {productsId === product.id ? (
+      {isAdmin !== "admin" ? (
+        <>
+          <div className="header-btn">
+            {foundProduct ? (
+              <button
+                onClick={() => handleButtonFavoritesDelete(productsId)}
+                title="btn-favorite"
+                className="btn"
+                type="button"
+              >
+                <IoMdHeart size={24} />
+              </button>
+            ) : (
+              <button
+                onClick={() => handleButtonFavoritesAdd(productsId)}
+                title="btn-favorite"
+                className="btn"
+                type="button"
+              >
+                <IoMdHeartEmpty size={24} />
+              </button>
+            )}
+          </div>
+          <img src={data.productImg} alt={data.title} className="img" />
+          <div className="title">
+            <h1 ref={titleTransition}>
+              {data.title}
+              {" >"}
+            </h1>
+          </div>
+          <p className="description">{data.description}</p>
+          <h2 className="value">R$ {data.price}</h2>
+          <div className="btn-display">
             <button
-              onClick={() => handleButtonFavoritesDelete(productsId)}
-              title="btn-favorite"
+              className="btn"
+              onClick={handleButton}
+              title="btn-remove"
+              type="button"
+            >
+              <IoMdRemove size={24} />
+            </button>
+            {quantidade > 9 ? <p>{quantidade}</p> : <p>0{quantidade}</p>}
+            <button
+              className="btn"
+              onClick={handleButton}
+              title="btn-add"
+              type="button"
+            >
+              <IoMdAdd size={24} />
+            </button>
+            <Button title={"incluir"} />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="header-btn">
+            <button
+              onClick={() => handleButtonEditDish(productsId)}
+              title="btn-edit-dish"
               className="btn"
               type="button"
             >
-              <IoMdHeart size={24} /* coraçao */ />
+              <PiPencilSimple size={24} />
             </button>
-          ) : null}
-        </div>
-      ))}
-      {!foundProduct ? (
-        <div className="btn-favorite">
-          <button
-            onClick={() => handleButtonFavoritesAdd(productsId)}
-            title="btn-favorite"
-            className="btn"
-            type="button"
-          >
-            <IoMdHeartEmpty size={24} /* sem coraçao */ />
-          </button>
-        </div>
-      ) : null}
-
-      <img src={data.productImg} alt={data.title} className="img" />
-      <div className="title">
-        <h1 ref={titleTransition}>
-          {data.title}
-          {" >"}
-        </h1>
-      </div>
-      <p className="description">{data.description}</p>
-      <h2 className="value">R$ {data.price}</h2>
-      <div className="btn-display">
-        <button
-          className="btn"
-          onClick={handleButton}
-          title="btn-remove"
-          type="button"
-        >
-          <IoMdRemove size={24} />
-        </button>
-        {quantidade > 9 ? <p>{quantidade}</p> : <p>0{quantidade}</p>}
-        <button
-          className="btn"
-          onClick={handleButton}
-          title="btn-add"
-          type="button"
-        >
-          <IoMdAdd size={24} />
-        </button>
-        <Button title={"incluir"} />
-      </div>
+          </div>
+          <img src={data.productImg} alt={data.title} className="img" />
+          <div className="title">
+            <h1 ref={titleTransition}>
+              {data.title}
+              {" >"}
+            </h1>
+          </div>
+          <p className="description">{data.description}</p>
+          <h2 className="value">R$ {data.price}</h2>
+        </>
+      )}
     </Container>
   );
 }
