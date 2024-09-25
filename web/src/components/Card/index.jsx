@@ -31,6 +31,23 @@ export function Card({ data, ...rest }) {
     }
   };
 
+  function handleButtonIncluir() {
+    let amountsToBePaid = localStorage.getItem("@Foodexplore:amountsToBePaid");
+
+    if (amountsToBePaid) {
+      amountsToBePaid = JSON.parse(amountsToBePaid);
+    } else {
+      amountsToBePaid = [];
+    }
+
+    amountsToBePaid.push({ product: data, amount: Number(quantidade) });
+
+    localStorage.setItem(
+      "@Foodexplore:amountsToBePaid",
+      JSON.stringify(amountsToBePaid)
+    );
+  }
+
   async function fetchFavorites() {
     try {
       const response = await api.get(`/favorites/${user.id}`);
@@ -126,7 +143,7 @@ export function Card({ data, ...rest }) {
             >
               <IoMdAdd size={24} />
             </button>
-            <Button title={"incluir"} />
+            <Button title={"incluir"} onClick={handleButtonIncluir} />
           </div>
         </>
       ) : (

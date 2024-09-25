@@ -8,13 +8,25 @@ export function Favorites() {
   const [favorites, setFavorites] = useState([]);
   const { user } = useAuth();
 
-  useEffect(() => {
-    async function fetchFavorites() {
+  async function fetchFavorites() {
+    try {
       const response = await api.get(`/favorites/${user.id}`);
-      setFavorites(response.data);
+      setFavorites(response.data.result.products);
+    } catch (error) {
+      console.error("Erro ao buscar produtos favoritos:", error);
     }
+  }
+
+  const handleButtonFavoritesDelete = async (productId) => {
+    await api.delete(`/favorites/${user.id}/delete`, {
+      data: { productsId: productId }
+    });
     fetchFavorites();
-  }, [user.id]);
+  };
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
 
   return (
     <Container>

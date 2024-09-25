@@ -22,11 +22,6 @@ export function Home() {
     }, 500);
   };
 
-  /// COMO RESOLVER O FETCH  PRA DEIXAR SEPARADA AS CATEGORIAS
-  /// 1-
-
-  /// 2- USESTATES SEPARADOSS
-
   useEffect(() => {
     async function fetchProducts() {
       const response = await api.post("/products/", { name: searchTerm });

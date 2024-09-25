@@ -65,12 +65,13 @@ export function Payment() {
         <Checkout>
           <h2>Meu pedido</h2>
           <div className="list">
-            <Highlight
-              img={img}
-              title="Salada Radish"
-              value={value}
-              amount={amount}
-            />
+            {favorites.map((favorite) => (
+              <Highlight
+                key={String(favorite.id)}
+                data={favorite}
+                buttonText="Remover dos Favoritos"
+              />
+            ))}
           </div>
           <p>Total: {total}</p>
         </Checkout>

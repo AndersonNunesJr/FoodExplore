@@ -85,7 +85,7 @@ export function Edit() {
     <Container>
       <Navbar />
       <Section>
-        <Link href="/" className="back">
+        <Link to="/" className="back">
           <PiCaretLeftBold size={24} />
           <p>Voltar</p>
         </Link>

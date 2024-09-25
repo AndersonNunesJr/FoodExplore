@@ -33,6 +33,7 @@ export async function favoritesGet(app: FastifyInstance) {
                     description: z.string().nullable(),
                     category: z.string().nullable(),
                     price: z.string(),
+                    productImg: z.string().nullable(),
                     marketplaceId: z.string().nullable()
                   })
                   .nullable()
