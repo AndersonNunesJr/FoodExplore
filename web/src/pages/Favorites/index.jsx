@@ -24,6 +24,10 @@ export function Favorites() {
     fetchFavorites();
   };
 
+  const handleRemoveFavorite = (productId) => {
+    handleButtonFavoritesDelete(productId);
+  };
+
   useEffect(() => {
     fetchFavorites();
   }, []);
@@ -39,6 +43,7 @@ export function Favorites() {
               key={String(favorite.id)}
               data={favorite}
               buttonText="Remover dos Favoritos"
+              onRemove={handleRemoveFavorite}
             />
           ))}
         </div>

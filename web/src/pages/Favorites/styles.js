@@ -24,8 +24,10 @@ export const Container = styled.div`
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
       grid-template-rows: 60px;
       row-gap: 32px;
+      column-gap: 32px;
       height: 100%;
       overflow-y: auto;
+      overflow-x: hidden;
       border: solid 2px ${theme.getColorStyle("DARK_1000")};
       border-radius: 8px;
       padding: 10px;

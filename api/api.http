@@ -124,12 +124,12 @@ Content-Type: application/json
 ////////////////////ORDER SECTION///////////////////////////
 
 ###
-POST   http://localhost:3333///////user-id///////order
+POST   http://localhost:3333/order/db53c5d9-2a8a-4983-bf3a-686780ed56a5
 Content-Type: application/json
 
 {  
    
-   "marketplaceId":"",
+   "marketplaceId":"fadf75b3-a4eb-404f-aad9-0e6ffd9952a4",
    "details":[""]
 }
 

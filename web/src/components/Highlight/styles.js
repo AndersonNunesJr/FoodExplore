@@ -11,18 +11,35 @@ export const Container = styled.div`
   }
   .head {
     display: flex;
+    width: 100px;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: flex-end;
-    gap: 5px;
+    overflow-x: hidden;
 
     .heading {
       display: flex;
-      gap: 5px;
+      justify-content: space-around;
+
       ${theme.getFontStyle("Poppins_200_medium")}
-      >p {
+
+      > p {
         color: ${theme.getColorStyle("LIGHT_400")};
+        background: none;
+        display: flex;
+        justify-content: space-around;
+        white-space: nowrap;
+        transition: transform 6s linear;
       }
+
+      .transition:not(:hover) {
+        transition: transform 0s linear;
+        transform: translateX(0);
+      }
+
+      .transition:hover {
+        transform: translateX(-100%);
+      }
+
       > span {
         ${theme.getFontStyle("Roboto_Smallest_normal")}
         color: ${theme.getColorStyle("LIGHT_400")};

@@ -6,9 +6,9 @@ import { BadRequest } from "../../routes/_errors/bad-request";
 import { createClient } from "@supabase/supabase-js";
 // import { CookieController } from "../../utils/CookieController";
 
-const supabaseUrl = process.env.SUPABASE_URI!;
-const supabaseKey = process.env.SUPABASE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// const supabaseUrl = process.env.SUPABASE_URI!;
+// const supabaseKey = process.env.SUPABASE_KEY!;
+// const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function productsCreate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(

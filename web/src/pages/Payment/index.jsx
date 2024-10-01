@@ -14,6 +14,9 @@ import { useRef, useState } from "react";
 
 import { PiReceiptLight } from "react-icons/pi";
 
+import { api } from "../../services/api.js";
+import { useAuth } from "../../hooks/auth";
+
 export function Payment() {
   const [methodPayment, setMethodPayment] = useState("pix");
   const [cardNumber, setCardNumber] = useState("");
@@ -22,6 +25,9 @@ export function Payment() {
   const [checkedAnalysis, setCheckedAnalysis] = useState(false);
   const [coming, setComing] = useState(false);
   const [orderDelivered, setOrderDelivered] = useState(false);
+
+  const [favorites, setFavorites] = useState([]);
+  const { user } = useAuth();
 
   const img = "*";
 
@@ -58,6 +64,15 @@ export function Payment() {
     }, 10000);
   };
 
+  async function fetchFavorites() {
+    try {
+      const response = await api.get(`/favorites/${user.id}`);
+      setFavorites(response.data.result.products);
+    } catch (error) {
+      console.error("Erro ao buscar produtos favoritos:", error);
+    }
+  }
+
   return (
     <Container>
       <Navbar />
@@ -65,13 +80,13 @@ export function Payment() {
         <Checkout>
           <h2>Meu pedido</h2>
           <div className="list">
-            {favorites.map((favorite) => (
+            {/* {favorites.map((favorite) => (
               <Highlight
                 key={String(favorite.id)}
                 data={favorite}
                 buttonText="Remover dos Favoritos"
               />
-            ))}
+            ))} */}
           </div>
           <p>Total: {total}</p>
         </Checkout>
