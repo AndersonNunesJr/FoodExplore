@@ -28,6 +28,7 @@ function AuthProvider({ children }) {
   function signOut(navigate) {
     localStorage.removeItem("@Foodexplore:user");
     localStorage.removeItem("@Foodexplore:token");
+    localStorage.removeItem("@Foodexplore:amountsToBePaid");
 
     setData({});
     navigate("/");

@@ -34,7 +34,7 @@ model Role {
 
 model Marketplace {
   id             String  @id @default(uuid())
-  storename      String? @unique
+  storename      String? @unique //marketName
   user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String  @unique
   profilePicture String?
@@ -69,14 +69,10 @@ model Product {
 }
 
 model Tag {
-  id    Int     @id @default(autoincrement())
-  name  String? @unique
-
-  
+  id   Int     @id @default(autoincrement())
+  name String? @unique
 }
 
-
-// @@unique([id, marketplaceId])
 model Favorite {
   id String @id @default(uuid())
 

@@ -8,7 +8,7 @@ import { userRotes } from "../controllers/userCotroller/@userRotes";
 import { AuthMiddleware } from "../utils/AuthMiddleware";
 import { Sing } from "../controllers/sing/Sing";
 import { userCreate } from "../controllers/userCotroller/userCreate";
-import { productsGet } from "../controllers/productsController/productsGet";
+
 import { app } from "../server";
 
 async function privateRoutes(app: FastifyInstance) {
@@ -23,18 +23,16 @@ async function privateRoutes(app: FastifyInstance) {
   app.register(favoritesRotes, {
     prefix: "/favorites"
   });
-
-  app.register(orderRotes, {
-    prefix: "/order"
-  });
-  app.register(marketRotes);
 }
 
 async function publicRoutes(app: FastifyInstance) {
   app.register(Sing, { prefix: "/sing" });
   app.register(userCreate, { prefix: "/user" });
-  app.register(productsGet, { prefix: "/products" });
 
+  app.register(orderRotes, {
+    prefix: "/order"
+  });
+  app.register(marketRotes, { prefix: "/market" });
 }
 
 async function projectAdmin(app: FastifyInstance) {

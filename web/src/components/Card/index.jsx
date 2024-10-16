@@ -39,8 +39,35 @@ export function Card({ data, ...rest }) {
     } else {
       amountsToBePaid = [];
     }
+    const storeIndex = amountsToBePaid.findIndex(
+      (item) => item.storage === data.marketplace.storename
+    );
 
-    amountsToBePaid.push({ product: data, amount: Number(quantidade) });
+    if (storeIndex !== -1) {
+      const productIndex = amountsToBePaid[storeIndex].products.findIndex(
+        (item) => item.product === data.title
+      );
+
+      if (productIndex !== -1) {
+        amountsToBePaid[storeIndex].products[productIndex].amount +=
+          Number(quantidade);
+      } else {
+        amountsToBePaid[storeIndex].products.push({
+          product: data.title,
+          amount: Number(quantidade)
+        });
+      }
+    } else {
+      amountsToBePaid.push({
+        storage: data.marketplace.storename,
+        products: [
+          {
+            product: data.title,
+            amount: Number(quantidade)
+          }
+        ]
+      });
+    }
 
     localStorage.setItem(
       "@Foodexplore:amountsToBePaid",
@@ -82,7 +109,6 @@ export function Card({ data, ...rest }) {
     } catch (error) {
       console.error("Erro ao buscar produtos favoritos:", error);
     }
-
     fetchFavorites();
   };
 

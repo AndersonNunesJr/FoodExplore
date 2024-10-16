@@ -27,15 +27,33 @@ export function Navbar({ onSearch }) {
     onSearch(value);
   };
 
+  // function getAmountOfProducts() {
+  //   const products = JSON.parse(
+  //     localStorage.getItem("@Foodexplore:amountsToBePaid")
+  //   );
+
+  //   console.log(products);
+
+  //   const totalAmount = products
+  //     ? products
+  //         .map((item) => item.amount)
+  //         .reduce((total, amount) => total + amount, 0)
+  //     : 0;
+
+  //   setAmount(totalAmount);
+  // }
+
   function getAmountOfProducts() {
     const products = JSON.parse(
       localStorage.getItem("@Foodexplore:amountsToBePaid")
     );
 
+    console.log(products);
+
     const totalAmount = products
       ? products
-          .map((item) => item.amount)
-          .reduce((total, amount) => total + amount, 0)
+          .flatMap((store) => store.products) // Acessa o array de produtos dentro de cada loja
+          .reduce((total, product) => total + product.amount, 0)
       : 0;
 
     setAmount(totalAmount);

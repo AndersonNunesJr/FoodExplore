@@ -5,48 +5,58 @@ import { prisma } from "../../lib/prisma";
 
 export async function marketGet(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/:marketplaceId",
+    "/:marketId",
     {
       schema: {
         summary: "marketplace information.",
         tags: ["Get"],
         params: z.object({
-          marketplaceId: z.string().uuid()
+          marketId: z.string().uuid()
         }),
         response: {
           201: z.object({
             result: z
-              .object({
-                storename: z.string().nullish(),
-                products: z.array(
-                  z.object({
-                    id: z.string(),
-                    title: z.string(),
-                    tag: z.string().nullable(),
-                    description: z.string().nullable(),
-                    category: z.string().nullable(),
-                    price: z.string()
-                  })
-                )
-              })
-              .nullable()
+              .array(
+                z.object({
+                  id: z.string(),
+                  title: z.string(),
+                  tag: z.string().nullable(),
+                  description: z.string().nullable(),
+                  category: z.string().nullable(),
+                  price: z.string(),
+                  productImg: z.string().nullable(),
+                  marketplace: z
+                    .object({
+                      storename: z.string().nullable()
+                    })
+                    .nullable()
+                })
+              )
+              .nullish()
           })
         }
       }
     },
     async (req, reply) => {
-      const { marketplaceId } = req.params;
+      const { marketId } = req.params;
 
-      const result = await prisma.marketplace.findFirst({
-        include: {
-          products: {
-            orderBy: {
-              createdAt: "desc"
+      const result = await prisma.product.findMany({
+        where: {
+          marketplaceId: marketId
+        },
+        select: {
+          id: true,
+          title: true,
+          tag: true,
+          description: true,
+          category: true,
+          price: true,
+          productImg: true,
+          marketplace: {
+            select: {
+              storename: true
             }
           }
-        },
-        where: {
-          id: marketplaceId
         }
       });
 

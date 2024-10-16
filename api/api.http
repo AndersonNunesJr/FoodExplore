@@ -129,14 +129,14 @@ Content-Type: application/json
 
 {  
    
-   "marketplaceId":"fadf75b3-a4eb-404f-aad9-0e6ffd9952a4",
-   "details":[""]
+   "marketName":"oi@g.com",
+   "details":["2","69622430-ae06-41c7-842f-9de459074234"]
 }
 
 
 
 ###                              
-GET http://localhost:3333//////user-id ou  marketid///////status
+GET http://localhost:3333/order/db53c5d9-2a8a-4983-bf3a-686780ed56a5/status
 Content-Type: application/json
  
 
@@ -151,3 +151,6 @@ Content-Type: application/json
 }
 
 ###
+
+GET http://localhost:3333/market/fadf75b3-a4eb-404f-aad9-0e6ffd9952a4
+Content-Type: application/json

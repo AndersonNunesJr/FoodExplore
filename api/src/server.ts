@@ -30,7 +30,7 @@ app.register(fastifyJwt, {
     ? env.JWT_SECRET_PASSWORD
     : "env.JWT_SECRET_PASSWORD",
   sign: {
-    expiresIn: "3600s"
+    expiresIn: "1d"
   }
 });
 

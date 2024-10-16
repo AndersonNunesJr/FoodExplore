@@ -13,9 +13,10 @@ export async function orderCreate(app: FastifyInstance) {
         summary: "Create purchase order.",
         tags: ["Post"],
         body: z.object({
-          marketplaceId: z.string().uuid(),
-          details: z.array(z.string()),
-          code: z.string().cuid().nullish()
+          // marketplaceId: z.string().uuid(),
+          marketName: z.string(),
+          details: z.array(z.string())
+          // code: z.string().cuid().nullish()
         }),
         params: z.object({
           userId: z.string().uuid()
@@ -33,7 +34,7 @@ export async function orderCreate(app: FastifyInstance) {
       }
     },
     async (req, reply) => {
-      const { details, marketplaceId } = req.body;
+      const { details, marketName } = req.body;
       const { userId } = req.params;
 
       const detailsString = JSON.stringify(details);
@@ -46,11 +47,12 @@ export async function orderCreate(app: FastifyInstance) {
       }
 
       const marketplace = await prisma.marketplace.findUnique({
-        where: { id: marketplaceId }
+        where: { storename: marketName }
       });
       if (!marketplace) {
         throw new BadRequest("Marketplace not found");
       }
+
       const newOrder = await prisma.orders.create({
         data: {
           status: "🟡 Pendente",
@@ -60,17 +62,18 @@ export async function orderCreate(app: FastifyInstance) {
               where: {
                 userId_marketplaceId: {
                   userId,
-                  marketplaceId
+                  marketplaceId: marketplace.id
                 }
               },
               create: {
                 userId,
-                marketplaceId
+                marketplaceId: marketplace.id
               }
             }
           }
         }
       });
+
       return reply.status(201).send({
         order: {
           status: newOrder.status,
